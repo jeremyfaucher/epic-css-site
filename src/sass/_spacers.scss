@@ -1,0 +1,203 @@
+@use 'sass:math';
+
+// spacing
+$base-padding: 1rem !default;
+$base-margin: 1rem !default;
+$base-gap: 1rem !default;
+
+$utilities: (
+  "padding": ("prefix": "p",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "padding-left": ("prefix": "pl",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "padding-right": ("prefix": "pr",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "padding-y": ("prefix": "py",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5)),
+  "padding-x": ("prefix": "px",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5)),
+  "padding-top": ("prefix": "pt",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "padding-bottom": ("prefix": "pb",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "margin": ("prefix": "m",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "margin-y": ("prefix": "my",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5,
+      "120": $base-padding * 7.5)),
+  "margin-left": ("prefix": "ml",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "margin-right": ("prefix": "mr",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "margin-top": ("prefix": "mt",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "margin-bottom": ("prefix": "mb",
+    "values": ("0": 0,
+      "2": $base-padding * 0.125,
+      "4": $base-padding * 0.25,
+      "6": $base-padding * 0.375,
+      "8": $base-padding * 0.5,
+      "12": $base-padding * 0.75,
+      "24": $base-padding * 1.5,
+      "32": $base-padding * 2,
+      "40": $base-padding * 2.5,
+      "80": $base-padding * 5),
+  ),
+  "gap": ("prefix": "gap",
+    "values": ("0": 0,
+      "2": $base-gap * 0.125,
+      "4": $base-gap * 0.25,
+      "8": $base-gap * 0.5,
+      "12": $base-gap * 0.75,
+      "24": $base-gap * 1.5,
+      "32": $base-gap * 2,
+      "40": $base-gap * 2.5,
+      "80": $base-gap * 5),
+  )
+);
+
+// generate utility classes
+@each $property, $map in $utilities {
+  $prefix: map-get($map, "prefix");
+  $values: map-get($map, "values");
+
+  @each $k, $v in $values {
+    @if $k =="default" {
+      .#{$prefix} {
+        #{$property}: $v;
+      }
+    }
+
+    @else if $property =="padding-x" {
+      .#{$prefix}-#{$k} {
+        padding-left: $v;
+        padding-right: $v;
+      }
+    }
+
+    @else if $property =="padding-y" {
+      .#{$prefix}-#{$k} {
+        padding-top: $v;
+        padding-bottom: $v;
+      }
+    }
+
+    @else if $property =="margin-y" {
+      .#{$prefix}-#{$k} {
+        padding-top: $v;
+        padding-bottom: $v;
+      }
+    }
+
+    @else {
+      .#{$prefix}-#{$k} {
+        #{$property}: $v;
+      }
+    }
+  }
+}
