@@ -1,13 +1,13 @@
 {
-  "name": "eleventy-theme-design2seo",
+  "name": "epic-css-site",
   "version": "1.0.0",
   "description": "11ty Starter Theme",
   "main": "index.njk",
   "scripts": {
-    "start": "npm-run-all epic-compile --parallel watch:*",
+    "start": "npm-run-all --parallel watch:*",
     "watch:start": "eleventy --serve",
-    "watch:sass": "sass --watch src/sass/index.scss:src/_includes/style.css",
     "build-production": "eleventy",
+    "watch:sass": "sass --watch src/my-epic-css/index.scss:src/_includes/style.css",
     "epic-compile": "sass --style expanded --source-map --embed-sources --no-error-css --quiet src/my-epic-css/index.scss:src/_includes/style.css",
     "epic-build": "node ./node_modules/epic-css/src/epic-build.js",
     "epic-light": "node ./node_modules/epic-css/src/epic-light.js"

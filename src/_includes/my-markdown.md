@@ -1,4 +1,6 @@
-A utility-first CSS framework that easily integrates with any node.js project like 11ty or Next.js. Yes it is very similar Tailwind but much more flexible and can be added to WordPress or PHP projects.
+Epic CSS is a utility-first CSS framework designed to empower developers by offering a comprehensive set of utility classes for rapid and efficient styling of web projects. Unlike Tailwind CSS, Epic CSS excels in seamlessly integrating with non-JavaScript projects such as 11ty and PHP, providing unparalleled flexibility and ease of use. 
+
+With Epic CSS, developers can efficiently create responsive and visually stunning websites without the need for complex JavaScript setups, making it an ideal choice for a wide range of web development projects.
 
 ## How to initialize a new node.js project
 

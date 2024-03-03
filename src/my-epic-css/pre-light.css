@@ -81,11 +81,6 @@ pre {
   border-radius: 1rem;
 }
 
-code {
-  color: #f8f8f2;
-  overflow: auto;
-}
-
 p code {
   background: #11384b;
   border-radius: 4px;

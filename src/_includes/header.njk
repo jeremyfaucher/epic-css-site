@@ -1,20 +1,27 @@
 {%- if tag == 'home-page' -%}
 <header class="container text-center my-120">
 <a href="/" class="text-xl font-bold">Epic CSS</a>
-<h1>A simpler utility-first UI library.</h2>
+<h1>A simpler utility-first UI library.</h1>
 <nav>
 <ul class="flex justify-center gap-24">
-<li role="listitem"><a href="https://www.npmjs.com/package/epic-css" class="{{ 'active' if tag == "blog-page"}}" target="_blank">NPM package</a></li>
-<li role="listitem"><a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" class="{{ 'active' if tag == "about-page"}}" target="_blank">11ty Theme</a></li>
+<li role="listitem"><a href="https://www.npmjs.com/package/epic-css" target="_blank">NPM package</a></li>
+<li role="listitem"><a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" target="_blank">11ty Theme</a></li>
+<li role="listitem"><a href="/docs" class="{{ 'active' if tag == "docs"}}" >Docs</a></li>
 </ul>
 </nav>
 </header>
 {%- else %}
+<header class="container my-40">
+<div class="flex gap-12 items-bottom">
+<a href="/" class="text-md font-bold" style="display: inline-block; transform: rotate(-90deg);">Epic<br> CSS</a>
+<h1 class="mb-0 mt-6">Documentation</h1>
+</div>
 <nav>
-<ul class="flex justify-center gap-24 mt-32">
-<li role="listitem"><a href="/docs/" class="{{ 'active' if tag == "blog-page"}}">Docs</a></li>
-<li role="listitem"><a href="/blog/" class="{{ 'active' if tag == "blog-page"}}">Blog</a></li>
-<li role="listitem"><a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" class="{{ 'active' if tag == "about-page"}}">11ty Theme</a></li>
+<ul class="flex gap-24">
+<li role="listitem"><a href="https://www.npmjs.com/package/epic-css" target="_blank">NPM package</a></li>
+<li role="listitem"><a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" target="_blank">11ty Theme</a></li>
+<li role="listitem"><a href="/docs" class="{{ 'active' if tag == "docs"}}" >Docs</a></li>
 </ul>
 </nav>
+</header>
 {% endif %}
