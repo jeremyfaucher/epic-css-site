@@ -23,6 +23,7 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy('./src/assets');
   eleventyConfig.addPassthroughCopy('./src/.well-known');
   eleventyConfig.addPassthroughCopy('./robots.txt');
+  eleventyConfig.addPassthroughCopy('./_redirects');
 
   //Date Clean up
   eleventyConfig.addFilter("postDate", (dateObj) => {
