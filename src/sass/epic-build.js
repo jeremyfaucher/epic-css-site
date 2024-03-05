@@ -1,20 +1,21 @@
 const fs = require('fs');
 const { exec } = require('child_process');
+const sass = require('sass');
+const path = require('path');
+// production
+//const epicConfig = require('../../../epicConfig');
+// dev
+const epicConfig = require('../../epicConfig');
+// Assuming epicConfig.epicThemeDir is the directory path
+const epicThemeDir = epicConfig.epicThemeDir;
+const sassFilePath = `${epicThemeDir}/pre-light.css`;
+const projectStyleDir = epicConfig.projectStyleDir;
 
-// Get the build folder path from the command-line arguments or use a default value
-const buildFolderPath = process.argv[2] || 'src';
-const sassFilePath = `${buildFolderPath}/my-epic-css/build/style.css`;
-
-// Function to create the build folder if it doesn't exist
-const createBuildFolder = (folderPath) => {
-  if (!fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath, { recursive: true });
-    console.log(`Build folder created at ${folderPath}`);
-  }
-};
-
-// Create the build folder if it doesn't exist
-createBuildFolder(`${buildFolderPath}/my-epic-css/build`);
+// Check if the build folder exists, if not, create it
+// if (!fs.existsSync(buildFolderPath)) {
+//   fs.mkdirSync(buildFolderPath, { recursive: true });
+//   console.log(`Build folder created at ${buildFolderPath}`);
+// }
 
 // Check if the Sass file exists, if not, create an empty one
 if (!fs.existsSync(sassFilePath)) {
@@ -23,7 +24,7 @@ if (!fs.existsSync(sassFilePath)) {
 }
 
 // Compile Sass file
-exec(`sass --style expanded --source-map --embed-sources --no-error-css --quiet ${buildFolderPath}/my-epic-css/index.scss:${sassFilePath}`, (error, stdout, stderr) => {
+exec(`sass --style expanded --source-map --embed-sources --no-error-css --quiet ${epicThemeDir}/index.scss:${sassFilePath} && cp ${sassFilePath} ${projectStyleDir}`, (error, stdout, stderr) => {
   if (error) {
     console.error(`Error: ${error.message}`);
     return;
@@ -32,8 +33,9 @@ exec(`sass --style expanded --source-map --embed-sources --no-error-css --quiet 
     console.error(`stderr: ${stderr}`);
     return;
   }
+  // Handle successful execution
   
-  console.log(`Sass file compiled successfully to ${sassFilePath}`);
+  console.log(`Sass file compiled successfully to CSS in projectDir ${sassFilePath}`);
   
   // Read the compiled Sass file content
   const sassFileContent = fs.readFileSync(sassFilePath, 'utf8');
@@ -46,61 +48,3 @@ exec(`sass --style expanded --source-map --embed-sources --no-error-css --quiet 
   
   console.log(`Processed Sass file content written back to ${sassFilePath}`);
 });
-
-
-
-
-
-
-
-
-// const fs = require('fs');
-// const sass = require('sass');
-// const path = require('path');
-
-// // Function to compile Sass files
-// function compileSass(inputFile, outputFile) {
-//   return new Promise((resolve, reject) => {
-//     sass.render({
-//       file: inputFile,
-//       outputStyle: 'expanded',
-//       sourceMap: true,
-//       outFile: outputFile,
-//     }, (err, result) => {
-//       if (err) {
-//         reject(err);
-//       } else {
-//         resolve(result);
-//       }
-//     });
-//   });
-// }
-
-// // Compile _base.scss file
-// const baseSassFile = './src/sass/_base.scss';
-// const tempCssFile = path.resolve('./src/_includes/temp-base-styles.css'); // Temporary output file for compiled base styles
-// compileSass(baseSassFile, tempCssFile)
-//   .then(() => {
-//     console.log(`Compiled ${baseSassFile} to ${tempCssFile}`);
-    
-//     // Read prebuilt stylesheet (existing styles)
-//     const prebuiltStylesPath = './src/_includes/style.css';
-//     const prebuiltStyles = fs.readFileSync(prebuiltStylesPath, 'utf8');
-
-//     // Read compiled base styles
-//     const baseStyles = fs.readFileSync(tempCssFile, 'utf8');
-
-//     // Concatenate base styles with prebuilt styles
-//     const newStylesContent = baseStyles + '\n' + prebuiltStyles;
-
-//     // Write the new stylesheet to disk, overwriting the existing styles.css
-//     fs.writeFileSync(prebuiltStylesPath, newStylesContent, 'utf8');
-//     console.log('Merged base styles with prebuilt styles');
-
-//     // Remove the temporary CSS file
-//     fs.unlinkSync(tempCssFile);
-//     console.log('Temporary CSS file removed');
-//   })
-//   .catch(err => {
-//     console.error('Error compiling Sass:', err);
-//   });

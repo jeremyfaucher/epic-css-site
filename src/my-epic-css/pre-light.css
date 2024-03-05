@@ -1,12 +1,15 @@
+/* Theme your site here
+/* base styles are html tags only like a, h1 and img.
+*/
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 1.125rem;
+  font-size: 22px;
   color: #d4d4d4;
-  margin: 0px;
+  margin: 3px;
 }
 
 p {
-  line-height: 24px;
+  line-height: 2.8rem;
 }
 
 h1, h2, h3, h4, p, ul {
@@ -81,10 +84,9 @@ pre {
   border-radius: 1rem;
 }
 
-p code {
-  background: #11384b;
-  border-radius: 4px;
-  padding: 2px 12px;
+code {
+  color: #f8f8f2;
+  overflow: auto;
 }
 
 .clr-primary {
@@ -95,16 +97,12 @@ p code {
   color: #f82fab;
 }
 
-a.underline-clr {
+a.clr-underline {
   text-decoration-color: #f82fab;
 }
 
-.bg-color {
-  background-color: #082027;
-}
-
-.bg-black {
-  background: black;
+.clr-body-bg {
+  background-color: hsl(198, 64%, 10%);
 }
 
 .text-center {
@@ -793,6 +791,10 @@ article img {
 
 .mt-4 {
   margin-top: 0.25rem;
+}
+
+.mt-6 {
+  margin-top: 0.375rem;
 }
 
 .mt-8 {

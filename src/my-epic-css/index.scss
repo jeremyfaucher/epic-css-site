@@ -1,40 +1,22 @@
-// @import "../sass/_variables";
-// // Define a SASS variable
-// $body-font-size: 16px;
-// $container-width: 640px;
+/* Theme your site here
+/* base styles are html tags only like a, h1 and img.
+*/
+@import "../sass/_variables";
 
-// @import "../sass/_base";
+// Define theme Sass color variables
+$clr-body-bg: hsl(198deg 64% 10%);
 
-// pre {
-//     background: #0b2938;
-//     padding: 1.5em 14px;
-//     margin-bottom: 2rem;
-//     overflow: auto;
-//     border-radius: 1rem;
-// }
+// Define theme Sass fontramp variables awaw
+$fs-body: 22px;
+$lh-body: 1.9rem;
+$lh-p: 2.8rem;
 
-// code {
-// }
-
-// p code {
-//     background: #11384b;
-//     border-radius: 4px;
-//     padding: 2px 12px;
-// }
-
-// @import "../sass/_colors";
-// @import "../sass/_fontramp";
-// @import "../sass/_images";
-// @import '../sass/_grid';
-// @import '../sass/_spacers';
-
-@import "../../node_modules/epic-css/src/_variables";
-// Define a SASS variable
-$body-font-size: 16px;
+// Define theme Sass grid variables
 $container-width: 640px;
 
-@import "../../node_modules/epic-css/src/_base";
-// Custom Sass
+@import "../sass/_base";
+
+// Add custom base styles for semantic html
 pre {
     background: #0b2938;
     padding: 1.5em 14px;
@@ -42,14 +24,18 @@ pre {
     overflow: auto;
     border-radius: 1rem;
 }
-
 code {
+    font-size: 1.2rem;
     color: #f8f8f2;
     overflow: auto;
 }
 
-@import "../../node_modules/epic-css/src/_colors";
-@import "../../node_modules/epic-css/src/_fontramp";
-@import "../../node_modules/epic-css/src/_images";
-@import '../../node_modules/epic-css/src/_grid';
-@import '../../node_modules/epic-css/src/_spacers';
+@import "../sass/_colors";
+// Add custom color styles here
+@import "../sass/_fontramp";
+// Add custom fontramp styles here
+@import "../sass/_images";
+// Add custom image styles here
+@import "../sass/_grid";
+// Add custom grid styles here
+@import "../sass/_spacers";

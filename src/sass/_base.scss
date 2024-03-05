@@ -1,31 +1,15 @@
 // font ramp
-// Headings
-//
-// Set the heading variable
-$h1-font-size: 32px;
-$h2-font-size: 24px;
-$h3-font-size: 20px;
-$h4-font-size: 16px;
 
-// Set the heading font-weight variables
-$headings-font-weight: 600;
-
-// Set the line heights for headings variables
-$h1-line-height: 40px;
-$h2-line-height: 32px;
-$h3-line-height: 28px;
-$h4-line-height: 20px;
-
-$body-font-size: 1.125rem;
 body {
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: $body-font-size;
+    font-size: $fs-body;
+    line-height: $lh-body;
     color: #d4d4d4;
-    margin: 0px;
+    margin: 3px;
   }
   
   p {
-    line-height: 24px;
+    line-height: $lh-p;
   }
 
   // set base for browsers
@@ -33,21 +17,21 @@ h1, h2, h3, h4, p, ul {
     margin-top: 0;
   }
   h1, .h1 {
-    font-size: $h1-font-size;
-    line-height: $h1-line-height;
+    font-size: $fs-h1;
+    line-height: $fs-h1;
   }
   
   h2, .h2 {
-    font-size: $h2-font-size;
-    line-height: $h2-line-height;
+    font-size: $fs-h2;
+    line-height: $fs-h2;
   }
   h3, .h3 {
-    font-size: $h3-font-size;
-    line-height: $h3-line-height;
+    font-size: $fs-h3;
+    line-height: $fs-h3;
   }
   h4, .h4 {
-    font-size: $h4-font-size;
-    line-height: $h4-line-height;
+    font-size: $fs-h4;
+    line-height: $fs-h4;
   }
   
   article {
@@ -69,8 +53,8 @@ h1, h2, h3, h4, p, ul {
   }
   
   h3 {
-    font-size: $h3-font-size;
-    line-height: $h3-line-height !important;
+    font-size: $fs-h3;
+    line-height: $fs-h3 !important;
   }
   
   ul {
