@@ -2,36 +2,20 @@
 layout: 'base.njk'
 tag: home-page
 ---
-<section>
-<div class="text-center margin-auto md-w-75 mb-60">
-<h1 class="mb-16">Easy to manage & high performace.</h1>
-<p>Epic CSS is a utility-first UI library that only outputs the styles you use. <a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" class="underline-clr">Clone the Epic CSS 11ty theme</a> from Github to see the future of the web.</p>
-</div>
-<div class="container flex flex-col md-flex-row gap-40 items-center mb-80">
-<div class="flex justify-end md-w-50">
-<img src="assets/home-banner.webp" width="420" height="327" alt="girl working at computer thinking creatively">
-</div>
-<div class="md-w-50">
-{%- for post in collections.blog | reverse | limit_latest(1) -%}
-  {% include 'post-latest.njk' %}
-{%- endfor -%}
-</div>
-</div>
+<section class="text-center mb-100">
+<p class="text-xl font-bold mb-24" style="line-height: 80px">Epic CSS</p>
+<h1 class="mb-0">A simpler utility-first UI library.</h1>
 </section>
-<section class="mb-80">
-<div class="md-w-75">
-<h2 class="mb-12">Typewriter wolf ugh shoreditch brunch tote bag.</h2>
-<p>I'm baby hot chicken bitters irony thundercats etsy direct trade chillwave kickstarter truffaut unicorn crucifix shaman farm-to-table mixtape. Man braid wolf adaptogen chambray, irony chartreuse 90's shabby chic viral banjo live-edge.</p>
-<p>Kitsch crucifix truffaut chia flexitarian quinoa, tbh health goth man braid tote bag ramps raclette helvetica craft beer squid. Kitsch air plant gochujang, wolf occupy tumeric umami art party taiyaki celiac mustache tweet adaptogen chambray, irony chartreuse.</p>
-<p>Trust fund retro seitan knausgaard, leggings kale chips echo park meh. Glossier viral before they sold out hashtag taiyaki. Lo-fi 3 wolf moon vice cloud bread mixtape art party everyday carry taxidermy cronut raw denim put a bird on photo booth blog.</p>
-</div>
-</section>
-<section class="mb-80">
-<h2 class="mb-2">Recent Blog Posts</h2>
-<p class="mb-24">YOLO pop-up synth fixie, slow-carb, fingerstache.</p>
-<div class="grid grid-col-2 gap-32">
-{%- for post in collections.blog | reverse | limit(5) -%}
-  {% include 'post-summary.njk' %}
-{%- endfor -%}
-</div>
-</section> 
+
+<p>Integrate into any project with node.js and <code>npm install epic-css</code> or use with our 11ty theme.</p>
+
+<p>A utility-first CSS framework that easily integrates with any node.js project like 11ty or Next.js. Yes it is very similar to Tailwind but much more flexible and can be added to WordPress or PHP projects.</p>
+
+<p>In the Epic CSS 11ty theme the UI library is included in the theme. Were as if you are doing a custom install the UI library will come from the NPM package. Regarless if you are using the theme or the custom install the epic-css NPM package module will handle the light version style.css build.</p>
+
+<h2>Utility-first example usage</h2>
+<article>
+{% markdown %}
+  {%- include "utility-first-doc.md" -%}
+{% endmarkdown %}
+</article>

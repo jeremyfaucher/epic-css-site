@@ -5,11 +5,23 @@ const { DateTime } = require("luxon");
 const CleanCSS = require("clean-css");
 const { minify } = require("terser");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const markdownIt = require("markdown-it");
 module.exports = function(eleventyConfig) {
   // Add plugins
   eleventyConfig.addPlugin(syntaxHighlight);
   // e.g. Use syntax highlighters in njk and md Eleventy templates (not liquid)
-  templateFormats: ["html", "md"],
+  templateFormats: ["html", "md"];
+    // Add markdown filter
+  const md = new markdownIt({
+    html: true,
+		breaks: true,
+		linkify: true,
+  });
+
+  eleventyConfig.addPairedShortcode("markdown", (content) => {
+    return md.render(content);
+  });
+  templateFormats: ["html", "md", "njk"],
   //Pass through files
 	eleventyConfig.addPassthroughCopy('./src/assets');
   eleventyConfig.addPassthroughCopy('./src/.well-known');
