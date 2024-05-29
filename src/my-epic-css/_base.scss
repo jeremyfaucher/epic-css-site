@@ -4,7 +4,7 @@ body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: $fs-body;
   line-height: $lh-body;
-  color: #d4d4d4;
+  color: $clr-body;
   margin: 3px;
 }
 
@@ -48,6 +48,15 @@ h4,
 
 article {
 
+  a {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  a:hover {
+    color: $clr-secondary;
+  }
+
   h2 {
     margin-bottom: 12px;
   }
@@ -77,18 +86,15 @@ ul {
 a {
   text-decoration: none;
   text-underline-offset: 4px;
-  color: #d4d4d4;
+  color: $clr-body;
 
   &:hover {
     text-decoration: underline;
+    text-underline-offset: 1px;
   }
 
-  &.underline-clr {
+  &.clr-underline {
     text-decoration: underline;
-  }
-
-  &.underline-clr:hover {
-    color: $clr-secondary;
   }
 
 }
@@ -102,7 +108,7 @@ a.active,
 a:hover,
 a.underline-clr {
   text-decoration: underline;
-  text-underline-offset: 1px;
+  text-underline-offset: 4px;
 }
 
 pre {
