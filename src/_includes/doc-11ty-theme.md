@@ -1,3 +1,5 @@
+<p>Get the Epic CSS 11ty theme <a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" class="underline-clr target="_blank" rel="noopener">from Github</a>.</p>
+
 <h2>Clone and run the Epic CSS 11ty theme</h2>
 
 1. Make a project directory and navigate to it if you don't already have one.
