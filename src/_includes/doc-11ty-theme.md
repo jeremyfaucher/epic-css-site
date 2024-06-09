@@ -5,7 +5,7 @@
 <h2>Features</h2>
 
 <ul>
-<li>Out of the box it <a href="https://pagespeed.web.dev/analysis/https-epic-css-11ty-theme-netlify-app/lzi2towjuf?form_factor=mobile" target="_blank" rel="noopener">scores all 100's on the Lighthouse</a> - performance, accessibility, best practices and SEO.</li>
+<li>Out of the box it <a href="https://pagespeed.web.dev/analysis/https-epic-css-11ty-theme-netlify-app/lzi2towjuf?form_factor=mobile" target="_blank" rel="noopener">scores all 100's on the Lighthouse</a> - performance, accessibility, best practices and SEO. You can also see the day to day testing over at <a href="https://eleventy-starters--speedlify.netlify.app/eleventy-starters/" target="_blank" rel="noopener">speedlify:eleventy-starters</a> leader board.</li>
 <li>Ready to go blog loop with SEO friendly URLs and an all in one place to manage title's and description's for SEO.</li>
 <li>Fully responsive using CSS Grid and Flexbox.</li>
 <li>Integrated with the Epic CSS Sass utility first UI library, making it easy to scale, change layouts and colors.</li>
