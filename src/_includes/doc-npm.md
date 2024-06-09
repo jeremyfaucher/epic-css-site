@@ -1,4 +1,6 @@
-<p>Use with the <a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" class="underline-clr target="_blank" rel="noopener">Epic CSS 11ty theme</a> from Github or add to any project using node.js and the <a href="https://www.npmjs.com/package/epic-css" class="underline-clr target="_blank" rel="noopener">epic-css node.js package</a>.</p>
+<p>Follow the instruction below to add to any project using node.js and the <a href="https://www.npmjs.com/package/epic-css" target="_blank" rel="noopener">epic-css node.js package</a>.</p>
+
+<p>Or use with the pre-integrated <a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" target="_blank" rel="noopener">Epic CSS 11ty theme</a> by cloning from Github.</p>
 
 ## NPM custom install
 

@@ -1,4 +1,17 @@
-<p>Get the Epic CSS 11ty theme <a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" class="underline-clr target="_blank" rel="noopener">from Github</a>.</p>
+<p>The Epic CSS 11ty theme is a high performance starter blog theme. It uses the Epic CSS utility-first UI library making it light weight and easy to manage.</p>
+
+<p><a href="https://epic-css-11ty-theme.netlify.app/" target="_blank" rel="noopener">Epic CSS 11ty theme demo site.</a></p>
+
+<h2>Features</h2>
+
+<ul>
+<li>Out of the box it <a href="https://pagespeed.web.dev/analysis/https-epic-css-11ty-theme-netlify-app/lzi2towjuf?form_factor=mobile" target="_blank" rel="noopener">scores all 100's on the Lighthouse</a> - performance, accessibility, best practices and SEO.</li>
+<li>Ready to go blog loop with SEO friendly URLs and an all in one place to manage title's and description's for SEO.</li>
+<li>Fully responsive using CSS Grid and Flexbox.</li>
+<li>Integrated with the Epic CSS Sass utility first UI library, making it easy to scale, change layouts and colors.</li>
+</ul>
+
+<p><a href="https://github.com/jeremyfaucher/epic-css-11ty-theme" target="_blank" rel="noopener">Download/clone Epic CSS 11ty theme from Github</a> by follow the below instructions.</p>
 
 <h2>Clone and run the Epic CSS 11ty theme</h2>
 
