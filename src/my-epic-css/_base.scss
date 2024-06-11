@@ -73,17 +73,7 @@ a:hover {
   text-underline-offset: 4px;
 }
 
-main,
-article {
-
-  h2 {
-    margin-bottom: 12px;
-  }
-
-  p {
-    margin-top: 0px;
-    margin-bottom: 2rem;
-  }
+main {
 
   a {
     color: $clr-body;
@@ -103,6 +93,19 @@ article {
       color: $clr-primary-light;
     }
 
+  }
+
+  p {
+    margin-top: 0px;
+    margin-bottom: 2rem;
+  }
+
+  iframe {
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    margin-bottom: 12px;
   }
 
 }

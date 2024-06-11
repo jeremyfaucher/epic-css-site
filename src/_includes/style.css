@@ -68,33 +68,30 @@ a:hover {
   text-underline-offset: 4px;
 }
 
-main h2,
-article h2 {
-  margin-bottom: 12px;
-}
-main p,
-article p {
-  margin-top: 0px;
-  margin-bottom: 2rem;
-}
-main a,
-article a {
+main a {
   color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-main a:hover,
-article a:hover {
+main a:hover {
   color: #00d886;
   text-underline-offset: 4px;
 }
-main a.clr-underline,
-article a.clr-underline {
+main a.clr-underline {
   color: #00d886;
 }
-main a.clr-underline:hover,
-article a.clr-underline:hover {
+main a.clr-underline:hover {
   color: #00e78f;
+}
+main p {
+  margin-top: 0px;
+  margin-bottom: 2rem;
+}
+main iframe {
+  margin-bottom: 2rem;
+}
+main h2 {
+  margin-bottom: 12px;
 }
 
 article ul {
