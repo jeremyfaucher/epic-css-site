@@ -51,9 +51,22 @@ h3 {
   line-height: $fs-h3 !important;
 }
 
+.lh-0 {
+  line-height: inherit;
+}
+
 ul {
   padding: 0;
   list-style-type: none;
+}
+/* Default list items */
+li {
+  margin-bottom: 0.75rem;
+}
+
+/* List items that contain <p> (Markdown block items) */
+li p {
+  margin-bottom: 0.75rem;
 }
 
 a {
@@ -125,7 +138,7 @@ pre {
   background: $clr-secondary-bg;
   padding: 1.5em 14px;
   margin-bottom: 2rem;
-  overflow: auto;
+  overflow-x: auto;
   border-radius: 1rem;
 }
 
@@ -140,4 +153,37 @@ code:not(pre code) {
 
 pre code {
   padding: 0px;
+}
+
+.position-relative {
+  position: relative;
+}
+.position-absolute {
+  position: absolute;
+}
+
+/* Utility styles */
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.scroll-snap-x-mandatory {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.z-100 {
+  z-index: 100;
 }

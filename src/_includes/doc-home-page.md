@@ -1,3 +1,7 @@
+<div class="wrapper">
+<div class="container">
+<h2>Utility-first example usage</h2>
+
 ```html
 <div class="container flex flex-col md-flex-row gap-40 items-center mb-80">
 ```
@@ -82,3 +86,83 @@ align-items: center;
     This is a<a href="/blog/web-design/second-web-design-post/" class="clr-underline"> Read more...</a></p>
 </div>
 ```
+
+## Horizontal Scroll Slider
+</div>
+</div>
+
+<div class="position-relative w-100 flex items-center">
+  <button class="prev-btn position-absolute cursor-pointer p-20 z-10 border-none clr-white" aria-label="Previous" style="top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); left: 10px;">&#9665;</button>
+  <div class="slider flex gap-16 w-100 gap-12 p-20 overflow-x-auto scroll-snap-x-mandatory scroll-smooth">
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">1</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">2</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">3</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">4</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">5</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">6</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">7</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">8</div>
+  </div>
+  <button class="next-btn position-absolute cursor-pointer p-20 z-10 border-none clr-white" aria-label="Next" style="top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); right: 10px;">&#9655;</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.querySelector(".slider");
+  const nextBtn = document.querySelector(".next-btn");
+  const prevBtn = document.querySelector(".prev-btn");
+
+  let cardWidth = document.querySelector(".card").offsetWidth + 16; // Include margin
+
+  nextBtn.addEventListener("click", () => {
+    slider.scrollBy({ left: cardWidth, behavior: "smooth" });
+  });
+
+  prevBtn.addEventListener("click", () => {
+    slider.scrollBy({ left: -cardWidth, behavior: "smooth" });
+  });
+});
+</script>
+
+<div class="wrapper">
+<div class="container">
+
+```html
+<div class="position-relative w-100 flex items-center">
+  <button class="position-absolute cursor-pointer p-20 z-10 border-none clr-white" aria-label="Previous" style="top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); left: 10px;">&#9665;</button>
+  <div class="slider flex gap-16 w-100 gap-12 p-20 overflow-x-auto scroll-snap-x-mandatory scroll-smooth">
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">1</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">2</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">3</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">4</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">5</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">6</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">7</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">8</div>
+  </div>
+  <button class="position-absolute cursor-pointer p-20 z-10 border-none clr-white" aria-label="Next" style="top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); right: 10px;">&#9655;</button>
+</div>
+```
+
+```js
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.querySelector(".slider");
+  const nextBtn = document.querySelector(".next-btn");
+  const prevBtn = document.querySelector(".prev-btn");
+
+  let cardWidth = document.querySelector(".card").offsetWidth + 16; // Include margin
+
+  nextBtn.addEventListener("click", () => {
+    slider.scrollBy({ left: cardWidth, behavior: "smooth" });
+  });
+
+  prevBtn.addEventListener("click", () => {
+    slider.scrollBy({ left: -cardWidth, behavior: "smooth" });
+  });
+});
+</script>
+```
+
+</div>
+</div>

@@ -18,10 +18,18 @@
   background: $clr-secondary-bg;
 }
 
+.clr-white {
+  color: $clr-white;
+}
+
 .border-r-4 {
   border-radius: 4px;
 }
 
 .border-r-16 {
   border-radius: 16px;
+}
+
+.border-none {
+  border: none;
 }

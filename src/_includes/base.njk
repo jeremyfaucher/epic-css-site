@@ -18,12 +18,18 @@
 {% endif -%}
 </head>
 <body class="clr-body-bg">
-<div class="wrapper">
 {% include 'header.njk' %}
+{%- if fullWidth == true %}
+<main class="mb-80">
+{{ content | safe }}
+</main>
+{% else -%}
+<div class="wrapper">
 <main class="container mb-80">
 {{ content | safe }}
 </main>
 </div>
+{% endif -%}
 {% include 'footer.njk' %}
 </body>
 </html>

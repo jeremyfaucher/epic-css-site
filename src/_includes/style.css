@@ -48,9 +48,23 @@ h3 {
   line-height: 28px !important;
 }
 
+.lh-0 {
+  line-height: inherit;
+}
+
 ul {
   padding: 0;
   list-style-type: none;
+}
+
+/* Default list items */
+li {
+  margin-bottom: 0.75rem;
+}
+
+/* List items that contain <p> (Markdown block items) */
+li p {
+  margin-bottom: 0.75rem;
 }
 
 a {
@@ -109,7 +123,7 @@ pre {
   background: #412677;
   padding: 1.5em 14px;
   margin-bottom: 2rem;
-  overflow: auto;
+  overflow-x: auto;
   border-radius: 1rem;
 }
 
@@ -124,6 +138,39 @@ code:not(pre code) {
 
 pre code {
   padding: 0px;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+/* Utility styles */
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.scroll-snap-x-mandatory {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.z-100 {
+  z-index: 100;
 }
 
 .text-center {
@@ -170,12 +217,20 @@ pre code {
   background: #412677;
 }
 
+.clr-white {
+  color: #ffffff;
+}
+
 .border-r-4 {
   border-radius: 4px;
 }
 
 .border-r-16 {
   border-radius: 16px;
+}
+
+.border-none {
+  border: none;
 }
 
 img {
@@ -242,10 +297,6 @@ article img {
   align-content: space-around;
 }
 
-.content-stretch {
-  align-content: space-stretch;
-}
-
 .items-start {
   align-items: flex-start;
 }
@@ -258,20 +309,16 @@ article img {
   align-items: center;
 }
 
-.items-between {
-  align-items: space-between;
-}
-
-.items-around {
-  align-items: space-around;
-}
-
-.items-stretch {
-  align-items: space-stretch;
+.items-between stretch {
+  align-items: space-between space-stretch;
 }
 
 .flex-col {
   flex-direction: column;
+}
+
+.flex-col-reverse {
+  flex-direction: column-reverse;
 }
 
 .w-100 {
@@ -378,6 +425,10 @@ article img {
   margin: 0 auto;
 }
 
+.flex-basis-300 {
+  flex: 0 0 300px;
+}
+
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -402,6 +453,13 @@ article img {
   box-sizing: border-box;
 }
 
+@media (min-width: 756px) {
+  .left-sidebar-sm {
+    display: grid;
+    grid-template-columns: minmax(140px, auto) 1fr;
+    gap: 6%;
+  }
+}
 .gap-0 {
   gap: 0;
 }
