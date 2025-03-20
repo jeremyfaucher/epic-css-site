@@ -19,7 +19,7 @@ More usage documentation on this to come.
 
 ## Usage from CDN
 
-<p>Alternatively, you can use <a rel="noopener noreferrer" href="https://cdn.epiccss.com/pre-light.css" target="_blank">cdn.epiccss.com</a> to link <code>pre-light.css</code>.</p>
+<p>Alternatively, you can use <a rel="noopener noreferrer" href="https://cdn.epiccss.com/0.11.0.css" target="_blank">cdn.epiccss.com</a> to link the latest version <code>0.11.0</code>.</p>
 
 ```html
 <link
@@ -91,9 +91,8 @@ align-items: center;
 </div>
 </div>
 
-<div class="position-relative w-100 flex items-center">
-  <button class="prev-btn position-absolute cursor-pointer p-20 z-10 border-none clr-white" aria-label="Previous" style="top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); left: 10px;">&#9665;</button>
-  <div class="slider flex gap-16 w-100 gap-12 p-20 overflow-x-auto scroll-snap-x-mandatory scroll-smooth">
+<div class="slider-container position-relative w-100 flex items-center overflow-x-auto scroll-snap-x-mandatory scroll-smooth" style="scroll-padding-inline-start: calc((100vw - 1000px) / 2); scrollbar-width: none;">
+  <div class="slider flex gap-16 w-100 gap-12 p-20 margin-auto" style="max-width: 1000px;">
     <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">1</div>
     <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">2</div>
     <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">3</div>
@@ -103,24 +102,31 @@ align-items: center;
     <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">7</div>
     <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">8</div>
   </div>
-  <button class="next-btn position-absolute cursor-pointer p-20 z-10 border-none clr-white" aria-label="Next" style="top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); right: 10px;">&#9655;</button>
+</div>
+<div class="flex gap-12 margin-auto" style="max-width: 1000px;">
+<button class="prev-btn cursor-pointer p-20 z-10 border-none clr-white" aria-label="Previous" style="background: rgba(0, 0, 0, 0.5);">&#9665;</button>
+<button class="next-btn cursor-pointer p-20 z-10 border-none clr-white" aria-label="Next" style="background: rgba(0, 0, 0, 0.5);">&#9655;</button>
 </div>
 
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-  const slider = document.querySelector(".slider");
+document.addEventListener("DOMContentLoaded", function () {
+  const outerContainer = document.querySelector(".position-relative.overflow-x-auto"); // Target the outer scrolling container
+  const cardWidth = document.querySelector(".card").offsetWidth + 16; // Include margin
   const nextBtn = document.querySelector(".next-btn");
   const prevBtn = document.querySelector(".prev-btn");
 
-  let cardWidth = document.querySelector(".card").offsetWidth + 16; // Include margin
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      outerContainer.scrollBy({ left: cardWidth, behavior: "smooth" });
+    });
+  }
 
-  nextBtn.addEventListener("click", () => {
-    slider.scrollBy({ left: cardWidth, behavior: "smooth" });
-  });
-
-  prevBtn.addEventListener("click", () => {
-    slider.scrollBy({ left: -cardWidth, behavior: "smooth" });
-  });
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      outerContainer.scrollBy({ left: -cardWidth, behavior: "smooth" });
+    });
+  }
 });
 </script>
 
@@ -128,38 +134,43 @@ align-items: center;
 <div class="container">
 
 ```html
-<div class="position-relative w-100 flex items-center">
-  <button class="position-absolute cursor-pointer p-20 z-10 border-none clr-white" aria-label="Previous" style="top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); left: 10px;">&#9665;</button>
-  <div class="slider flex gap-16 w-100 gap-12 p-20 overflow-x-auto scroll-snap-x-mandatory scroll-smooth">
-    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">1</div>
-    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">2</div>
-    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">3</div>
-    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">4</div>
-    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">5</div>
-    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">6</div>
-    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">7</div>
-    <div class="card flex flex-basis-300 items-center clr-white border-r-12 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">8</div>
+<div class="slider-container position-relative w-100 flex items-center overflow-x-auto scroll-snap-x-mandatory scroll-smooth" style="scroll-padding-inline-start: calc((100vw - 1000px) / 2); scrollbar-width: none;">
+  <div class="slider flex gap-16 w-100 gap-12 p-20 margin-auto" style="max-width: 1000px;">
+    <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">1</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">2</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">3</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">4</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">5</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">6</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">7</div>
+    <div class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">8</div>
   </div>
-  <button class="position-absolute cursor-pointer p-20 z-10 border-none clr-white" aria-label="Next" style="top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); right: 10px;">&#9655;</button>
+</div>
+<div class="flex gap-12 margin-auto" style="max-width: 1000px;">
+<button class="prev-btn cursor-pointer p-20 z-10 border-none clr-white" aria-label="Previous" style="background: rgba(0, 0, 0, 0.5);">&#9665;</button>
+<button class="next-btn cursor-pointer p-20 z-10 border-none clr-white" aria-label="Next" style="background: rgba(0, 0, 0, 0.5);">&#9655;</button>
 </div>
 ```
 
 ```js
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-  const slider = document.querySelector(".slider");
+document.addEventListener("DOMContentLoaded", function () {
+  const outerContainer = document.querySelector(".position-relative.overflow-x-auto"); // Target the outer scrolling container
+  const cardWidth = document.querySelector(".card").offsetWidth + 16; // Include margin
   const nextBtn = document.querySelector(".next-btn");
   const prevBtn = document.querySelector(".prev-btn");
 
-  let cardWidth = document.querySelector(".card").offsetWidth + 16; // Include margin
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      outerContainer.scrollBy({ left: cardWidth, behavior: "smooth" });
+    });
+  }
 
-  nextBtn.addEventListener("click", () => {
-    slider.scrollBy({ left: cardWidth, behavior: "smooth" });
-  });
-
-  prevBtn.addEventListener("click", () => {
-    slider.scrollBy({ left: -cardWidth, behavior: "smooth" });
-  });
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      outerContainer.scrollBy({ left: -cardWidth, behavior: "smooth" });
+    });
+  }
 });
 </script>
 ```
