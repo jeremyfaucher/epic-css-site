@@ -45,18 +45,23 @@
 
     You will see a folder named `my-epic-css` with and index.scss file in `src` folder, where you can customize your Epic CSS integration.
 
-## Build a light version of your CSS
+<h2 class="fs-32 lh-32">Connect Your Folder Structure to Epic CSS</h2>
 
-In your Epic CSS 11ty theme project root folder, you will see the `epicConfig.js` file. This is to configure a light build and will correspond with the Epic CSS 11ty theme folder structure.
+To configure your Epic CSS setup, you'll need to update the `epicConfig.js` file located in your Epic CSS 11ty theme project root folder. This file defines how your project connects to your Epic CSS theme and where the generated CSS file will be saved.
 
 ```js
 module.exports = {
-    // project source folder where html, nunjucks or php files are
+    // The source directory where your HTML, Nunjucks, or PHP files are located, relative to the project root.
     projectDir: './src',
-    // where epic css theme folder lives
+
+    // The directory where your Epic CSS theme files are located, relative to the project root.
     epicThemeDir: './src/my-epic-css',
-    // folder and file where project style sheet lives
-    projectStyleDir: './src/_includes/style.css'
+
+    // The output directory for your generated CSS file, relative to the project root.
+    projectStyleDir: './src/_includes',
+
+    // The name of the generated CSS file.
+    outputFileName: 'style.css'
 };
 ```
 

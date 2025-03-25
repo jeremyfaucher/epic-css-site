@@ -6,6 +6,5 @@ module.exports = {
     // The directory where your CSS file will be saved
     projectStyleDir: './src/_includes',
     // The name of the final CSS file
-    outputFileName: 'style.css',
-    theme: 'theme3', // Options: 'theme1', 'theme2', 'theme3'
+    outputFileName: 'style.css'
 };

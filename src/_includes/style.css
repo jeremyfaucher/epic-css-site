@@ -1,3 +1,171 @@
+:root {
+  --fs-12: 12px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+  --fs-29: 29px;
+  --fs-32: 32px;
+  --fs-37: 37px;
+  --fs-40: 40px;
+  --fs-50: 50px;
+  --fs-76: 76px;
+  --fs-96: 96px;
+  --fw-400: 400;
+  --fw-600: 600;
+  --lh-12: 12px;
+  --lh-14: 14px;
+  --lh-16: 16px;
+  --lh-20: 20px;
+  --lh-24: 24px;
+  --lh-29: 29px;
+  --lh-32: 32px;
+  --lh-37: 37px;
+  --lh-50: 50px;
+  --lh-76: 76px;
+  --lh-96: 96px;
+}
+
+@media (max-width: 1084px) {
+  :root {
+    --fs-12: 12px;
+    --fs-14: 12px;
+    --fs-16: 14px;
+    --fs-20: 18px;
+    --fs-24: 21px;
+    --fs-29: 24px;
+    --fs-32: 24px;
+    --fs-40: 28px;
+    --fs-37: 24px;
+    --fs-50: 32px;
+    --fs-76: 40px;
+    --fs-96: 48px;
+    --lh-12: 16px;
+    --lh-14: 18px;
+    --lh-16: 20px;
+    --lh-20: 24px;
+    --lh-24: 28px;
+    --lh-29: 32px;
+    --lh-32: 32px;
+    --lh-37: 34px;
+    --lh-40: 28px;
+    --lh-50: 38px;
+    --lh-76: 50px;
+    --lh-96: 54px;
+  }
+}
+.fs-12 {
+  font-size: var(--fs-12);
+}
+
+.fs-14 {
+  font-size: var(--fs-14);
+}
+
+.fs-16 {
+  font-size: var(--fs-16);
+}
+
+.fs-20 {
+  font-size: var(--fs-20);
+}
+
+.fs-24 {
+  font-size: var(--fs-24);
+}
+
+.fs-29 {
+  font-size: var(--fs-29);
+}
+
+.fs-32 {
+  font-size: var(--fs-32);
+}
+
+.fs-37 {
+  font-size: var(--fs-37);
+}
+
+.fs-50 {
+  font-size: var(--fs-50);
+}
+
+.fs-76 {
+  font-size: var(--fs-76);
+}
+
+.fs-96 {
+  font-size: var(--fs-96);
+}
+
+.lh-12 {
+  line-height: var(--lh-12);
+}
+
+.lh-14 {
+  line-height: var(--lh-14);
+}
+
+.lh-16 {
+  line-height: var(--lh-16);
+}
+
+.lh-20 {
+  line-height: var(--lh-20);
+}
+
+.lh-24 {
+  line-height: var(--lh-24);
+}
+
+.lh-29 {
+  line-height: var(--lh-29);
+}
+
+.lh-32 {
+  line-height: var(--lh-32);
+}
+
+.lh-37 {
+  line-height: var(--lh-37);
+}
+
+.lh-50 {
+  line-height: var(--lh-50);
+}
+
+.lh-76 {
+  line-height: var(--lh-76);
+}
+
+.lh-96 {
+  line-height: var(--lh-96);
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.lh-normal {
+  line-height: normal;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 1.125rem;
@@ -14,57 +182,11 @@ h1,
 h2,
 h3,
 h4,
+h5,
+h6,
 p,
 ul {
-  margin-top: 0;
-}
-
-h1,
-.h1 {
-  font-size: 32px;
-  line-height: 48px;
-}
-
-h2,
-.h2 {
-  font-size: 32px;
-  line-height: 32px;
-}
-
-h3,
-.h3 {
-  font-size: 28px;
-  line-height: 28px;
-}
-
-h4,
-.h4 {
-  font-size: 20px;
-  line-height: 20px;
-}
-
-h3 {
-  font-size: 28px;
-  line-height: 28px !important;
-}
-
-.lh-0 {
-  line-height: inherit;
-}
-
-ul {
-  padding: 0;
-  list-style-type: none;
-}
-
-/* Default list items */
-li {
-  margin-bottom: 0.75rem;
-}
-
-/* List items that contain <p> (Markdown block items) */
-li p {
-  margin-bottom: 0.75rem;
+  margin: 0;
 }
 
 a {
@@ -82,6 +204,10 @@ a:hover {
   text-underline-offset: 4px;
 }
 
+ul.list-none {
+  list-style-type: none;
+}
+
 main a {
   color: #ffffff;
   text-decoration: underline;
@@ -97,21 +223,57 @@ main a.clr-underline {
 main a.clr-underline:hover {
   color: #00e78f;
 }
-main p {
-  margin-top: 0px;
-  margin-bottom: 2rem;
-}
-main iframe {
-  margin-bottom: 2rem;
-}
-main h2 {
-  margin-bottom: 12px;
-}
 
+article {
+  /* Default list items */
+  /* List items that contain <p> (Markdown block items) */
+}
+article h1 {
+  font-size: var(--fs-40);
+  line-height: var(--lh-40);
+}
+article h2 {
+  font-size: var(--fs-32);
+  line-height: var(--lh-32);
+}
+article h3 {
+  font-size: var(--fs-28);
+  line-height: var(--lh-28);
+}
+article h4 {
+  font-size: var(--fs-24);
+  line-height: var(--lh-24);
+}
+article h5 {
+  font-size: var(--fs-20);
+  line-height: var(--lh-20);
+}
+article h6 {
+  font-size: var(--fs-16);
+  line-height: var(--lh-16);
+}
+article h2 {
+  margin: 64px 0 24px;
+}
+article h3 {
+  margin: 40px 0 24px;
+}
+article p {
+  line-height: 24px;
+  margin-bottom: 24px;
+  overflow-wrap: break-word;
+}
 article ul {
   padding-left: 3rem;
   list-style-type: circle;
   line-height: 2rem;
+  margin-bottom: 24px;
+}
+article li {
+  margin-bottom: 0.75rem;
+}
+article li p {
+  margin-bottom: 0.75rem;
 }
 
 hr {
@@ -171,30 +333,6 @@ pre code {
 
 .z-100 {
   z-index: 100;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-xs {
-  font-size: 11px;
-}
-
-.text-sm {
-  font-size: 12px;
-}
-
-.text-lg {
-  font-size: 1.5rem;
-}
-
-.text-xl {
-  font-size: 6rem;
-}
-
-.font-bold {
-  font-weight: 700;
 }
 
 .clr-body-bg {

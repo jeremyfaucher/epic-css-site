@@ -1,6 +1,6 @@
 <div class="wrapper">
-<div class="container">
-<h2>Utility-first example usage</h2>
+<article class="container">
+<h2 class="fs-32 lh-32">Utility-first example usage</h2>
 
 ```html
 <div class="container flex flex-col md-flex-row gap-40 items-center mb-80">
@@ -17,14 +17,14 @@
 
 More usage documentation on this to come.
 
-## Usage from CDN
+<h2>Usage from CDN</h2>
 
-<p>Alternatively, you can use <a rel="noopener noreferrer" href="https://cdn.epiccss.com/0.11.0.css" target="_blank">cdn.epiccss.com</a> to link the latest version <code>0.11.0</code>.</p>
+<p>Alternatively, you can use <a rel="noopener noreferrer" href="https://cdn.epiccss.com/0.12.0.css" target="_blank">cdn.epiccss.com</a> to link the latest version <code>0.12.0</code>.</p>
 
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.epiccss.com/pre-light.css"
+  href="https://cdn.epiccss.com/0.12.0.css"
 />
 ```
 
@@ -57,7 +57,7 @@ align-items: center;
 <div class="clr-secondary clr-secondary-bg">clr-secondary<br>clr-secondary-bg</div>
 ```
 
-<h2>Horizontal Card</h2>
+<h2>Vertical Card</h2>
 
 <div class="clr-primary-bg p-24 border-r-16" style="max-width: 344px">
     <a href="/blog/web-design/second-web-design-post/" class="flex mb-8"><img src="/assets/blog/featured-image/design2seo-11ty-theme.webp" alt="I'm baby fashion axe swag actually, retro man" width="484" height="242"></a>
@@ -87,7 +87,7 @@ align-items: center;
 </div>
 ```
 
-## Horizontal Scroll Slider
+<h2>Horizontal Scroll Slider</h2>
 </div>
 </div>
 
@@ -175,5 +175,5 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 ```
 
-</div>
+</article>
 </div>

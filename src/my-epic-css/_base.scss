@@ -17,56 +17,11 @@ h1,
 h2,
 h3,
 h4,
+h5,
+h6,
 p,
 ul {
-  margin-top: 0;
-}
-
-h1,
-.h1 {
-  font-size: $fs-h1;
-  line-height: $lh-h1;
-}
-
-h2,
-.h2 {
-  font-size: $fs-h2;
-  line-height: $fs-h2;
-}
-
-h3,
-.h3 {
-  font-size: $fs-h3;
-  line-height: $fs-h3;
-}
-
-h4,
-.h4 {
-  font-size: $fs-h4;
-  line-height: $fs-h4;
-}
-
-h3 {
-  font-size: $fs-h3;
-  line-height: $fs-h3 !important;
-}
-
-.lh-0 {
-  line-height: inherit;
-}
-
-ul {
-  padding: 0;
-  list-style-type: none;
-}
-/* Default list items */
-li {
-  margin-bottom: 0.75rem;
-}
-
-/* List items that contain <p> (Markdown block items) */
-li p {
-  margin-bottom: 0.75rem;
+  margin: 0;
 }
 
 a {
@@ -84,6 +39,10 @@ a.active,
 a:hover {
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+ul.list-none {
+  list-style-type: none;
 }
 
 main {
@@ -108,25 +67,69 @@ main {
 
   }
 
-  p {
-    margin-top: 0px;
-    margin-bottom: 2rem;
-  }
+}
 
-  iframe {
-    margin-bottom: 2rem;
+article {
+  h1 {
+    font-size: var(--fs-40);
+    line-height: var(--lh-40);
   }
 
   h2 {
-    margin-bottom: 12px;
+    font-size: var(--fs-32);
+    line-height: var(--lh-32);
   }
 
-}
+  h3 {
+    font-size: var(--fs-28);
+    line-height: var(--lh-28);
+  }
 
-article ul {
-  padding-left: 3rem;
-  list-style-type: circle;
-  line-height: 2rem;
+  h4 {
+    font-size: var(--fs-24);
+    line-height: var(--lh-24);
+  }
+
+  h5 {
+    font-size: var(--fs-20);
+    line-height: var(--lh-20);
+  }
+
+  h6 {
+    font-size: var(--fs-16);
+    line-height: var(--lh-16);
+  }
+
+  h2 {
+    margin: 64px 0 24px;
+  }
+
+  h3 {
+    margin: 40px 0 24px;
+  }
+
+  p {
+    line-height: 24px;
+    margin-bottom: 24px;
+    overflow-wrap: break-word;
+  }
+
+  ul {
+    padding-left: 3rem;
+    list-style-type: circle;
+    line-height: 2rem;
+    margin-bottom: 24px;
+  }
+  
+  /* Default list items */
+  li {
+    margin-bottom: 0.75rem;
+  }
+  
+  /* List items that contain <p> (Markdown block items) */
+  li p {
+    margin-bottom: 0.75rem;
+  }
 }
 
 hr {
@@ -158,6 +161,7 @@ pre code {
 .position-relative {
   position: relative;
 }
+
 .position-absolute {
   position: absolute;
 }

@@ -197,6 +197,163 @@ pre code {
   font-weight: 700;
 }
 
+:root {
+  --fs-12: 12px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-21: 21px;
+  --fs-24: 24px;
+  --fs-29: 29px;
+  --fs-32: 32px;
+  --fs-37: 37px;
+  --fs-50: 50px;
+  --fs-76: 76px;
+  --fs-96: 96px;
+  --fw-400: 400;
+  --fw-600: 600;
+  --lh-12: 18px;
+  --lh-14: 20px;
+  --lh-16: 24px;
+  --lh-21: 28px;
+  --lh-24: 32px;
+  --lh-29: 40px;
+  --lh-32: 44px;
+  --lh-37: 50px;
+  --lh-50: 56px;
+  --lh-76: 80px;
+  --lh-96: 104px;
+}
+
+@media (max-width: 1084px) {
+  :root {
+    --fs-12: 12px;
+    --fs-14: 12px;
+    --fs-16: 14px;
+    --fs-21: 18px;
+    --fs-24: 21px;
+    --fs-29: 24px;
+    --fs-32: 24px;
+    --fs-37: 24px;
+    --fs-50: 32px;
+    --fs-76: 40px;
+    --fs-96: 48px;
+    --lh-12: 16px;
+    --lh-14: 18px;
+    --lh-16: 20px;
+    --lh-21: 24px;
+    --lh-24: 28px;
+    --lh-29: 32px;
+    --lh-32: 32px;
+    --lh-37: 34px;
+    --lh-50: 38px;
+    --lh-76: 50px;
+    --lh-96: 54px;
+  }
+}
+.fs-12 {
+  font-size: var(--fs-12);
+}
+
+.fs-14 {
+  font-size: var(--fs-14);
+}
+
+.fs-16 {
+  font-size: var(--fs-16);
+}
+
+.fs-21 {
+  font-size: var(--fs-21);
+}
+
+.fs-24 {
+  font-size: var(--fs-24);
+}
+
+.fs-29 {
+  font-size: var(--fs-29);
+}
+
+.fs-32 {
+  font-size: var(--fs-32);
+}
+
+.fs-37 {
+  font-size: var(--fs-37);
+}
+
+.fs-50 {
+  font-size: var(--fs-50);
+}
+
+.fs-76 {
+  font-size: var(--fs-76);
+}
+
+.fs-96 {
+  font-size: var(--fs-96);
+}
+
+.lh-12 {
+  line-height: var(--lh-12);
+}
+
+.lh-14 {
+  line-height: var(--lh-14);
+}
+
+.lh-16 {
+  line-height: var(--lh-16);
+}
+
+.lh-21 {
+  line-height: var(--lh-21);
+}
+
+.lh-24 {
+  line-height: var(--lh-24);
+}
+
+.lh-29 {
+  line-height: var(--lh-29);
+}
+
+.lh-32 {
+  line-height: var(--lh-32);
+}
+
+.lh-37 {
+  line-height: var(--lh-37);
+}
+
+.lh-50 {
+  line-height: var(--lh-50);
+}
+
+.lh-76 {
+  line-height: var(--lh-76);
+}
+
+.lh-96 {
+  line-height: var(--lh-96);
+}
+
+.fw-400 {
+  font-weight: var(--fw-400);
+}
+
+.fw-600 {
+  font-weight: var(--fw-600);
+}
+
+.lh-normal {
+  line-height: normal;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
 .clr-body-bg {
   background-color: #2e106a;
 }
