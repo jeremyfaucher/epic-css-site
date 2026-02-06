@@ -1,4 +1,5 @@
 // Import the whole library or just the parts you need
+@import "_custom";
 @import "_variables";
 @import "_fontramp";
 @import "_base";
@@ -6,6 +7,8 @@
 @import "_images";
 @import "_grid";
 @import "_spacers";
+
+// @import  "../../node_modules/epic-css/src/index";
 
 // Bring in the whole library
 // @import  "../../node_modules/epic-css/src/_variables";
@@ -15,5 +18,3 @@
 // @import  "../../node_modules/epic-css/src/_images";
 // @import  "../../node_modules/epic-css/src/grid";
 // @import  "../../node_modules/epic-css/src/_spacers";
-
-// @import  "../../node_modules/epic-css/src/index";

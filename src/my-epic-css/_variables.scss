@@ -1,4 +1,5 @@
 // Define a SASS variable
+
 // Headings
 //
 // Set the heading variable
@@ -55,14 +56,14 @@ $lh-p: 1.9rem;
 // $clr-secondary-bg: #3ccbd6;
 
 // Color theme #3
-$clr-body: #ffffff;
-$clr-body-bg: #2e106a;
-$clr-primary: #00d886;
-$clr-primary-light: #00e78f;
-$clr-primary-bg: #3e1689;
-$clr-secondary: #c6c9e5;
-$clr-secondary-bg: #412677;
-$clr-white: #ffffff;
+$clr-body: #ffffff !default;
+$clr-body-bg: #2e106a !default;
+$clr-primary: #00d886 !default;
+$clr-primary-light: #00e78f !default;
+$clr-primary-bg: #3e1689 !default;
+$clr-secondary: #c6c9e5 !default;
+$clr-secondary-bg: #412677 !default;
+$clr-white: #ffffff !default;
 
 
 // borders

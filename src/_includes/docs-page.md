@@ -1,9 +1,10 @@
-<div class="left-sidebar-sm">
+<div class="grid lg-grid-sidebar-left-25">
 <div>
 <h2 class="fs-20 mb-12 items-center">Utilities</h2>
-<ul class="ml-12">
-<li><a href="/docs#flexbox" class="active" aria-current="page">Flexbox</a></li>
+<ul class="ml-12 list-none">
+<li class="mb-12"><a href="/docs#flexbox" class="active" aria-current="page">Flexbox</a></li>
 <li><a href="/docs#grid" class="" aria-current="page">Grid</a></li>
+<li><a href="/docs#colors" class="" aria-current="page">Colors</a></li>
 </ul>
 </div>
 <div >

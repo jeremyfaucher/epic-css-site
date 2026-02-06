@@ -171,22 +171,16 @@ body {
   font-size: 1.125rem;
   line-height: 1.5rem;
   color: #ffffff;
-  margin: 3px;
+  margin: 0px;
 }
 
 p {
   line-height: 1.9rem;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul {
+h1, h2, h3, h4, h5, h6, p, ul {
   margin: 0;
+  padding: 0;
 }
 
 a {
@@ -214,14 +208,14 @@ main a {
   text-underline-offset: 4px;
 }
 main a:hover {
-  color: #00d886;
+  color: #4f9eea;
   text-underline-offset: 4px;
 }
 main a.clr-underline {
-  color: #00d886;
+  color: #4f9eea;
 }
 main a.clr-underline:hover {
-  color: #00e78f;
+  color: #93c5fd;
 }
 
 article {
@@ -282,7 +276,7 @@ hr {
 }
 
 pre {
-  background: #412677;
+  background: #1c1f2c;
   padding: 1.5em 14px;
   margin-bottom: 2rem;
   overflow-x: auto;
@@ -290,10 +284,10 @@ pre {
 }
 
 code:not(pre code) {
-  background: #412677;
+  background: #1c1f2c;
   padding: 2px 8px;
   font-size: 1.2rem;
-  color: #c6c9e5;
+  color: #94a3b8;
   overflow: auto;
   border-radius: 4px;
 }
@@ -336,23 +330,23 @@ pre code {
 }
 
 .clr-body-bg {
-  background-color: #2e106a;
+  background-color: #0f172a;
 }
 
 .clr-primary {
-  color: #00d886;
+  color: #4f9eea;
 }
 
 .clr-primary-bg {
-  background: #3e1689;
+  background: #1e293b;
 }
 
 .clr-secondary {
-  color: #c6c9e5;
+  color: #94a3b8;
 }
 
 .clr-secondary-bg {
-  background: #412677;
+  background: #1c1f2c;
 }
 
 .clr-white {
@@ -591,6 +585,42 @@ article img {
   box-sizing: border-box;
 }
 
+/* Default Mobile Stacking */
+.grid-sidebar-left {
+  grid-template-columns: 1fr;
+  /* Stacks sidebar on mobile */
+}
+
+@media (min-width: 820px) {
+  .grid-1fr-4fr-md {
+    grid-template-columns: 1fr 4fr;
+  }
+}
+@media (min-width: 960px) {
+  .grid-1fr-4fr-md {
+    grid-template-columns: 1fr 4fr;
+  }
+  /* Left Sidebar (Percentage Widths) */
+  .lg-grid-sidebar-left-25 {
+    grid-template-columns: 25% 1fr;
+  }
+  .lg-grid-sidebar-left-30 {
+    grid-template-columns: 30% 1fr;
+  }
+  .lg-grid-sidebar-left-40 {
+    grid-template-columns: 40% 1fr;
+  }
+  /* Responsive Adjustments */
+}
+@media (min-width: 960px) and (max-width: 1024px) {
+  .lg-grid-sidebar-left-25,
+  .lg-grid-sidebar-left-30,
+  .lg-grid-sidebar-left-40,
+  .grid-1fr-4fr-md {
+    grid-template-columns: 1fr;
+    /* Stacks sidebar on smaller screens */
+  }
+}
 @media (min-width: 756px) {
   .left-sidebar-sm {
     display: grid;

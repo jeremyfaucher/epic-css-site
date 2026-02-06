@@ -5,24 +5,19 @@ body {
   font-size: $fs-body;
   line-height: $lh-body;
   color: $clr-body;
-  margin: 3px;
+  margin: 0px;
 }
 
 p {
   line-height: $lh-p;
 }
 
-// set base for browsers
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul {
+// set base/reset for browsers
+h1, h2, h3, h4, h5, h6, p, ul {
   margin: 0;
+  padding: 0;
 }
+
 
 a {
   text-decoration: none;

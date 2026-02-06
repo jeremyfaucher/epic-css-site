@@ -1,4 +1,6 @@
 @use "sass:math";
+@use 'sass:map';
+@use 'variables';
 
 $breakpoints: (
   "xs": 0,
@@ -202,6 +204,62 @@ $grid-fractions: (
   max-width: 1000px;
   box-sizing: border-box;
 }
+
+
+
+
+
+
+/* Default Mobile Stacking */
+.grid-sidebar-left {
+  grid-template-columns: 1fr;
+  /* Stacks sidebar on mobile */
+}
+
+
+
+
+// Start grid
+@media (min-width: map-get($breakpoints, md)) {
+  .grid-1fr-4fr-md {
+    grid-template-columns: 1fr 4fr;
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .grid-1fr-4fr-md {
+    grid-template-columns: 1fr 4fr;
+  }
+
+  /* Left Sidebar (Percentage Widths) */
+  .lg-grid-sidebar-left-25 {
+    grid-template-columns: 25% 1fr;
+  }
+
+  .lg-grid-sidebar-left-30 {
+    grid-template-columns: 30% 1fr;
+  }
+
+  .lg-grid-sidebar-left-40 {
+    grid-template-columns: 40% 1fr;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 1024px) {
+
+    .lg-grid-sidebar-left-25,
+    .lg-grid-sidebar-left-30,
+    .lg-grid-sidebar-left-40,
+    .grid-1fr-4fr-md {
+      grid-template-columns: 1fr;
+      /* Stacks sidebar on smaller screens */
+    }
+  }
+
+
+}
+
+
 
 @media (min-width: 756px) {
   .left-sidebar-sm {
