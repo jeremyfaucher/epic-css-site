@@ -1,5 +1,10 @@
 [build]
+  command = "npm run build"
+  publish = "_site"
   functions = "functions"
+
+[build.environment]
+  NODE_VERSION = "22"
 
 [[redirects]]
   from = "jovial-goldstine-83c0bc.netlify.app/*"
