@@ -1,57 +1,55 @@
-<h2>Clone and run the Epic CSS 11ty theme</h2>
+# Epic CSS documentation and demo site
 
-1. Make a project directory and navigate to it if you don't already have one.
+This Eleventy project is the documentation/demo site. It shares starter ancestry with the blog theme (even the same package name), but its Sass ownership differs. See the [workspace map](../README.md) for the complete component relationships and release workflow.
 
-    ```sh
-    mkdir my-blog-name
-    cd my-blog-project
-    ```
-2. From your new directory folder clone the [Epic CSS 11ty Theme](https://github.com/jeremyfaucher/epic-css-11ty-theme) from GitHub.
+## Source map
 
-    ```sh
-    git clone https://github.com/jeremyfaucher/epic-css-11ty-theme.git
-    cd epic-css-11ty-theme
-    ```
+- [src/my-epic-css/index.scss](src/my-epic-css/index.scss) imports this site's local `_custom`, `_variables`, `_fontramp`, `_base`, `_colors`, `_images`, `_grid` and `_spacers` partials. Updating the npm library does not replace these local styles.
+- Installed `epic-css` supplies `epic-build.js` and `epic-light.js` via npm scripts, not the active Sass library imports. It declares `^0.14.0`; the installed copy reports `0.14.0`.
+- [src/_includes/docs-page.md](src/_includes/docs-page.md) supplies the main utility documentation through `src/docs/index.html`.
+- `doc-home-page.md`, `doc-npm.md`, and `doc-11ty-theme.md` are visitor-facing content includes. They are separate from these maintainer READMEs and may still contain older workflow claims; verify them against the actual scripts before reusing commands.
+- `.eleventy.js` reads `src` and writes `_site`. `src/_includes/base.njk` embeds `style.css` after CleanCSS minification. `src/_data/site.json` still identifies Design 2 SEO; the checkout does not establish the deployed domain.
 
-3. Install dependencies
+## Develop and build
 
-    ```sh
-    npm install
-    ```
-4. Run Eleventy to start the server and follow to the localhost URL http://localhost:8080/.
+From this directory:
 
-    ```sh
-    npm run start
-    ```
-
-    The `npm run start` command will fire up `eleventy --serve` and watch for any changes to your files. Changes will be auto updated in the browser for fast iterating.
-
-    You will see a folder named `my-epic-css` with and index.scss file in `src` folder, where you can customize your Epic CSS integration.
-
-## Build a light version of your CSS
-
-In your Epic CSS 11ty theme project root folder, you will see the `epicConfig.js` file. This is to configure a light build and will correspond with the Epic CSS 11ty theme folder structure.
-
-```js
-module.exports = {
-    // project source folder where html, nunjucks or php files are
-    projectDir: './src',
-    // where epic css theme folder lives
-    epicThemeDir: './src/my-epic-css',
-    // folder and file where project style sheet lives
-    projectStyleDir: './src/_includes/style.css'
-};
+```sh
+npm ci
+npm start
 ```
 
-In the package.json file you will see the `epic-build` and `epic-light` commands. These are to update the pre-light.css file, and output a light version of the style.css file.
+Follow the URL printed by Eleventy, normally `http://localhost:8080`. `start` runs Eleventy serve and Sass watch in parallel. Sass writes the full CSS include; the prestart hook compiles CSS before serving.
 
-```js
-"epic-build": "node ./node_modules/epic-css/src/epic-build.js",
-"epic-light": "node ./node_modules/epic-css/src/epic-light.js"
+Stop watch before building filtered production CSS, then run each command to completion:
+
+```sh
+npm run build
 ```
 
-3. Run `npm run epic-build` to update the pre-light.css file to your project, that the `epic-light` command can use to compare to your project file results.
+`epic-build` compiles local Sass to `src/my-epic-css/pre-light.css` and copies full CSS to `src/_includes/style.css`. `epic-light` scans raw `.html`, `.njk`, `.md` under `src`, then overwrites the include with filtered CSS. `build-production` only runs Eleventy. See [filter implementation and limitations](../README.md#what-pre-light-actually-does); this is not exact dead-code removal, and dynamic classes require special care. There is no supported safelist option.
 
-4. Then run `npm run epic-light` to search your project files from the `projectDir` and filter out the found classes against pre-light.css class, then build a lightened version of your project style.css.
+[epicConfig.js](epicConfig.js) correctly separates `projectStyleDir: './src/_includes'` from `outputFileName: 'style.css'`; the former is not a full filename. The scanner does not support PHP despite the config comment. `epic-build` always copies to `style.css`.
 
-This will take the current Epic CSS UI library from 1426 lines of CSS down to only 303 lines of CSS for the Epic CSS 11ty theme. This gives you access to all the UI library styles during development and publishing only the styles you use in your project for production.
+## Palette and future teaching examples
+
+Edit [src/my-epic-css/_custom.scss](src/my-epic-css/_custom.scss), imported before `_variables.scss`. Its active palette uses white body text, `#0f172a` body background, and `#4f9eea` primary blue. Commented alternatives include teal/indigo and light blue/neutral palettes. Keep one complete set of eight color assignments active. The local color defaults have `!default`, so custom overrides win. Commenting out all overrides returns to the purple/green defaults in `_variables.scss`.
+
+The [starter palette table](../epic-css-11ty-theme/README.md#palette-ownership) also describes this site's color variables: body/base text, `.clr-body-bg`, `.clr-primary`, `.clr-primary-bg`, `.clr-secondary`, `.clr-secondary-bg`, `.clr-white`, and the primary-light underline hover color. There is no standalone `.clr-body` or `.clr-primary-light`, shade generator, or runtime palette switch. Values become concrete CSS colors at Sass compilation.
+
+For a small change: edit `_custom.scss`, compile once and preview with `npm start`; inspect text/background, links, hover and code blocks. Then stop watch, run `npm run build`, and inspect the filtered site. A site-only palette change requires no npm release. Shared Sass changes must be intentionally ported to the library and tested in consumers; no automatic synchronization exists.
+
+Current `/docs/` has Flexbox and grid text/code and live grid markup. The `#colors` section now contains live primary/secondary callouts, a utility table, and a palette switching lesson. Future teaching work could add side-by-side palette swatches, examples of the existing color classes, and measured text/background contrast. A runtime theme selector and measured contrast comparisons remain future work.
+
+## Release, hosting and validation
+
+This repository has no automated publish/deploy workflow. `netlify.toml` lacks build command and publish directory; it only specifies a functions directory and a historical redirect. Verify the hosting settings independently. `_site` is the local output; a filtered hosted build needs all three production commands above and development dependencies.
+
+Local validation passed: Sass compilation, actual installed `epic-build` and `epic-light`, then Eleventy to an isolated output directory (6 pages, 13 copied files). Generated include/pre-light files were restored after validation. Dependencies were already installed; a fresh `npm ci`, browser visual review, npm registry state, and remote deployment were not tested. No npm publication or deployment was performed.
+
+
+## Repeatable build and validation
+
+`npm start` now compiles Sass once before launching the watchers. `npm run build` compiles full Sass, runs the installed class filter, and writes Eleventy pages/assets to `_site`. `npm run validate` performs that same filtered build in a fresh `.epic-check-*` directory, checks output files, restores the previous CSS include and pre-light bytes in a finally block, and removes temporary output. Stop watchers first and run one build/validation at a time.
+
+The previous temporary-directory EPERM is resolved in this runner by rendering output paths first and creating shared parents sequentially before Eleventy's concurrent writes. Both the starter (15 pages) and site (6 pages) now pass fresh filtered builds. This supersedes the earlier audit limitation; the legacy raw Eleventy command is unchanged. `build-production` remains Eleventy-only. `npm ci` and browser visual review have not been performed during this change.

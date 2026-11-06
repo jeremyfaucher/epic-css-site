@@ -9,7 +9,7 @@
 </div>
 <div >
 <article>
-<h1 class="fs-32 lh-32 mb-12" id="flexbox">Introduction</h1>
+<h1 class="fs-32 lh-32 mb-12" id="introduction">Introduction</h1>
 <p class="mb-0">Get started with Epic, an intuitive UI library that is easy to use and manage.</p>
 <h2 class="fs-24 lh-24 mb-12" id="flexbox">Flexbox</h2>
 <p>Quickly manage the layout, alignment, and sizing of grid columns, navigation, components, and more with a full suite of responsive flexbox utilities.</p>
@@ -86,5 +86,46 @@
 </div>
 
 
+<h2 class="fs-24 lh-24 mb-12" id="colors">Colors and palettes</h2>
+<p>Use semantic colors so a palette change updates the same components throughout your site. Text and background utilities are separate: pair them deliberately and check that the text remains readable.</p>
+<div class="clr-primary-bg p-24 mb-16">
+  <p class="clr-primary">Primary text on the primary background.</p>
+  <p>This paragraph inherits the body text color.</p>
+</div>
+<div class="clr-secondary-bg p-24 mb-16">
+  <p class="clr-secondary">Secondary text on the secondary background.</p>
+  <p class="clr-white">White text stays white when the palette changes.</p>
+</div>
+<pre><code>&lt;div class="clr-primary-bg p-24"&gt;
+  &lt;p class="clr-primary"&gt;Primary text&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="clr-secondary-bg p-24"&gt;
+  &lt;p class="clr-secondary"&gt;Secondary text&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+<table>
+<thead><tr><th>Utility</th><th>Sass palette value</th><th>Changes</th></tr></thead>
+<tbody>
+<tr><td><code>clr-body-bg</code></td><td><code>$clr-body-bg</code></td><td>Background color</td></tr>
+<tr><td><code>clr-primary</code></td><td><code>$clr-primary</code></td><td>Text color</td></tr>
+<tr><td><code>clr-primary-bg</code></td><td><code>$clr-primary-bg</code></td><td>Background</td></tr>
+<tr><td><code>clr-secondary</code></td><td><code>$clr-secondary</code></td><td>Text color</td></tr>
+<tr><td><code>clr-secondary-bg</code></td><td><code>$clr-secondary-bg</code></td><td>Background</td></tr>
+<tr><td><code>clr-white</code></td><td><code>$clr-white</code></td><td>Text color</td></tr>
+</tbody>
+</table>
+<h3 class="fs-20 mb-12">Switch a palette</h3>
+<p>In the Eleventy theme or this site's <code>src/my-epic-css/_custom.scss</code>, comment out the eight assignments in the active palette, then uncomment the eight assignments in another palette. Keep one complete palette active. Sass compiles the chosen values into CSS; this does not create a runtime light/dark switch.</p>
+<pre><code>// Example light palette
+$clr-body: #1e1e1e;
+$clr-body-bg: #f4f6fa;
+$clr-primary: #0067b8;
+$clr-primary-light: #4f9eea;
+$clr-primary-bg: #dceeff;
+$clr-secondary: #7a7574;
+$clr-secondary-bg: #ececec;
+$clr-white: #ffffff;</code></pre>
+<p><code>$clr-body</code> sets the base text color. <code>$clr-primary-light</code> sets the accent on <code>main a.clr-underline:hover</code>. There are no standalone <code>clr-body</code> or <code>clr-primary-light</code> utilities. Changing a palette updates existing declarations, rather than generating new color class names.</p>
+<p>Run <code>npm start</code> to preview palette changes. Check text, links, hover states, code blocks, and both callouts above. White text can disappear on a light surface: keep it on a sufficiently dark background or use an appropriate semantic text color. The example palettes are starting points; their names do not guarantee contrast for every combination.</p>
+<p>Stop the development server, then run <code>npm run build</code> to compile Sass, filter CSS using literal source classes, and generate the production site. Run <code>npm run validate</code> for the same check with temporary output and restored CSS files. Always preview important pages after filtering, especially if class names are assembled dynamically.</p>
 </article>
 </div>
