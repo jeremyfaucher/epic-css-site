@@ -43,9 +43,9 @@ Current `/docs/` has Flexbox and grid text/code and live grid markup. The `#colo
 
 ## Release, hosting and validation
 
-This repository has no automated publish/deploy workflow. `netlify.toml` lacks build command and publish directory; it only specifies a functions directory and a historical redirect. Verify the hosting settings independently. `_site` is the local output; a filtered hosted build needs all three production commands above and development dependencies.
+Netlify production is confirmed as `cdn-epic-css`, serving `https://epiccss.com/`, linked to this repository's `main`. Pushing main triggers deployment. `netlify.toml` now selects Node 22, `npm run build` and `_site`. After deployment, run `npm run verify:production` to check the exact published commit, five routes, the lesson, and all eight palette values. Follow [RELEASING.md](RELEASING.md): site → verify production → npm code/docs release → starter dependency/docs update.
 
-Local validation passed: Sass compilation, actual installed `epic-build` and `epic-light`, then Eleventy to an isolated output directory (6 pages, 13 copied files). Generated include/pre-light files were restored after validation. Dependencies were already installed; a fresh `npm ci`, browser visual review, npm registry state, and remote deployment were not tested. No npm publication or deployment was performed.
+Local validation passed: Sass compilation, actual installed `epic-build` and `epic-light`, then Eleventy to an isolated output directory (6 pages, 13 copied files). Generated include/pre-light files were restored after validation. A later isolated `npm ci`, validation and production build passed. Site commit `2a57d63` was deployed and verified on production. Browser visual review has not been performed; npm publication is blocked by direct public-registry TLS access.
 
 
 ## Repeatable build and validation
