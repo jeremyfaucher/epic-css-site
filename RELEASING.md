@@ -21,4 +21,20 @@ The CDN is a separate release surface. No verified CDN deployment configuration 
 
 Production is the existing Netlify site `cdn-epic-css` (ID `76ae57fc-00f3-460c-bf44-f2cc8458f1c4`), linked to this repository's `main`, serving `https://epiccss.com/`. The confusing historical site name does not mean it is only the CDN. The Git push trigger was verified by deploying commit `2a57d63` and checking the published production revision and live content. Direct Netlify CLI authentication is not needed for that Git-driven path.
 
-This machine uses `https://packagefeedproxy.microsoft.io/npm/` for npm installs. Explicit requests to the public registry currently fail TLS negotiation in both Node and Windows HTTP clients. Package publishing must target `https://registry.npmjs.org/`, never the install proxy. Do not disable TLS verification to bypass this. Resolve public-registry access and authenticate the npm publisher before publishing the prepared candidate; recheck the latest version and account at that point.
+This machine uses `https://packagefeedproxy.microsoft.io/npm/` for npm installs. Explicit requests to the public registry currently fail TLS negotiation in both Node and Windows HTTP clients. Package publishing must target `https://registry.npmjs.org/`, never the install proxy. Do not disable TLS verification to bypass this. The user has also confirmed an IT/admin protection page blocking npm content, so this is an organizational access restriction. Stop login/publication attempts until IT authorizes registry access or provides an approved publishing environment; do not try alternate routing or proxies. Once approved, authenticate the npm publisher before publishing the prepared candidate; recheck the latest version and account at that point.
+
+## Prepared 0.14.1 handoff
+
+The reviewed library candidate is commit `d4578bb` on `release/palette-0.14.1` in `jeremyfaucher/epic-css`. Its package has an explicit public-registry publish target and a prepublish test. The local aggregate folder contains `.release-artifacts/epic-css-0.14.1.tgz` and its package manifest/integrity. The packed candidate preserved the custom primary color and passed all 15 starter pages using clean locked dependencies. A fresh registry 0.14.0 install was checked first and reproduced the override bug.
+
+Only after IT-approved registry access is available, or in an IT-approved publishing environment, the remaining publishing steps are:
+
+```sh
+npm ping --registry=https://registry.npmjs.org/
+npm login --registry=https://registry.npmjs.org/
+npm whoami --registry=https://registry.npmjs.org/
+```
+
+If ping still fails or an admin block appears, stop and ask IT for approved access; login alone cannot repair the restriction. Do not paste credentials into chat. Before publishing, re-run the site's production gate, verify the intended publisher, and query the public registry to confirm 0.14.1 is still unused. Then publish the reviewed tarball explicitly to that registry, or reproduce/test/pack it from the clean candidate commit. Verify the published version and integrity before tagging the release or updating consumers.
+
+After verified publication, in each consumer run `npm install epic-css@0.14.1 --save-exact`, review manifest/lockfile changes, run `npm run validate`, then commit/push. For the starter, additionally preview its palette and affected pages; for the site, re-run the production gate after its deployment. Replace the docs' pending-publication note with the verified release status. Do not change consumer manifests now to a version that has not been published.

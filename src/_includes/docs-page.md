@@ -114,6 +114,7 @@
 </tbody>
 </table>
 <h3 class="fs-20 mb-12">Switch a palette</h3>
+<p>Overrides depend on the library declaring fallback colors with <code>!default</code>. This site's local Sass supports that. The published npm <code>0.14.0</code> library overwrites earlier assignments; the prepared <code>0.14.1</code> patch fixes this and is awaiting publication. A fresh starter install needs that fixed release before these overrides will work.</p>
 <p>In the Eleventy theme or this site's <code>src/my-epic-css/_custom.scss</code>, comment out the eight assignments in the active palette, then uncomment the eight assignments in another palette. Keep one complete palette active. Sass compiles the chosen values into CSS; this does not create a runtime light/dark switch.</p>
 <pre><code>// Example light palette
 $clr-body: #1e1e1e;
