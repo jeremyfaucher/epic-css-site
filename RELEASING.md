@@ -1,40 +1,46 @@
 # Site-first release workflow
 
-Develop shared styles and documentation here first. The order is:
+1. Develop and validate the Epic CSS site with `npm run validate`, review/commit/push its `main`.
+2. Netlify builds with Node 22, `npm run build`, output `_site`. After deployment, run `npm run verify:production`: it checks the exact published site HEAD, five live routes, the colors lesson and all eight palette values. Visually review changed layouts/interactions too.
+3. Port verified shared source and relevant usage docs into `jeremyfaucher/epic-css`. Keep consumer palettes separate from library defaults. Run package tests, inspect the pack contents, and test a candidate in a disposable consumer. Commit/push only reviewed source; preserve unrelated working edits.
+4. The **user creates/publishes the GitHub release** for the reviewed package version. The assistant does not create another release or run a local publish as part of consumer updates.
+5. The library's `.github/workflows/npm-publish.yml` runs Node 22 tests, then publishes using npm 11 and OIDC trusted publishing. Check both jobs succeeded and confirm the published version/artifact.
+6. Install the actual published version in the starter and site through the approved configured registry, review manifest/lockfile changes, verify palette overrides and the full filtered build, then commit/push. Do not substitute a local candidate for published-artifact verification. Re-run the site's production gate after its deployment.
 
-1. Run `npm run validate`, review the diff, commit, and push this site's `main`.
-2. Deploy this repository to the existing Epic CSS Netlify site. `netlify.toml` specifies Node 22, `npm run build`, and `_site`. A Git push only deploys if the repository is connected to that Netlify site; otherwise use its authenticated deployment controls. Do not create a replacement site or guess a site ID.
-3. Run `npm run verify:production` after Netlify reports the deployment ready. This checks the exact site HEAD against Netlify's published production revision, five live routes, the colors lesson, and all eight compiled palette values. It exits nonzero when production is still on an older commit. For a specific revision, pass its full SHA after `--`. Do not advance the package release on the basis of a successful local build alone. Also visually review changed layouts and interactions.
-4. Port the verified shared Sass or relevant documentation into the `epic-css` npm repository. Site-only content does not need to be copied wholesale into the package README. Include a concise explanation of new utilities/palette behavior and consumer build commands where applicable. Inspect `npm pack --dry-run` and test a packed candidate in a disposable starter before publishing.
-5. Check the registry's current version and authenticated publisher, choose the next unused version appropriate to the change, and publish only a reviewed package tree. Never publish the mixed working directory just because its version looks newer. The local library currently includes pre-existing changes beyond the palette fix; review or isolate those before release.
-6. Update the starter's dependency and lockfile to the released version, propagate relevant usage documentation/examples, then run its validation and preview before committing/pushing it. The starter already has the build runner; it does not yet consume a newly published palette fix.
+## Trusted publisher configuration
 
-Use `npm start` for development; stop watchers before build/release checks. `npm run validate` restores existing generated CSS, while `npm run build` produces deployable `_site` output and intentionally updates generated CSS. The historical `build-production` command only runs Eleventy.
+The npm trusted publisher must match exactly:
 
-From the local aggregate folder, `node validate.cjs` validates the library, site, and starter. That folder is outside these repositories; component commands are the portable interface.
+- GitHub owner: `jeremyfaucher`
+- Repository: `epic-css`
+- Workflow filename: `npm-publish.yml`
+- Permission: **Allow npm publish**, not staging-only permission
 
-The scanner filters literal source classes using substring matches, not complete selector analysis. Preview responsive layouts and dynamically assembled classes after filtering. The palette is selected at Sass compile time, not by a browser theme toggle.
+The workflow triggers on `release: published`, grants `contents: read` and `id-token: write`, runs `npm ci` and `npm test`, then installs npm 11 and runs `npm publish`. The initial staging-only permission caused E403; allowing npm publish resolved it. The user confirmed successful publication of 0.14.1. No local npm token/login or new package release is needed merely to update consumers.
 
-The CDN is a separate release surface. No verified CDN deployment configuration exists here; do not claim an npm release updates CDN files automatically.
+## Consumer update commands
 
-## Confirmed hosting and current access
-
-Production is the existing Netlify site `cdn-epic-css` (ID `76ae57fc-00f3-460c-bf44-f2cc8458f1c4`), linked to this repository's `main`, serving `https://epiccss.com/`. The confusing historical site name does not mean it is only the CDN. The Git push trigger was verified by deploying commit `2a57d63` and checking the published production revision and live content. Direct Netlify CLI authentication is not needed for that Git-driven path.
-
-This machine uses `https://packagefeedproxy.microsoft.io/npm/` for npm installs. Explicit requests to the public registry currently fail TLS negotiation in both Node and Windows HTTP clients. Package publishing must target `https://registry.npmjs.org/`, never the install proxy. Do not disable TLS verification to bypass this. The user has also confirmed an IT/admin protection page blocking npm content, so this is an organizational access restriction. Stop login/publication attempts until IT authorizes registry access or provides an approved publishing environment; do not try alternate routing or proxies. Once approved, authenticate the npm publisher before publishing the prepared candidate; recheck the latest version and account at that point.
-
-## Prepared 0.14.1 handoff
-
-The reviewed library candidate is commit `d4578bb` on `release/palette-0.14.1` in `jeremyfaucher/epic-css`. Its package has an explicit public-registry publish target and a prepublish test. The local aggregate folder contains `.release-artifacts/epic-css-0.14.1.tgz` and its package manifest/integrity. The packed candidate preserved the custom primary color and passed all 15 starter pages using clean locked dependencies. A fresh registry 0.14.0 install was checked first and reproduced the override bug.
-
-Only after IT-approved registry access is available, or in an IT-approved publishing environment, the remaining publishing steps are:
+Once the approved registry exposes the released version, run inside each consumer:
 
 ```sh
-npm ping --registry=https://registry.npmjs.org/
-npm login --registry=https://registry.npmjs.org/
-npm whoami --registry=https://registry.npmjs.org/
+npm install epic-css@0.14.1 --save-exact
+node -p "require('./node_modules/epic-css/package.json').version"
+node node_modules/epic-css/test/palette.cjs
+npm run validate
 ```
 
-If ping still fails or an admin block appears, stop and ask IT for approved access; login alone cannot repair the restriction. Do not paste credentials into chat. Before publishing, re-run the site's production gate, verify the intended publisher, and query the public registry to confirm 0.14.1 is still unused. Then publish the reviewed tarball explicitly to that registry, or reproduce/test/pack it from the clean candidate commit. Verify the published version and integrity before tagging the release or updating consumers.
+Also verify the starter's compiled `.clr-primary` is `#4f9eea` and `.clr-body-bg` is `#0f172a`, then preview affected pages. Review the lockfile's version, resolved artifact and integrity before committing. Keep existing user content and generated CSS edits out of the upgrade commit. The regression command tests library defaults/overrides; the consumer build separately checks its integration.
 
-After verified publication, in each consumer run `npm install epic-css@0.14.1 --save-exact`, review manifest/lockfile changes, run `npm run validate`, then commit/push. For the starter, additionally preview its palette and affected pages; for the site, re-run the production gate after its deployment. Replace the docs' pending-publication note with the verified release status. Do not change consumer manifests now to a version that has not been published.
+## Approved registry availability
+
+This machine installs through `https://packagefeedproxy.microsoft.io/npm/`. Direct npm registry access is blocked by organizational policy; do not bypass it, weaken TLS, or attempt alternative routing. The configured proxy currently returns E404/ETARGET for `epic-css@0.14.1`, including with a fresh local metadata cache. Ask the registry administrators to expose/refresh the already published version, then repeat the consumer update. A browser npm login will not fix mirror availability. Do not fabricate a lockfile or pin an unavailable artifact.
+
+The earlier locally packed 0.14.1 candidate passed all 15 starter pages and palette tests. That remains candidate validation, not a test of the final newly published artifact. The actual starter upgrade is pending registry availability; its manifest and lockfile remain unchanged after the failed installation.
+
+## Hosting and daily commands
+
+Production is Netlify site `cdn-epic-css`, ID `76ae57fc-00f3-460c-bf44-f2cc8458f1c4`, linked to the site repository's `main`, serving `https://epiccss.com/`. Git-driven deployment and the production gate have been verified. The historical site name does not mean it is only a CDN. Direct Netlify CLI login is unnecessary for this path.
+
+Use `npm start` for development, `npm run build` for Sass/filter/Eleventy, and `npm run validate` for temporary output with restored CSS. Stop watchers first. `build-production` is the legacy Eleventy-only command. The aggregate `node validate.cjs` is a local convenience outside these repositories.
+
+The class filter uses literal source attributes and substring matching; preview dynamic classes and responsive layouts after filtering. Palettes are compile-time Sass values. The CDN remains a separate release surface with no verified upload configuration here.
