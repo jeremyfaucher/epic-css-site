@@ -6,7 +6,7 @@ const postcss = require('postcss');
 
 module.exports = function checkDocs(output, libraryCss) {
   if (libraryCss) assert.ok(!libraryCss.includes('.docs-'), 'Docs presentation leaked into the portable library stylesheet');
-  const topics = ['overview', 'installation', 'flexbox', 'grid', 'colors'];
+  const topics = ['overview', 'installation', 'flexbox', 'grid', 'colors', 'typography'];
   assert.ok(fs.existsSync(path.join(output, 'assets/js/docs.js')), 'Missing docs copy/legacy-link script');
   let examples = 0;
   for (const topic of topics) {
@@ -19,7 +19,7 @@ module.exports = function checkDocs(output, libraryCss) {
     assert.equal($('nav [aria-current="page"]').attr('href'), route, route + ': wrong active link');
     const ids = $('[id]').map((_, el) => $(el).attr('id')).get();
     assert.equal(new Set(ids).size, ids.length, route + ': duplicate IDs');
-    for (const other of ['flexbox', 'grid', 'colors'].filter(other => other !== topic)) {
+    for (const other of ['flexbox', 'grid', 'colors', 'typography'].filter(other => other !== topic)) {
       assert.equal($('article h1#' + other + ', article h2#' + other).length, 0, route + ': contains another topic');
     }
     $('nav[aria-label="Documentation"] a').each((_, link) => {
@@ -50,7 +50,7 @@ module.exports = function checkDocs(output, libraryCss) {
     });
   }
   assert.ok(examples >= 8, 'Expected live examples across the three utility topics');
-  console.log('Docs checks: five isolated pages, active navigation, matching preview/code, ' + examples + ' filtered examples.');
+  console.log('Docs checks: six isolated pages, active navigation, matching preview/code, ' + examples + ' filtered examples.');
 };
 
 if (require.main === module) module.exports(path.resolve(process.argv[2] || '_site'));

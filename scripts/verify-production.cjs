@@ -32,7 +32,7 @@ async function main() {
   assert.equal(site.published_deploy.context, 'production');
   assert.equal(site.published_deploy.commit_ref, commit, 'Production is not on the expected site commit');
 
-  const routes = ['/', '/docs/', '/docs/installation/', '/docs/flexbox/', '/docs/grid/', '/docs/colors/', '/npm-custom-install/', '/11ty-theme/', '/assets/favicon.png'];
+  const routes = ['/', '/docs/', '/docs/installation/', '/docs/flexbox/', '/docs/grid/', '/docs/colors/', '/docs/typography/', '/npm-custom-install/', '/11ty-theme/', '/assets/favicon.png'];
   let docs;
   let home;
   for (const route of routes) {
@@ -46,6 +46,10 @@ async function main() {
       assert.equal(page('nav [aria-current="page"]').attr('href'), route);
       assert.equal(page('article h1').length, 1, route + ': topic isolation');
       if (route === '/docs/colors/') docs = page;
+      if (route === '/docs/typography/') {
+        assert.deepEqual(page('[data-utility="fs-32"] td').map((_, cell) => page(cell).text()).get(), ['fs-32', '32px', '24px']);
+        assert.ok(page('.docs-example-preview .fw-700').length, 'Typography preview is missing');
+      }
     }
   }
   assert.equal(docs('#colors').length, 1, 'Missing or duplicate colors section');
@@ -62,6 +66,6 @@ async function main() {
     ['.clr-primary-bg', 'background'], ['.clr-secondary', 'color'],
     ['.clr-secondary-bg', 'background'], ['.clr-white', 'color'],
   ]) assert.equal(value(live, selector, property), value(local, selector, property), `Production differs: ${selector}`);
-  console.log(`Verified production ${commit}: nine routes, isolated docs navigation and all eight palette values.`);
+  console.log(`Verified production ${commit}: ${routes.length} routes, isolated docs navigation and all eight palette values.`);
 }
 main().catch(error => { console.error(error.message); process.exitCode = 1; });

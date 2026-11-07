@@ -1,0 +1,71 @@
+---
+layout: docs.njk
+tag: docs-page
+title: Typography
+description: Use the existing Epic CSS font-size, line-height, weight and text utilities.
+docTopic: typography
+---
+{% from "docs-example.njk" import example %}
+<h1 id="typography">Typography</h1>
+<p class="docs-lead">Build a readable hierarchy with the font ramp. Choose a font-size class, pair it with a line height, then set a weight where needed.</p>
+<h2 id="compose">Compose a type hierarchy</h2>
+<p>The preview below uses only existing typography, spacing, and color utilities. The markup is the same text you can copy.</p>
+{% set markup %}<div>
+  <p class="fs-14 lh-20 fw-600 clr-primary mb-8">EPIC CSS</p>
+  <h3 class="fs-32 lh-37 fw-700 m-0 mb-12">A clear heading for your next idea</h3>
+  <p class="fs-16 lh-24 m-0">Pair a stronger heading with comfortable body text. Change the palette without changing your type classes.</p>
+</div>{% endset %}
+{{ example(markup, "Typography hierarchy") }}
+<p>Use HTML heading levels for the structure of your content. A font-size utility changes appearance; it does not change the meaning of the element.</p>
+<h2 id="font-sizes">Font sizes</h2>
+<p>The ramp uses CSS custom properties. At <code>{{ typography.query }}</code>, their values change automatically. The class names describe the wide-screen scale, not a fixed size at every viewport. Resize the page to see the same classes adapt.</p>
+<table><thead><tr><th>Class</th><th>Default scale</th><th>At {{ typography.query }}</th></tr></thead><tbody>
+{% for row in typography.sizes %}
+<tr data-utility="{{ row.name }}"><td><code>{{ row.name }}</code></td><td>{{ row.wide }}</td><td>{{ row.narrow }}</td></tr>
+{% endfor %}
+</tbody></table>
+<p>This table is generated from the full compiled utility stylesheet. The current ramp also defines <code>--fs-40</code> for base styles, but does not emit an <code>fs-40</code> utility. There are no breakpoint-prefixed font-size utilities in this version; the existing classes respond through the shared variables.</p>
+<h2 id="line-heights">Line heights</h2>
+<p>Choose line height separately from size. A smaller size can still need generous line spacing, especially for paragraphs.</p>
+{% set markup %}<div class="grid gap-24">
+  <p class="fs-16 lh-24 m-0">This paragraph uses the same font size with a more compact line height. Use enough text to see how the lines sit together as the container gets narrower.</p>
+  <p class="fs-16 lh-32 m-0">This paragraph keeps the same font size but gives its lines more room. Compare the two settings at both wide and narrow viewport widths.</p>
+</div>{% endset %}
+{{ example(markup, "Comparing line heights") }}
+<table><thead><tr><th>Class</th><th>Default scale</th><th>At {{ typography.query }}</th></tr></thead><tbody>
+{% for row in typography.heights %}
+<tr data-utility="{{ row.name }}"><td><code>{{ row.name }}</code></td><td>{{ row.wide }}</td><td>{{ row.narrow }}</td></tr>
+{% endfor %}
+<tr><td><code>lh-normal</code></td><td colspan="2">Browser/font-dependent normal line height</td></tr>
+</tbody></table>
+<p>There is no <code>lh-40</code> utility. In the current base styles, some heading declarations reference tokens without a wide-screen default, including <code>--lh-40</code>, <code>--fs-28</code>, and <code>--lh-28</code>. Use explicit existing utilities for predictable examples; this documentation does not add missing tokens or classes.</p>
+<h2 id="weights">Font weights</h2>
+{% set markup %}<div class="flex flex-col gap-12">
+  <p class="fs-20 lh-29 fw-400 m-0">Regular — comfortable everyday text</p>
+  <p class="fs-20 lh-29 fw-600 m-0">Semibold — a little more emphasis</p>
+  <p class="fs-20 lh-29 fw-700 m-0">Bold — a stronger visual anchor</p>
+</div>{% endset %}
+{{ example(markup, "Font weight comparison") }}
+<table><thead><tr><th>Class</th><th>Weight</th></tr></thead><tbody>
+{% for row in typography.weights %}
+<tr data-utility="{{ row.name }}"><td><code>{{ row.name }}</code></td><td>{{ row.wide }}</td></tr>
+{% endfor %}
+</tbody></table>
+<p>The selected font determines which weight faces are available and whether the browser synthesizes a weight. The ramp itself does not download a webfont.</p>
+<h2 id="text-helpers">Text helpers</h2>
+{% set markup %}<p class="fs-20 lh-29 text-center m-0">A centered line with a <span class="text-nowrap">short unbroken label</span>.</p>{% endset %}
+{{ example(markup, "Alignment and wrapping helpers") }}
+<p><code>text-center</code> centers inline content. <code>text-nowrap</code> prevents wrapping, so keep it for short labels or provide an overflow treatment. No additional text-alignment or responsive text-helper classes are assumed here.</p>
+<h2 id="base-and-customization">Base styles and customization</h2>
+<p>The base partial supplies the system font stack, body text, headings, and paragraph styling. Its default body size is <code>1.125rem</code>. The font-ramp partial supplies the utilities and their variables. You can import them selectively, but importing the ramp alone does not add the base element styles.</p>
+<p>To adjust an existing size token, add CSS overrides after the library import. Define both viewport cases if you want to preserve a responsive step. Unlike the palette defaults, the ramp's Sass assignments are not currently optional defaults, so assigning those Sass variables before import is not an override mechanism.</p>
+<pre><code class="language-scss">// In your Sass entry, after your chosen library imports:
+:root {
+  --fs-32: 36px;
+}
+@media (max-width: 1084px) {
+  :root {
+    --fs-32: 26px;
+  }
+}</code></pre>
+<p>This changes what <code>fs-32</code> resolves to; it does not generate a new utility. For palette overrides and import order, see <a href="/docs/colors/">Colors</a> and <a href="/docs/installation/#partial-imports">selective imports</a>.</p>

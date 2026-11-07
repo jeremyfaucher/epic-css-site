@@ -1,0 +1,10 @@
+const assert = require('node:assert/strict');
+const data = require('../src/_data/typography')();
+assert.equal(data.query, '(max-width: 1084px)');
+assert.deepEqual(data.sizes.find(row => row.name === 'fs-32'), { name: 'fs-32', wide: '32px', narrow: '24px' });
+assert.deepEqual(data.heights.find(row => row.name === 'lh-37'), { name: 'lh-37', wide: '37px', narrow: '34px' });
+assert.ok(data.sizes.every(row => row.wide && row.narrow), 'Unresolved font-size token');
+assert.ok(data.heights.every(row => row.wide && row.narrow), 'Unresolved line-height token');
+assert.ok(!data.sizes.some(row => row.name === 'fs-40'), 'Docs must not invent an absent utility');
+assert.deepEqual(data.weights.map(row => row.wide), ['400', '600', '700']);
+console.log('Typography inventory resolves current responsive sizes, line heights and weights without inventing missing classes.');
