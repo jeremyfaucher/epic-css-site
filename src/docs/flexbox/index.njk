@@ -1,0 +1,69 @@
+---
+layout: docs.njk
+tag: docs-page
+title: Flexbox
+description: Use Epic CSS flex direction, alignment, wrapping and gap utilities.
+docTopic: flexbox
+---
+{% from "docs-example.njk" import example %}
+<h1 id="flexbox">Flexbox</h1>
+<p class="docs-lead">Arrange a group of items along a row or column. Add <code>flex</code> to the parent, then choose its direction, alignment, wrapping, and spacing.</p>
+<h2 id="enable-flex">Start a flex layout</h2>
+<p><code>flex</code> sets <code>display: flex</code>. Direct children become flex items. The default direction is a row.</p>
+{% set markup %}<div class="flex gap-16">
+  <div class="docs-demo-item">One</div>
+  <div class="docs-demo-item">Two</div>
+  <div class="docs-demo-item">Three</div>
+</div>{% endset %}
+{{ example(markup, "Flex row with a gap") }}
+<h2 id="direction">Direction</h2>
+<table><thead><tr><th>Class</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>flex-row</code></td><td>Place items in a row.</td></tr>
+<tr><td><code>flex-col</code></td><td>Place items in a column.</td></tr>
+<tr><td><code>flex-col-reverse</code></td><td>Reverse the visual order in a column. DOM and keyboard order stay unchanged.</td></tr>
+</tbody></table>
+{% set markup %}<div class="flex flex-col gap-12">
+  <div class="docs-demo-item">One</div>
+  <div class="docs-demo-item">Two</div>
+  <div class="docs-demo-item">Three</div>
+</div>{% endset %}
+{{ example(markup, "Column direction") }}
+<h2 id="responsive-direction">Responsive direction</h2>
+<p>Start with <code>flex-col</code>, then use a breakpoint-prefixed row class. Resize this example: it becomes a row at 820 pixels.</p>
+{% set markup %}<div class="flex flex-col md-flex-row gap-16">
+  <div class="docs-demo-item">Stacked on small screens</div>
+  <div class="docs-demo-item">Side by side from md</div>
+</div>{% endset %}
+{{ example(markup, "Responsive flex direction") }}
+<table><thead><tr><th>Row class</th><th>Minimum viewport width</th></tr></thead><tbody>
+<tr><td><code>xs-flex-row</code></td><td>0 px</td></tr>
+<tr><td><code>sm-flex-row</code></td><td>480 px</td></tr>
+<tr><td><code>md-flex-row</code></td><td>820 px</td></tr>
+<tr><td><code>lg-flex-row</code></td><td>960 px</td></tr>
+<tr><td><code>xl-flex-row</code></td><td>1200 px</td></tr>
+</tbody></table>
+<p>These prefixes change direction, not display. Keep <code>flex</code> on the parent. The current stylesheet does not generate responsive display classes such as <code>md-flex</code>, or an <code>inline-flex</code> utility.</p>
+<h2 id="alignment">Alignment</h2>
+<p>Justification distributes items along the main axis. Item alignment positions them along the cross axis; those axes change when the direction is a column.</p>
+{% set markup %}<div class="flex justify-between items-center gap-16">
+  <span class="docs-demo-item">Brand</span>
+  <span class="docs-demo-item">Navigation</span>
+</div>{% endset %}
+{{ example(markup, "Justification and item alignment") }}
+<table><thead><tr><th>Utility family</th><th>Available values</th></tr></thead><tbody>
+<tr><td>Justify content</td><td><code>justify-start</code>, <code>justify-end</code>, <code>justify-center</code>, <code>justify-between</code>, <code>justify-around</code>, <code>justify-evenly</code></td></tr>
+<tr><td>Align items</td><td><code>items-start</code>, <code>items-end</code>, <code>items-center</code></td></tr>
+<tr><td>Align multiple lines</td><td><code>content-start</code>, <code>content-end</code>, <code>content-center</code>, <code>content-between</code>, <code>content-around</code></td></tr>
+</tbody></table>
+<p>The <code>content-*</code> utilities need wrapped lines and spare cross-axis space to have a visible effect. Additional alignment and responsive variants are not assumed by these examples.</p>
+<h2 id="wrapping">Wrapping and item size</h2>
+<p><code>flex-wrap</code> allows items to move onto another line. <code>flex-basis-300</code> sets <code>flex: 0 0 300px</code>: it fixes the basis at 300 pixels and disables growing and shrinking. Use it where that fixed item width fits your layout.</p>
+{% set markup %}<div class="flex flex-wrap gap-16">
+  <div class="docs-demo-item">First item</div>
+  <div class="docs-demo-item">Another item</div>
+  <div class="docs-demo-item">One more item</div>
+  <div class="docs-demo-item">Items wrap as space runs out</div>
+</div>{% endset %}
+{{ example(markup, "Wrapping flex items") }}
+<h2 id="spacing">Spacing</h2>
+<p>Use <code>gap-16</code> for one rem between items, or another key from the shared spacer scale. Gap utilities work with both Flexbox and <a href="/docs/grid/">Grid</a>. They do not add space around the outside of the parent.</p>

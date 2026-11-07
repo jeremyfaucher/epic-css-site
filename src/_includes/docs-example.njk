@@ -1,0 +1,11 @@
+{% macro example(markup, label="Utility example") %}
+<section class="docs-example" aria-label="{{ label }}">
+  <div class="docs-example-preview">{{ markup | safe }}</div>
+  <div class="docs-example-toolbar">
+    <span>HTML</span>
+    <button type="button" data-copy-example>Copy HTML</button>
+    <span class="docs-copy-feedback" role="status"></span>
+  </div>
+  <pre><code>{{ markup | trim | escape }}</code></pre>
+</section>
+{% endmacro %}

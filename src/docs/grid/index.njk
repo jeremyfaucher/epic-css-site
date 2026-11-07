@@ -1,0 +1,53 @@
+---
+layout: docs.njk
+tag: docs-page
+title: Grid
+description: Build Epic CSS auto-fitting grids, containers and sidebar layouts.
+docTopic: grid
+---
+{% from "docs-example.njk" import example %}
+<h1 id="grid">Grid</h1>
+<p class="docs-lead">Use CSS Grid for rows and columns. Add <code>grid</code> for display, a column utility for the tracks, and a gap utility for spacing.</p>
+<h2 id="auto-fit">Auto-fitting columns</h2>
+<p><code>grid-col-3</code> uses <code>repeat(auto-fit, minmax(270px, 1fr))</code>. It fits as many columns as the available space permits; it does not force exactly three columns.</p>
+{% set markup %}<div class="grid grid-col-3 gap-16">
+  <div class="docs-demo-item">One</div>
+  <div class="docs-demo-item">Two</div>
+  <div class="docs-demo-item">Three</div>
+</div>{% endset %}
+{{ example(markup, "Auto-fitting grid") }}
+<table><thead><tr><th>Class</th><th>Generated declaration</th></tr></thead><tbody>
+<tr><td><code>grid</code></td><td><code>display: grid</code></td></tr>
+<tr><td><code>grid-col-2</code></td><td><code>grid-template-columns: repeat(auto-fit, minmax(331px, 1fr))</code></td></tr>
+<tr><td><code>grid-col-3</code></td><td><code>grid-template-columns: repeat(auto-fit, minmax(270px, 1fr))</code></td></tr>
+</tbody></table>
+<p>The minimum track widths are real minimums. A container narrower than 270 or 331 pixels can overflow. Choose the utility for your available content width, rather than treating the number in its name as a guaranteed column count.</p>
+<h2 id="gap">Space between tracks</h2>
+<p><code>gap-16</code> sets both row and column gap to one rem. These are the current spacer keys:</p>
+<p><code>0, 4, 6, 8, 10, 12, 16, 18, 20, 24, 32, 40, 56, 60, 64, 80, 100</code>.</p>
+<p>The values are rem-based Sass multipliers, not a general pixel parser. In the current scale both <code>gap-16</code> and <code>gap-18</code> resolve to one rem.</p>
+<h2 id="sidebar">Sidebar layouts</h2>
+<p>Combine <code>grid</code> and <code>grid-sidebar-left</code> for a one-column starting layout, then select a large-screen sidebar width.</p>
+{% set markup %}<div class="grid grid-sidebar-left lg-grid-sidebar-left-25 gap-24">
+  <div class="docs-demo-item">Sidebar</div>
+  <div class="docs-demo-item">Main content</div>
+</div>{% endset %}
+{{ example(markup, "Responsive sidebar grid") }}
+<table><thead><tr><th>Class</th><th>Large-screen tracks</th></tr></thead><tbody>
+<tr><td><code>lg-grid-sidebar-left-25</code></td><td><code>25% 1fr</code></td></tr>
+<tr><td><code>lg-grid-sidebar-left-30</code></td><td><code>30% 1fr</code></td></tr>
+<tr><td><code>lg-grid-sidebar-left-40</code></td><td><code>40% 1fr</code></td></tr>
+</tbody></table>
+<p>The current sidebar rules start in the 960-pixel breakpoint but are overridden back to one column through 1024 pixels. The two-track sidebar layout therefore takes effect above 1024 pixels. That is the existing output; no extra example CSS changes its behavior here.</p>
+<h3>Other existing layout helpers</h3>
+<p><code>left-sidebar-sm</code> creates a grid from 756 pixels with tracks <code>minmax(140px, auto) 1fr</code> and a six-percent gap. <code>grid-1fr-4fr-md</code> uses <code>1fr 4fr</code> from 820 pixels; the current sidebar override temporarily stacks it between 960 and 1024 pixels. These describe the current rules, rather than additional utilities added for the docs.</p>
+<h2 id="containers">Containers and widths</h2>
+<table><thead><tr><th>Class</th><th>Effect</th></tr></thead><tbody>
+<tr><td><code>wrapper</code></td><td>Five percent padding on each side.</td></tr>
+<tr><td><code>container</code></td><td>Centered container with the Sass-configured maximum width, currently 1000 pixels.</td></tr>
+<tr><td><code>container-post</code></td><td>Centered container with a fixed maximum width of 1000 pixels.</td></tr>
+<tr><td><code>w-100</code></td><td>Full available width.</td></tr>
+<tr><td><code>margin-auto</code></td><td><code>margin: 0 auto</code>, resetting vertical margins and centering horizontally where the available width permits.</td></tr>
+<tr><td><code>sm-w-25</code>, <code>md-w-50</code>, <code>lg-w-75</code></td><td>Examples of breakpoint-prefixed 25%, 50%, and 75% widths.</td></tr>
+</tbody></table>
+<p>The generated width prefixes are <code>xs</code>, <code>sm</code>, <code>md</code>, <code>lg</code>, and <code>xl</code>, using the same <a href="/docs/flexbox/#responsive-direction">breakpoints as Flexbox</a>. Percentage widths combined with gaps can exceed the parent's available width; use the auto-fitting grid where it better fits the content.</p>

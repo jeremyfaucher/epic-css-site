@@ -10,6 +10,9 @@
 <style>
 {{- main | cssmin | safe -}}
 </style>
+{% if tag == 'docs-page' %}
+<style>{% docsStyles %}</style>
+{% endif %}
 {%- if css_include %}
 <link rel="stylesheet" href="{{ css_include }}"/>
 {% endif -%}

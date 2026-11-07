@@ -1,7 +1,22 @@
 ---
-layout: 'base.njk'
+layout: docs.njk
 tag: docs-page
+title: Documentation
+description: Install Epic CSS and learn its existing layout and color utilities.
+docTopic: overview
 ---
-{% markdown %}
-  {%- include "docs-page.md" -%}
-{% endmarkdown %}
+<h1>Build with Epic CSS</h1>
+<p class="docs-lead">A simpler utility-first library. Start with the full stylesheet, compose your layout with readable classes, and select a palette for your project.</p>
+<h2>Choose a starting point</h2>
+<div class="docs-topic-list">
+  <a href="/docs/installation/"><strong>Installation</strong><span>Compile Sass, use the Eleventy starter, and understand full versus light CSS.</span></a>
+  <a href="/docs/flexbox/"><strong>Flexbox</strong><span>Arrange items, change direction, align content, and add gaps.</span></a>
+  <a href="/docs/grid/"><strong>Grid</strong><span>Build auto-fitting layouts and understand the current sidebar utilities.</span></a>
+  <a href="/docs/colors/"><strong>Colors and palettes</strong><span>Use semantic text and background colors and customize Sass values.</span></a>
+</div>
+<h2>Small utilities, your design</h2>
+<p>Use the classes together in ordinary markup. These pages document the utilities currently emitted by Epic CSS, with a live example and the same HTML ready to copy. Example borders and numbered tiles are documentation decoration; the layout and color classes come from the library.</p>
+<h2>Full CSS and a project-specific light build</h2>
+<p><strong>Pre-light is the whole compiled stylesheet.</strong> It contains the utilities available from your Sass imports. The optional light step compares classes found in project source with that CSS and writes a filtered stylesheet. It is a separate production step, not a requirement for using the library.</p>
+<p>Read <a href="/docs/installation/#light-build">the light-build guide</a> for the commands and scanning limits.</p>
+<noscript><p>Looking for an old documentation link? Open <a href="/docs/flexbox/">Flexbox</a>, <a href="/docs/grid/">Grid</a>, or <a href="/docs/colors/">Colors</a> from the sidebar.</p></noscript>

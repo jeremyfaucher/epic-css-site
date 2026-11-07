@@ -32,13 +32,19 @@ async function main() {
   assert.equal(site.published_deploy.context, 'production');
   assert.equal(site.published_deploy.commit_ref, commit, 'Production is not on the expected site commit');
 
-  const routes = ['/', '/docs/', '/npm-custom-install/', '/11ty-theme/', '/assets/favicon.png'];
+  const routes = ['/', '/docs/', '/docs/installation/', '/docs/flexbox/', '/docs/grid/', '/docs/colors/', '/npm-custom-install/', '/11ty-theme/', '/assets/favicon.png'];
   let docs;
   for (const route of routes) {
     const response = await get(`https://epiccss.com${route}?release=${commit}`);
     const contentType = response.headers.get('content-type') || '';
     assert.ok(contentType.includes(route.endsWith('.png') ? 'image/png' : 'text/html'), `${route}: unexpected content type`);
-    if (route === '/docs/') docs = cheerio.load(await response.text());
+    if (route.startsWith('/docs/')) {
+      const page = cheerio.load(await response.text());
+      assert.equal(page('nav[aria-label="Documentation"] [aria-current="page"]').length, 1, route + ': active navigation');
+      assert.equal(page('nav [aria-current="page"]').attr('href'), route);
+      assert.equal(page('article h1').length, 1, route + ': topic isolation');
+      if (route === '/docs/colors/') docs = page;
+    }
   }
   assert.equal(docs('#colors').length, 1, 'Missing or duplicate colors section');
   assert.ok(docs('#colors').text().includes('Colors and palettes'));
@@ -52,6 +58,6 @@ async function main() {
     ['.clr-primary-bg', 'background'], ['.clr-secondary', 'color'],
     ['.clr-secondary-bg', 'background'], ['.clr-white', 'color'],
   ]) assert.equal(value(live, selector, property), value(local, selector, property), `Production differs: ${selector}`);
-  console.log(`Verified production ${commit}: five routes, colors lesson and all eight palette values.`);
+  console.log(`Verified production ${commit}: nine routes, isolated docs navigation and all eight palette values.`);
 }
 main().catch(error => { console.error(error.message); process.exitCode = 1; });

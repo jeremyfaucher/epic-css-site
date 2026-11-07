@@ -1,0 +1,32 @@
+---
+layout: base.njk
+---
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <nav aria-label="Documentation">
+      <p class="docs-nav-heading">Getting started</p>
+      <ul>
+        <li><a href="/docs/"{% if docTopic == "overview" %} aria-current="page"{% endif %}>Overview</a></li>
+        <li><a href="/docs/installation/"{% if docTopic == "installation" %} aria-current="page"{% endif %}>Installation</a></li>
+      </ul>
+      <p class="docs-nav-heading">Layout</p>
+      <ul>
+        <li><a href="/docs/flexbox/"{% if docTopic == "flexbox" %} aria-current="page"{% endif %}>Flexbox</a></li>
+        <li><a href="/docs/grid/"{% if docTopic == "grid" %} aria-current="page"{% endif %}>Grid</a></li>
+      </ul>
+      <p class="docs-nav-heading">Styling</p>
+      <ul>
+        <li><a href="/docs/colors/"{% if docTopic == "colors" %} aria-current="page"{% endif %}>Colors and palettes</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <article class="docs-article" id="docs-content" data-doc-topic="{{ docTopic }}">
+    <p class="docs-eyebrow">Epic CSS / Documentation</p>
+    {{ content | safe }}
+    <footer class="docs-page-footer">
+      <a href="/docs/">Documentation overview</a>
+      <a href="https://github.com/jeremyfaucher/epic-css">Library source</a>
+    </footer>
+  </article>
+</div>
+<script src="/assets/js/docs.js" defer></script>

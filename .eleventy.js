@@ -6,7 +6,14 @@ const CleanCSS = require("clean-css");
 const { minify } = require("terser");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const markdownIt = require("markdown-it");
+const sass = require("sass");
 module.exports = function(eleventyConfig) {
+  // Render site-only documentation CSS independently of the portable library.
+  eleventyConfig.addShortcode("docsStyles", () =>
+    new CleanCSS({}).minify(sass.compile("src/site-styles/index.scss").css).styles);
+  eleventyConfig.addWatchTarget("./src/site-styles/");
+  eleventyConfig.addWatchTarget("./src/my-epic-css/_custom.scss");
+  eleventyConfig.addWatchTarget("./src/my-epic-css/_variables.scss");
   // Add plugins
   eleventyConfig.addPlugin(syntaxHighlight);
   // e.g. Use syntax highlighters in njk and md Eleventy templates (not liquid)

@@ -1,7 +1,7 @@
 # Site-first release workflow
 
 1. Develop and validate the Epic CSS site with `npm run validate`, review/commit/push its `main`.
-2. Netlify builds with Node 22, `npm run build`, output `_site`. After deployment, run `npm run verify:production`: it checks the exact published site HEAD, five live routes, the colors lesson and all eight palette values. Visually review changed layouts/interactions too.
+2. Netlify builds with Node 22, `npm run build`, output `_site`. After deployment, run `npm run verify:production`: it checks the exact published site HEAD, the docs topic routes, existing site routes, and all eight palette values. Visually review changed layouts/interactions too.
 3. Port verified shared source and relevant usage docs into `jeremyfaucher/epic-css`. Keep consumer palettes separate from library defaults. Run package tests, inspect the pack contents, and test a candidate in a disposable consumer. Commit/push only reviewed source; preserve unrelated working edits.
 4. The **user creates/publishes the GitHub release** for the reviewed package version. The assistant does not create another release or run a local publish as part of consumer updates.
 5. The library's `.github/workflows/npm-publish.yml` runs Node 22 tests, then publishes using npm 11 and OIDC trusted publishing. Check both jobs succeeded and confirm the published version/artifact.

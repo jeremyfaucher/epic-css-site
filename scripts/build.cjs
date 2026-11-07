@@ -43,6 +43,7 @@ async function main() {
       if (page.outputPath) fs.mkdirSync(path.dirname(page.outputPath), { recursive: true });
     }
     await site.write();
+    require('./check-docs.cjs')(output, full);
     for (const page of pages) {
       if (page.outputPath) assert.ok(fs.existsSync(page.outputPath), `Missing ${page.outputPath}`);
     }
@@ -54,7 +55,7 @@ async function main() {
         else fs.writeFileSync(file, bytes);
       }
       // output is a unique directory created above inside this project.
-      fs.rmSync(output, { recursive: true, force: true });
+      fs.rmSync(output, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
     }
   }
 }
