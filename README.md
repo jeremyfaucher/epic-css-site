@@ -30,7 +30,7 @@ npm run validate
 npm run build
 ```
 
-`build` compiles full library Sass, invokes the installed Epic class filter, then writes Eleventy pages/assets. `validate` uses temporary output, restores the existing CSS include and pre-light bytes, and removes its temporary directory. Windows cleanup retries transient locked-file errors. `build-production` remains the legacy Eleventy-only command.
+`build` compiles full library Sass, invokes the installed Epic class filter, then writes Eleventy pages/assets. `validate` uses temporary output, restores the existing CSS include and pre-light bytes, and removes its temporary directory. Windows cleanup retries transient locked-file errors; a remaining locked scratch folder is reported separately after CSS restoration, without masking actual build failures. `build-production` remains the legacy Eleventy-only command.
 
 Both commands run [check-docs.cjs](scripts/check-docs.cjs), verifying isolated topics, active sidebar navigation, unique IDs, navigation targets, preview/code consistency, retention of example utilities in filtered CSS, sticky sidebar styles, the docs script asset, and separation of docs presentation from library CSS.
 
@@ -51,3 +51,5 @@ npm run verify:production
 ```
 
 The read-only gate checks the exact published commit, docs navigation and topic pages, existing routes/assets, and all eight palette values on the Colors page. Library releases are a separate action: the assistant prepares reviewed commits; the user publishes a GitHub release, triggering the library's trusted npm publishing workflow. This documentation-only update needs no new npm release. See [RELEASING.md](RELEASING.md) for registry availability and consumer-update details.
+
+Code blocks are highlighted at build time using the already installed syntax plugin. Give snippets a `language-html`, `language-scss`, `language-javascript`, `language-json`, or `language-bash` class (or use a labeled Markdown fence). File trees use `language-text` and remain plain. The transform preserves the exact text/newlines used by the copy button; `node scripts/test-highlight.cjs` checks that behavior and HTML escaping. Color styles live in `src/site-styles/_code.scss`, separate from the utility library, and load on all site pages. No browser highlighter or new dependency is shipped.

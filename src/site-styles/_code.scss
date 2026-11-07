@@ -1,0 +1,10 @@
+// Build-time syntax highlighting, presentation only; never copy to the library.
+pre[class*="language-"] { color: #e6edf3; background: #151b2b; tab-size: 2; }
+pre[class*="language-"] code { color: inherit; background: transparent; text-shadow: none; }
+pre .token.comment, pre .token.prolog, pre .token.doctype { color: #a0aec0; }
+pre .token.punctuation, pre .token.operator { color: #cbd5e1; }
+pre .token.tag, pre .token.selector, pre .token.keyword { color: #93c5fd; }
+pre .token.attr-name, pre .token.property, pre .token.variable { color: #c4b5fd; }
+pre .token.attr-value, pre .token.string, pre .token.inserted { color: #86efac; }
+pre .token.number, pre .token.boolean, pre .token.constant { color: #fcd34d; }
+pre .token.function, pre .token.class-name { color: #67e8f9; }

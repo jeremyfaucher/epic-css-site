@@ -55,7 +55,14 @@ async function main() {
         else fs.writeFileSync(file, bytes);
       }
       // output is a unique directory created above inside this project.
-      fs.rmSync(output, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+      try {
+        fs.rmSync(output, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+      } catch (error) {
+        // A Windows scanner can hold a generated directory after all checks.
+        // Keep build failures fatal; report a leftover scratch directory separately.
+        if (process.platform !== 'win32' || !['EPERM', 'EBUSY', 'ENOTEMPTY'].includes(error.code)) throw error;
+        console.warn('Temporary output could not be removed; CSS was restored. Cleanup path: ' + output);
+      }
     }
   }
 }

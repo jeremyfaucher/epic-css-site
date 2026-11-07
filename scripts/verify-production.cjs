@@ -34,10 +34,12 @@ async function main() {
 
   const routes = ['/', '/docs/', '/docs/installation/', '/docs/flexbox/', '/docs/grid/', '/docs/colors/', '/npm-custom-install/', '/11ty-theme/', '/assets/favicon.png'];
   let docs;
+  let home;
   for (const route of routes) {
     const response = await get(`https://epiccss.com${route}?release=${commit}`);
     const contentType = response.headers.get('content-type') || '';
     assert.ok(contentType.includes(route.endsWith('.png') ? 'image/png' : 'text/html'), `${route}: unexpected content type`);
+    if (route === '/') home = cheerio.load(await response.text());
     if (route.startsWith('/docs/')) {
       const page = cheerio.load(await response.text());
       assert.equal(page('nav[aria-label="Documentation"] [aria-current="page"]').length, 1, route + ': active navigation');
@@ -47,6 +49,8 @@ async function main() {
     }
   }
   assert.equal(docs('#colors').length, 1, 'Missing or duplicate colors section');
+  assert.ok(home('pre code.language-html .token').length, 'Homepage code is not highlighted');
+  assert.ok(docs('pre code.language-html .token').length, 'Docs examples are not highlighted');
   assert.ok(docs('#colors').text().includes('Colors and palettes'));
   assert.ok(docs('.clr-primary-bg .clr-primary').length, 'Missing primary callout');
   assert.ok(docs('.clr-secondary-bg .clr-secondary').length, 'Missing secondary callout');

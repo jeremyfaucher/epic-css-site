@@ -9,38 +9,38 @@ docTopic: installation
 <p class="docs-lead">Use Epic CSS in an existing Node project, or start with the Eleventy theme. The output is ordinary CSS that you can load in your own site.</p>
 <h2 id="npm">Install the package</h2>
 <p>From a project with a package manifest, install the library and Sass:</p>
-<pre><code>npm install epic-css sass</code></pre>
+<pre><code class="language-bash">npm install epic-css sass</code></pre>
 <p>Version 0.14.1 preserves palette values assigned before importing the library. If your configured corporate registry does not expose a newly published version, wait for it to become available through that registry; do not change network policy or disable TLS verification.</p>
 <h2 id="sass-entry">Create your Sass entry point</h2>
 <p>Create <code>src/my-epic-css/index.scss</code> and import the installed library. Relative paths below assume this folder structure:</p>
-<pre><code>my-project/
+<pre><code class="language-text">my-project/
   package.json
   node_modules/
   src/
     my-epic-css/
       index.scss
     _includes/</code></pre>
-<pre><code>// src/my-epic-css/index.scss
+<pre><code class="language-scss">// src/my-epic-css/index.scss
 @import "../../node_modules/epic-css/src/index";</code></pre>
 <p>To customize the palette, import your own <code>custom</code> partial before the library. See <a href="/docs/colors/">Colors and palettes</a>.</p>
 <h2 id="compile">Compile full CSS</h2>
-<pre><code>npx --no-install sass src/my-epic-css/index.scss src/_includes/style.css</code></pre>
+<pre><code class="language-bash">npx --no-install sass src/my-epic-css/index.scss src/_includes/style.css</code></pre>
 <p>Make sure the output folder exists. For a conventional site, choose a public CSS output path and load it with a stylesheet link. The Eleventy starter instead minifies and embeds <code>src/_includes/style.css</code> in its base template. A one-time full compile is enough to start using <a href="/docs/flexbox/">Flexbox</a>, <a href="/docs/grid/">Grid</a>, and <a href="/docs/colors/">Colors</a>.</p>
 <h2 id="eleventy">Use the Eleventy starter</h2>
-<pre><code>git clone https://github.com/jeremyfaucher/epic-css-11ty-theme.git
+<pre><code class="language-bash">git clone https://github.com/jeremyfaucher/epic-css-11ty-theme.git
 cd epic-css-11ty-theme
 npm ci
 npm start</code></pre>
 <p>Follow the local URL printed by the server. The starter compiles Sass before starting its Eleventy and Sass watchers. Customize <code>src/my-epic-css/_custom.scss</code> and put your content under <code>src</code>.</p>
 <h3 id="starter-files">Your files in the starter</h3>
-<pre><code>src/my-epic-css/
+<pre><code class="language-text">src/my-epic-css/
   _custom.scss    // your palette overrides and custom styles
   index.scss      // imports custom first, then the installed library
   pre-light.css   // generated full CSS baseline</code></pre>
 <p>You do not need to copy all the library partials into this folder. They remain in the installed npm package. Edit <code>_custom.scss</code> for your overrides and <code>index.scss</code> to choose imports. Rebuild <code>pre-light.css</code> with the build command rather than editing generated CSS by hand. The provided Epic config points at these folders and the CSS include output.</p>
 <h2 id="partial-imports">Import selected parts</h2>
 <p>The Sass is split into variables, base, font ramp, colors, images, grid, and spacers. You can import selected partials instead of the complete entry point. Load variables first, after your custom overrides, because the other partials use them.</p>
-<pre><code>// Example: color utilities with your own base styles
+<pre><code class="language-scss">// Example: color utilities with your own base styles
 @import "custom";
 @import "../../node_modules/epic-css/src/variables";
 @import "../../node_modules/epic-css/src/colors";</code></pre>
@@ -48,16 +48,16 @@ npm start</code></pre>
 <h2 id="light-build">Full pre-light CSS and filtered CSS</h2>
 <p><strong>Pre-light is the full compiled stylesheet.</strong> The optional light command then compares literal class names in project source with that baseline and writes a project-specific filtered stylesheet. It does not compile Sass or infer new utilities on demand.</p>
 <p>Add <code>epicConfig.js</code> beside your package manifest:</p>
-<pre><code>module.exports = {
+<pre><code class="language-javascript">module.exports = {
   projectDir: './src',
   epicThemeDir: './src/my-epic-css',
   projectStyleDir: './src/_includes',
   outputFileName: 'style.css'
 };</code></pre>
 <p>Add these scripts to the consuming project's manifest:</p>
-<pre><code>"epic-build": "node ./node_modules/epic-css/src/epic-build.js",
+<pre><code class="language-json">"epic-build": "node ./node_modules/epic-css/src/epic-build.js",
 "epic-light": "node ./node_modules/epic-css/src/epic-light.js"</code></pre>
-<pre><code>npm run epic-build
+<pre><code class="language-bash">npm run epic-build
 npm run epic-light</code></pre>
 <p>Run them sequentially from the project root. Rebuild pre-light after changing Sass. The full-build copy uses <code>style.css</code>; the filter honors the configured output filename. A missing or empty pre-light file is not a useful baseline.</p>
 <h2 id="source-coverage">Source coverage</h2>
@@ -65,6 +65,6 @@ npm run epic-light</code></pre>
 <p>The filter uses substring matches, retains whole matching media blocks, and does not provide a configured safelist. Dynamically assembled classes and other at-rule structures need careful checking. Preview your affected pages and responsive layouts after filtering; a successful build alone does not prove every dynamic state was retained.</p>
 <h2 id="consumer-build">Build the maintained site or starter</h2>
 <p>Stop the watchers first:</p>
-<pre><code>npm run validate
+<pre><code class="language-bash">npm run validate
 npm run build</code></pre>
 <p><code>validate</code> checks the full Sass/filter/Eleventy pipeline using temporary output and restores the prior CSS files. <code>build</code> writes the deployable site to <code>_site</code>. The legacy <code>build-production</code> script runs only Eleventy, so it does not refresh CSS itself.</p>

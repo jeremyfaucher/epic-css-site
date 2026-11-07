@@ -5,7 +5,7 @@
 ## NPM custom install
 
 1. **Install dependencies**:
-    ```
+    ```bash
     npm install sass
     npm install epic-css
     ``` 
@@ -15,13 +15,13 @@
 
     In your package.json file add the `epic-compile` command.
 
-    ```
+    ```json
     "epic-compile": "sass --style expanded --source-map --embed-sources --no-error-css --quiet src/my-epic-css/index.scss:src/_includes/style.css"
     ```
 
     To use, run `npm run epic-compile`. This will build your style sheet based on the directory input and output for this folder structure or adjust as needed.
 
-    ```
+    ```text
     my-project/
         ├── src/
         │   └── _include/
@@ -37,11 +37,11 @@
 
     Add a folder in the `src` folder or your projects main folder and give it a name of your choice like `my-epic-css`. Then create `index.scss` file and add the imports like this:
 
-    ```
+    ```scss
     @import  "../../node_modules/epic-css/src/index";
     ```
     or individually like:
-    ```
+    ```scss
     @import  "../../node_modules/epic-css/src/_variables";
     @import  "../../node_modules/epic-css/src/_base";
     @import  "../../node_modules/epic-css/src/_fontramp";

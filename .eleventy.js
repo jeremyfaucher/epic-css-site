@@ -7,15 +7,21 @@ const { minify } = require("terser");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const markdownIt = require("markdown-it");
 const sass = require("sass");
+const highlightCode = require("./scripts/highlight-code.cjs");
 module.exports = function(eleventyConfig) {
   // Render site-only documentation CSS independently of the portable library.
   eleventyConfig.addShortcode("docsStyles", () =>
     new CleanCSS({}).minify(sass.compile("src/site-styles/index.scss").css).styles);
+  eleventyConfig.addShortcode("codeStyles", () =>
+    new CleanCSS({}).minify(sass.compile("src/site-styles/_code.scss").css).styles);
+  eleventyConfig.addTransform("highlightCode", function(content) {
+    return this.outputPath && this.outputPath.endsWith(".html") ? highlightCode(content) : content;
+  });
   eleventyConfig.addWatchTarget("./src/site-styles/");
   eleventyConfig.addWatchTarget("./src/my-epic-css/_custom.scss");
   eleventyConfig.addWatchTarget("./src/my-epic-css/_variables.scss");
   // Add plugins
-  eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(syntaxHighlight, { lineSeparator: "\n" });
   // e.g. Use syntax highlighters in njk and md Eleventy templates (not liquid)
   templateFormats: ["html", "md"];
     // Add markdown filter

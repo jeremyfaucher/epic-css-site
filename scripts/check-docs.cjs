@@ -35,6 +35,7 @@ module.exports = function checkDocs(output, libraryCss) {
     $('.docs-example').each((_, element) => {
       examples++;
       const block = $(element);
+      assert.ok(block.find('pre code .token').length, 'Example is missing syntax highlighting');
       const code = block.find('pre code').text().trim();
       const normalize = text => text.replace(/>\s+</g, '><').replace(/\s+/g, ' ').trim();
       const snippet = cheerio.load(code, null, false);
