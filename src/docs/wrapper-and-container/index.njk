@@ -1,0 +1,72 @@
+---
+layout: docs.njk
+tag: docs-page
+title: Wrapper and container
+description: Compose percentage gutters, a centered maximum width, and inner flex or grid layouts with Epic CSS.
+docTopic: wrapper-and-container
+---
+{% from "docs-example.njk" import example %}
+<h1 id="wrapper-and-container">Wrapper and container</h1>
+<p class="docs-lead">Start with side gutters, add a centered width cap when you need one, then arrange the content inside with flex or grid.</p>
+<h2 id="customize-container-width">Customize your container width</h2>
+<p>Set your preferred maximum in <code>src/my-epic-css/_custom.scss</code>. This site uses:</p>
+<pre><code class="language-scss">$container-width: 980px;</code></pre>
+<p>Keep using <code>class="container"</code>. Run <code>npm start</code> to recompile and preview, or <code>npm run build</code> for production. The library fallback is a 1000-pixel maximum; this site's override is 980 pixels. Neither is a fixed width. This setting changes <code>container</code>; <code>container-post</code> stays at its hardcoded 1000-pixel maximum.</p>
+<h2 id="current-behavior">What the classes do</h2>
+<table>
+  <thead><tr><th>Class</th><th>Current CSS</th><th>Use it for</th></tr></thead>
+  <tbody>
+    <tr><td><code>wrapper</code></td><td><code>padding: 0 5%</code></td><td>Left and right gutters, with no top or bottom padding.</td></tr>
+    <tr><td><code>container</code></td><td><code>margin: 0 auto; max-width: 980px; box-sizing: border-box</code> on this site</td><td>A centered maximum width, including the container's own padding and border.</td></tr>
+  </tbody>
+</table>
+<p>A container fills the available block width up to its cap, then centers with automatic side margins. It adds no gutters. A wrapper adds 5% padding on each side, measured against its containing block's width.</p>
+<p><strong>Preview boundaries:</strong> backgrounds show the nested regions inside this docs column, not the viewport. This site's 980-pixel cap does not engage in these narrow previews.</p>
+<h2 id="wrapper-plus-container">Gutters and a centered width cap</h2>
+<p>Use a wrapper around a container for the usual page-content pattern. The wrapper supplies breathing room at the edges; the container limits long rows on wider screens.</p>
+{% set markup %}<div class="wrapper clr-primary-bg">
+  <div class="container clr-secondary-bg p-16">
+    <p class="mb-0">Content inside percentage gutters and a centered width cap.</p>
+  </div>
+</div>{% endset %}
+{{ example(markup, "Wrapper around a centered container") }}
+<h2 id="wrapper-only">Gutters without a width cap</h2>
+<p>Leave out the container when the content should keep growing with its parent while retaining side gutters.</p>
+{% set markup %}<div class="wrapper clr-primary-bg">
+  <div class="clr-secondary-bg py-16">
+    <p class="mb-0">This region has gutters but no container width cap.</p>
+  </div>
+</div>{% endset %}
+{{ example(markup, "Wrapper without a container") }}
+<h2 id="full-width">A viewport-wide section</h2>
+<p>Put a section outside the page's wrapper and container when its surface should reach the viewport edges. Do not nest it inside a capped parent and expect it to break out: even <code>w-100</code> means 100% of the available parent width.</p>
+{% set markup %}<section class="clr-primary-bg py-24">
+  <p class="mb-0">A section with no wrapper or container of its own.</p>
+</section>{% endset %}
+{{ example(markup, "Section without gutters or a width cap") }}
+<p>In this preview the surface reaches the preview's inner edges. On a page, place this markup directly in the full-width content region for viewport-wide output. The <a href="/ui/sliders/">Sliders page</a> uses that arrangement for its live scrolling row.</p>
+<h2 id="aligned-section-content">A full-width surface with aligned content</h2>
+<p>A section can have an edge-to-edge background while its text aligns with the rest of the page. Place the wrapper and container inside the section rather than outside it.</p>
+{% set markup %}<section class="clr-primary-bg py-24">
+  <div class="wrapper">
+    <div class="container clr-secondary-bg p-16">
+      <p class="mb-0">Aligned content inside a full-width section surface.</p>
+    </div>
+  </div>
+</section>{% endset %}
+{{ example(markup, "Full-width surface with an inner wrapper and container") }}
+<h2 id="inner-layout">Arrange the content inside</h2>
+<p>Once the outer width is chosen, apply flex or grid where the items need arranging. These are composition choices: flex and grid do not require a wrapper or container.</p>
+{% set markup %}<div class="wrapper">
+  <div class="container flex flex-col md-flex-row gap-40 items-center justify-between mb-80 pt-24">
+    <a href="/">Epic CSS</a>
+    <nav class="flex flex-wrap gap-24" aria-label="Example navigation">
+      <a href="/docs/flexbox/">Flexbox</a>
+      <a href="/docs/grid/">Grid</a>
+    </nav>
+  </div>
+</div>{% endset %}
+{{ example(markup, "Inner responsive flex layout") }}
+<p><code>flex</code> enables flex layout. <code>flex-col</code> stacks the brand and navigation on smaller screens; <code>md-flex-row</code> switches to a row from 820 pixels up. In that row, <code>justify-between</code> pushes them toward opposite sides and <code>items-center</code> aligns them vertically. The breakpoint follows the viewport, even inside this narrower docs preview.</p>
+<p><code>gap-40</code> spaces the main flex items; <code>gap-24</code> spaces the navigation links. Gap needs a flex or grid layout to have that effect. For more arrangements, see <a href="/docs/flexbox/">Flexbox</a> and <a href="/docs/grid/">Grid</a>.</p>
+<p><code>pt-24</code> adds top padding, <code>py-24</code> adds top and bottom padding, and <code>mb-80</code> adds bottom margin. Their current values are <code>1.5rem</code>, <code>1.5rem</code> per side, and <code>5rem</code>, respectively; at a 16-pixel root font size these are 24 and 80 pixels. The same spacing scale makes <code>gap-24</code> <code>1.5rem</code> and <code>gap-40</code> <code>2.5rem</code>.</p>

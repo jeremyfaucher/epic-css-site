@@ -1,0 +1,48 @@
+---
+layout: docs.njk
+tag: docs-page
+title: Images
+description: Responsive images, rounded corners, centering classes, and article spacing in Epic CSS.
+docTopic: images
+---
+{% from "docs-example.njk" import example %}
+<h1 id="images">Images</h1>
+<p class="docs-lead">Use <code>border-r-16</code> to choose rounded image corners, and add <code>img-center</code> or <code>center</code> to center a smaller image. Responsive sizing is automatic.</p>
+<h2 id="automatic-styles">Responsive images with a radius utility</h2>
+<p>Add <code>border-r-16</code> directly to the image for a 16-pixel radius. Epic CSS also gives every <code>img</code> <code>max-width: 100%</code> and <code>height: auto</code>. Large images shrink to fit their container while keeping their aspect ratio; small images do not stretch to full width automatically.</p>
+{% set markup %}<img class="border-r-16" src="/assets/placeholder.png"
+  alt="Placeholder landscape with pale hills and a sun"
+  width="1200" height="800">{% endset %}
+{{ example(markup, "Responsive image with border-r-16 corners") }}
+<p>The local image is 1200 by 800 pixels. Its HTML dimensions describe that aspect ratio; the responsive CSS lets it shrink with the available space.</p>
+<h2 id="border-radius">Choose a border radius</h2>
+<p><code>border-r-16</code> chooses <code>16px</code>, while <code>border-r-4</code> chooses <code>4px</code> for smaller corners. Both override Epic CSS's global image default of <code>1rem</code>. The examples use an explicit radius class so you can copy your chosen style.</p>
+{% set markup %}<img class="border-r-16" src="/assets/placeholder.png"
+  alt="Placeholder landscape with pale hills and a sun"
+  width="300" height="200">{% endset %}
+{{ example(markup, "Image with an explicit border-r-16 radius") }}
+{% set markup %}<img class="border-r-4" src="/assets/placeholder.png"
+  alt="Placeholder landscape with pale hills and a sun"
+  width="300" height="200">{% endset %}
+{{ example(markup, "Image with smaller border-r-4 corners") }}
+<h2 id="centering">Center a smaller image</h2>
+<p>Use <code>img-center</code> or <code>center</code> on the image itself. Both set <code>display: block</code> and automatic left and right margins. Centering is visible only when the image is narrower than its container. These examples use a width of 300 pixels; <code>max-width: 100%</code> still lets them shrink on narrower screens.</p>
+{% set markup %}<img class="border-r-16 img-center" src="/assets/placeholder.png"
+  alt="Placeholder landscape with pale hills and a sun"
+  width="300" height="200">{% endset %}
+{{ example(markup, "Image centered with img-center") }}
+{% set markup %}<img class="border-r-16 center" src="/assets/placeholder.png"
+  alt="Placeholder landscape with pale hills and a sun"
+  width="300" height="200">{% endset %}
+{{ example(markup, "Image centered with center") }}
+<p>On images, <code>img-center</code> also resets vertical margins to zero outside articles; <code>center</code> changes only horizontal margins.</p>
+<h2 id="article-spacing">Images inside articles</h2>
+<p>Any image inside an <code>article</code>, including a nested or centered image, receives <code>margin-bottom: 2rem</code> automatically. No spacing class is needed.</p>
+{% set markup %}<article>
+  <img class="border-r-16 img-center" src="/assets/placeholder.png"
+    alt="Placeholder landscape with pale hills and a sun"
+    width="300" height="200">
+  <p>Article text follows the image's automatic bottom margin.</p>
+</article>{% endset %}
+{{ example(markup, "Automatic article image spacing") }}
+<p>This documentation page itself uses an <code>article</code> wrapper, so all image previews above also receive the article spacing. Outside an article, the global image styles do not add that bottom margin. Other surrounding margins can affect the visible gap.</p>

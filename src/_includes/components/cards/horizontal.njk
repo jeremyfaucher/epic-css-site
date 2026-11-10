@@ -1,0 +1,7 @@
+{% from "components/cards/parts.njk" import image, content %}
+<div class="clr-primary-bg p-24 border-r-16 flex flex-col md-flex-row gap-24 items-start">
+    {{ image(cardExample, "flex items-start md-w-50") }}
+    <div class="md-w-50">
+        {{ content(cardExample) }}
+    </div>
+</div>

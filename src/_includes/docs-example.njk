@@ -1,11 +1,11 @@
 {% macro example(markup, label="Utility example") %}
-<section class="docs-example" aria-label="{{ label }}">
-  <div class="docs-example-preview">{{ markup | safe }}</div>
-  <div class="docs-example-toolbar">
+<section class="docs-example border-r-16 my-24" aria-label="{{ label }}">
+  <div class="docs-example-preview p-20 overflow-x-auto">{{ markup | safe }}</div>
+  <div class="docs-example-toolbar flex flex-wrap items-center gap-12 py-8 px-16 clr-secondary-bg fs-14">
     <span>HTML</span>
-    <button type="button" data-copy-example>Copy HTML</button>
-    <span class="docs-copy-feedback" role="status"></span>
+    <button class="py-4 px-10 border-r-4 cursor-pointer" type="button" data-copy-example>Copy HTML</button>
+    <span class="docs-copy-feedback clr-secondary" role="status"></span>
   </div>
-  <pre><code class="language-html">{{ markup | trim | escape }}</code></pre>
+  <pre class="m-0 p-16 fs-14 lh-24"><code class="language-html">{{ markup | trim | escape }}</code></pre>
 </section>
 {% endmacro %}

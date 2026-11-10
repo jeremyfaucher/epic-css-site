@@ -1,0 +1,29 @@
+(() => {
+  function initializeSliders() {
+    document.querySelectorAll('[data-slider]').forEach((slider) => {
+      const viewport = slider.querySelector('[data-slider-viewport]');
+      const track = slider.querySelector('[data-slider-track]');
+      const card = slider.querySelector('[data-slider-card]');
+      const previous = slider.querySelector('[data-slider-previous]');
+      const next = slider.querySelector('[data-slider-next]');
+      if (!viewport || !track || !card || !previous || !next) return;
+      if (slider.dataset.sliderReady) return;
+      slider.dataset.sliderReady = 'true';
+
+      function move(direction) {
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        viewport.scrollBy({
+          left: direction * (card.getBoundingClientRect().width + gap),
+          behavior: 'smooth'
+        });
+      }
+      previous.addEventListener('click', () => move(-1));
+      next.addEventListener('click', () => move(1));
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeSliders, { once: true });
+  } else {
+    initializeSliders();
+  }
+})();

@@ -9,16 +9,23 @@ docTopic: colors
 <h1 id="colors">Colors and palettes</h1>
 <p class="docs-lead">Choose colors by their role in your design. Text and background utilities are separate, so one palette can change the appearance of the same markup.</p>
 <h2 id="color-utilities">Text and backgrounds</h2>
-{% set markup %}<div class="clr-primary-bg p-24 border-r-16">
-  <p class="clr-primary">Primary text on the primary background.</p>
-  <p>This paragraph inherits the body text color.</p>
+<p>Compare the primary and secondary text/background pairs side by side. Text color and background color each need their own class.</p>
+{% set markup %}<div class="flex w-100">
+  <div class="xs-w-50 py-40 flex items-center justify-center text-center fs-14 lh-20 clr-primary clr-primary-bg">
+    <div>clr-primary<br>clr-primary-bg</div>
+  </div>
+  <div class="xs-w-50 py-40 flex items-center justify-center text-center fs-14 lh-20 clr-secondary clr-secondary-bg">
+    <div>clr-secondary<br>clr-secondary-bg</div>
+  </div>
 </div>{% endset %}
-{{ example(markup, "Primary text and background") }}
+{{ example(markup, "Primary and secondary color pairs") }}
+<p><code>xs-w-50</code> gives each box half the width. Vertical padding supplies the box height while the flex utilities center the labels.</p>
+<h3 id="inherited-and-white-text">Inherited and fixed text colors</h3>
 {% set markup %}<div class="clr-secondary-bg p-24 border-r-16">
-  <p class="clr-secondary">Secondary text on the secondary background.</p>
+  <p>This paragraph inherits the body text color.</p>
   <p class="clr-white">White text stays white when the palette changes.</p>
 </div>{% endset %}
-{{ example(markup, "Secondary text and background") }}
+{{ example(markup, "Inherited body text and fixed white text") }}
 <table>
 <thead><tr><th>Utility</th><th>Sass palette value</th><th>Changes</th></tr></thead>
 <tbody>
@@ -43,5 +50,5 @@ $clr-secondary: #7a7574;
 $clr-secondary-bg: #ececec;
 $clr-white: #ffffff;</code></pre>
 <p><code>$clr-body</code> sets the base text color. <code>$clr-primary-light</code> sets the accent on <code>main a.clr-underline:hover</code>. There are no standalone <code>clr-body</code> or <code>clr-primary-light</code> utilities. Changing a palette updates existing declarations, rather than generating new color class names.</p>
-<p>Run <code>npm start</code> to preview palette changes. Check text, links, hover states, code blocks, and both callouts above. White text can disappear on a light surface: keep it on a sufficiently dark background or use an appropriate semantic text color. The example palettes are starting points; their names do not guarantee contrast for every combination.</p>
+<p>Run <code>npm start</code> to preview palette changes. Check text, links, hover states, code blocks, and the examples above. White text can disappear on a light surface: keep it on a sufficiently dark background or use an appropriate semantic text color. The example palettes are starting points; their names do not guarantee contrast for every combination.</p>
 <p>Stop the development server, then run <code>npm run build</code> to compile Sass, filter CSS using literal source classes, and generate the production site. Run <code>npm run validate</code> for the same check with temporary output and restored CSS files. Always preview important pages after filtering, especially if class names are assembled dynamically.</p>

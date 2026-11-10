@@ -1,0 +1,39 @@
+---
+layout: base.njk
+tag: ui-page
+fullWidth: true
+title: Sliders
+description: A horizontal scroll slider with numbered gradient cards and Previous and Next controls.
+---
+{% from "ui-example.njk" import example %}
+<div class="wrapper"><div class="container">
+<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI examples</a> / <a href="/ui/sliders/" aria-current="page">Sliders</a></nav>
+<h1 class="fs-37 lh-37 mb-24">Sliders</h1>
+<h2 class="fs-24 lh-32 mb-16">Horizontal Scroll Slider</h2>
+<p class="mb-24">Scroll through eight numbered gradient cards, or use Previous and Next to move one card at a time. The cards keep their original 300-pixel width, 200-pixel height, rounded corners, and scroll snapping.</p>
+</div></div>
+{% set markup %}<div data-slider>
+<div data-slider-viewport tabindex="0" role="region" aria-label="Numbered gradient cards" class="slider-container position-relative w-100 flex items-center overflow-x-auto scroll-snap-x-mandatory scroll-smooth" style="scroll-padding-inline-start: calc((100vw - 1000px) / 2); scrollbar-width: none;">
+  <div data-slider-track class="slider flex gap-16 w-100 gap-12 p-20 margin-auto" style="max-width: 1000px;">
+    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">1</div>
+    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">2</div>
+    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">3</div>
+    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">4</div>
+    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">5</div>
+    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">6</div>
+    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">7</div>
+    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">8</div>
+  </div>
+</div>
+<div class="flex gap-12 margin-auto" style="max-width: 1000px;">
+<button type="button" data-slider-previous class="prev-btn cursor-pointer p-20 border-none clr-white" aria-label="Previous" style="background: rgba(0, 0, 0, 0.5);">&#9665;</button>
+<button type="button" data-slider-next class="next-btn cursor-pointer p-20 border-none clr-white" aria-label="Next" style="background: rgba(0, 0, 0, 0.5);">&#9655;</button>
+</div>
+</div>{% endset %}
+{% set script %}{% include "slider-script.njk" %}{% endset %}
+{{ example(markup, "Horizontal scroll slider", script, true) }}
+<div class="wrapper"><div class="container">
+<p class="mb-24">Copy both the HTML and JavaScript. The controls are scoped to each <code>data-slider</code> wrapper. The original inline styles preserve the gradient, height, width cap, scroll padding, and button backgrounds.</p>
+</div></div>
+<script>{{ script | safe }}</script>
+<script src="/assets/js/examples.js" defer></script>

@@ -1,0 +1,10 @@
+# Shared card examples
+
+- Edit `vertical.njk` or `horizontal.njk` to change a variant's utility markup.
+- Edit `parts.njk` for shared image/content markup and `src/_data/cardExample.js` for shared sample content.
+- Both `src/ui/cards/index.njk` and `src/_includes/card-showcase.njk` capture these templates once per variant. The captured HTML supplies both the live preview and escaped copyable code through `ui-example.njk`.
+- Rebuild with `npm run build` after editing examples or site `src/my-epic-css` utilities. This refreshes both surfaces and filtered CSS; `npm run validate` checks preview/code and cross-page parity without retaining generated CSS changes.
+- The homepage showcase only controls which example and code block are visible. Keep card markup in these components, not in its interaction wrapper.
+- Review prose docs and sync/version the portable library separately when intentional utility changes are ready. These steps are not automatic.
+
+The original sample blog link is intentionally retained, although the destination is not included in this site. The vertical card retains its original inline width cap because the library has no matching max-width utility.

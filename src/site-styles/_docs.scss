@@ -1,16 +1,12 @@
 // Site-only documentation presentation. Do not copy this into the npm library.
-.docs-layout { display: grid; gap: 2rem; padding-top: 1.5rem; }
 .docs-sidebar { align-self: start; }
-.docs-sidebar ul { list-style: none; margin: 0 0 1.25rem; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem; }
-.docs-sidebar a { display: block; padding: .5rem .75rem; border-radius: .375rem; color: $clr-secondary; text-decoration: none; }
+.docs-sidebar a { display: block; text-decoration: none; }
 .docs-sidebar a:hover, .docs-sidebar a[aria-current="page"] { color: $clr-primary; background: $clr-primary-bg; }
-.docs-nav-heading, .docs-eyebrow { color: $clr-secondary; font-size: .875rem; margin-bottom: .5rem; }
-.docs-nav-heading { font-weight: 600; }
 .docs-article { min-width: 0; }
 .docs-article > h1 { font-size: clamp(2rem, 5vw, 2.75rem); line-height: 1.15; margin: 0 0 1.25rem; }
 .docs-article > h2 { font-size: 1.5rem; line-height: 1.3; margin: 2.5rem 0 1rem; scroll-margin-top: 2rem; }
 .docs-article > h3 { font-size: 1.25rem; margin: 2rem 0 1rem; }
-.docs-article > p { margin-bottom: 1rem; }
+.docs-article > p:not(.docs-eyebrow) { margin-bottom: 1rem; }
 .docs-lead { font-size: 1.25rem; line-height: 1.7; }
 .docs-article table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .95rem; overflow-wrap: anywhere; }
 .docs-article th, .docs-article td { text-align: left; vertical-align: top; padding: .75rem; border-bottom: 1px solid rgba($clr-body, .18); }
@@ -18,22 +14,20 @@
 .docs-article td:first-child code { white-space: nowrap; overflow-wrap: normal; }
 .docs-article code { overflow-wrap: anywhere; }
 .docs-article pre code { overflow-wrap: normal; }
-.docs-example { border: 1px solid rgba($clr-body, .2); border-radius: .75rem; margin: 1.5rem 0; overflow: hidden; }
-.docs-example-preview { padding: 1.25rem; overflow-x: auto; }
+.docs-example { border: 1px solid rgba($clr-body, .2); overflow: hidden; }
 .docs-example-preview p:last-child { margin-bottom: 0; }
-.docs-example-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; padding: .5rem 1rem; background: $clr-secondary-bg; border-top: 1px solid rgba($clr-body, .15); font-size: .8rem; }
-.docs-example-toolbar button { margin-left: auto; padding: .3rem .6rem; font: inherit; color: $clr-body; background: transparent; border: 1px solid rgba($clr-body, .35); border-radius: .3rem; cursor: pointer; }
+.docs-example-toolbar { border-top: 1px solid rgba($clr-body, .15); }
+.docs-example-toolbar button { margin-left: auto; font: inherit; color: $clr-body; background: transparent; border: 1px solid rgba($clr-body, .35); }
 .docs-example-toolbar button:hover { color: $clr-primary; border-color: $clr-primary; }
 .docs-sidebar a:focus-visible, .docs-example-toolbar button:focus-visible { outline: 2px solid $clr-primary; outline-offset: 3px; }
-.docs-copy-feedback { color: $clr-secondary; }
-.docs-example pre { margin: 0; border-radius: 0; padding: 1rem; font-size: .875rem; line-height: 1.6; }
+.docs-example pre { border-radius: 0; }
 .docs-demo-item { padding: .75rem 1rem; border: 1px solid rgba($clr-primary, .5); border-radius: .35rem; background: $clr-primary-bg; color: $clr-primary; overflow-wrap: anywhere; }
 .docs-topic-list { display: grid; gap: 1rem; }
 .docs-topic-list a { display: block; padding: 1.25rem; border: 1px solid rgba($clr-body, .2); border-radius: .75rem; text-decoration: none; }
 .docs-topic-list strong, .docs-topic-list span { display: block; }
 .docs-topic-list strong { color: $clr-primary; margin-bottom: .5rem; }
 .docs-topic-list span { color: $clr-body; }
-.docs-page-footer { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid rgba($clr-body, .2); }
+.docs-page-footer { border-top: 1px solid rgba($clr-body, .2); }
 @media (min-width: 960px) {
   .docs-layout { grid-template-columns: 13rem minmax(0, 1fr); gap: 3rem; }
   .docs-sidebar { position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; }

@@ -1,0 +1,15 @@
+{% macro image(card, classes) -%}
+<a href="{{ card.href }}" class="{{ classes }}"><img class="border-r-16" src="{{ card.image }}" alt="{{ card.alt }}" width="{{ card.width }}" height="{{ card.height }}"></a>
+{%- endmacro %}
+
+{% macro content(card) -%}
+<h3 class="clr-primary mt-0 mb-24">
+    <a href="{{ card.href }}">{{ card.title }}</a>
+</h3>
+<div class="mb-24">
+by <span>{{ card.author }}</span> on <span>{{ card.date }}</span>
+</div>
+<p class="mb-0">
+{{ card.excerpt | escape }}
+This is a<a href="{{ card.href }}" class="clr-underline"> Read more...</a></p>
+{%- endmacro %}
