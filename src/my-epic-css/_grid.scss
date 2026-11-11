@@ -188,6 +188,16 @@ $grid-fractions: (
   display: flex;
 }
 
+@include md {
+  .flex-md {
+    display: flex;
+  }
+}
+
+.flex-1 {
+  flex: 1;
+}
+
 .wrapper {
   padding: 0 5%;
 }

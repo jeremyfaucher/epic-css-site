@@ -1,0 +1,10 @@
+<section aria-labelledby="three-column-title">
+  <h2 id="three-column-title" class="text-center fs-32 lh-37 mt-0 mb-32">Make room for your next ideas</h2>
+  <div class="flex-md gap-24">
+    {% for column in [1, 2, 3] %}
+    <div class="flex-1 mb-24">
+      {% include "components/cards/vertical.njk" %}
+    </div>
+    {% endfor %}
+  </div>
+</section>

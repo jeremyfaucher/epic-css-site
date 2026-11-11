@@ -1,12 +1,19 @@
 <div class="wrapper">
 <article class="container">
-<section class="text-center mb-100">
-<p class="fs-96 lh-96 fw-700 mb-24">Epic CSS</p>
-<h1 class="mb-24">A simpler utility-first UI library.</h1>
+<section class="mb-100">
+<p class="text-center fs-96 lh-96 fw-700 mb-24">Epic CSS</p>
+<h1 class="text-center mb-24">A simpler utility-first UI library.</h1>
 
+<div class="flex-md gap-40">
+<div class="flex-1">
 <p>A utility-first CSS framework that easily integrates with any node.js project like 11ty or Next.js. Yes it is very similar to Tailwind but much more flexible and can be added to WordPress or PHP projects.</p>
 
 <p>Integrate into any project with node.js and <code>npm install epic-css</code> or use with the pre-integrated <a href="https://epiccss.com/11ty-theme/" target="_blank" rel="noopener">Epic CSS 11ty theme</a>.</p>
+</div>
+<div class="flex-1">
+{% include "npm-downloads.njk" %}
+</div>
+</div>
 </section>
 
 <p>Start with side gutters and a centered width cap in <a href="/docs/wrapper-and-container/">Wrapper and container</a>, then arrange the content with flex or grid.</p>

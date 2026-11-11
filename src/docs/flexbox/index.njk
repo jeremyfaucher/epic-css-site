@@ -16,6 +16,16 @@ docTopic: flexbox
   <div class="docs-demo-item">Three</div>
 </div>{% endset %}
 {{ example(markup, "Flex row with a gap") }}
+<h2 id="responsive-display">Enable flex from medium screens</h2>
+<p><code>flex-md</code> sets <code>display: flex</code> at the medium breakpoint and above. Its minimum width comes from the <code>md</code> entry in the Sass breakpoint map, currently 820 pixels. Below that width it leaves the element's display unchanged, so ordinary block children stack naturally. Use it on the parent without <code>flex</code> when you want flex layout to begin at medium.</p>
+<h2 id="flexible-items">Share available space with flex-1</h2>
+<p>Add <code>flex-1</code> to direct children of a flex container. It sets <code>flex: 1</code>, allowing those items to grow and shrink from a zero basis and share available space equally, subject to their minimum content sizes. It does not enable flex on the parent.</p>
+<p>Combine the two utilities for a mobile-first two-column layout. Resize this example: the block elements stack below medium and share a row from 820 pixels.</p>
+{% set markup %}<div class="flex-md gap-24">
+  <div class="flex-1 docs-demo-item">First column</div>
+  <div class="flex-1 docs-demo-item">Second column</div>
+</div>{% endset %}
+{{ example(markup, "Stacked blocks become equal flex columns from medium") }}
 <h2 id="direction">Direction</h2>
 <table><thead><tr><th>Class</th><th>Effect</th></tr></thead><tbody>
 <tr><td><code>flex-row</code></td><td>Place items in a row.</td></tr>
@@ -42,7 +52,7 @@ docTopic: flexbox
 <tr><td><code>lg-flex-row</code></td><td>960 px</td></tr>
 <tr><td><code>xl-flex-row</code></td><td>1200 px</td></tr>
 </tbody></table>
-<p>These prefixes change direction, not display. Keep <code>flex</code> on the parent. The current stylesheet does not generate responsive display classes such as <code>md-flex</code>, or an <code>inline-flex</code> utility.</p>
+<p>These prefixes change direction, not display. Keep <code>flex</code> on the parent for an always-active flex layout. To enable flex only from medium, use <code>flex-md</code> instead. Note the existing names: <code>md-flex-row</code> changes direction, while <code>flex-md</code> enables display. The current stylesheet does not generate <code>md-flex</code> or <code>inline-flex</code> utilities.</p>
 <h2 id="alignment">Alignment</h2>
 <p>Justification distributes items along the main axis. Item alignment positions them along the cross axis; those axes change when the direction is a column.</p>
 {% set markup %}<div class="flex justify-between items-center gap-16">

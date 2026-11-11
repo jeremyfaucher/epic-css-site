@@ -14,8 +14,9 @@ img.center {
     margin-right: auto;
     margin-left: auto;
   }
-  
-  article img {
+
+  // Post defaults stay weaker than explicit image margin utilities.
+  :where(.post) img {
     margin-bottom: 2rem;
   }
-  
+

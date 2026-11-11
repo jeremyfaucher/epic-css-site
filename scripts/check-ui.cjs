@@ -9,7 +9,7 @@ module.exports = function checkUi(output) {
   const core = new CleanCSS({}).minify(fs.readFileSync(path.join(__dirname, '../src/_includes/style.css'), 'utf8')).styles;
   const selectors = [];
   postcss.parse(core).walkRules(rule => selectors.push(rule.selector));
-  for (const route of ['/ui/', '/ui/cards/', '/ui/sliders/']) {
+  for (const route of ['/ui/', '/ui/cards/', '/ui/sliders/', '/ui/heroes/', '/ui/layouts/']) {
     const $ = cheerio.load(fs.readFileSync(path.join(output, route, 'index.html'), 'utf8'));
     assert.equal($('head style').first().text().trim(), core, route + ': missing compiled Epic CSS');
     assert.ok(!$('head style').text().includes('.docs-layout'), route + ': unexpected docs decoration');
@@ -66,6 +66,38 @@ module.exports = function checkUi(output) {
         return;
       }
       const card = preview.children('div.clr-primary-bg.p-24.border-r-16');
+      if (route === '/ui/layouts/') {
+        if (example.attr('aria-label') === 'Three column') {
+          const section = preview.children('section');
+          const columns = section.children('.flex-md').children('.flex-1');
+          assert.equal(section.children('h2').length, 1);
+          assert.equal(columns.length, 3, 'Three-column layout needs three equal flex wrappers');
+          columns.each((_, column) => {
+            assert.equal($(column).children('.clr-primary-bg.p-24.border-r-16').length, 1);
+            assert.equal($(column).find('h3').length, 1);
+          });
+          return;
+        }
+        const layout = preview.children('section.flex-md.items-center');
+        const columns = layout.children('.flex-1');
+        assert.equal(columns.length, 2, 'Layout must have two equal flex columns');
+        assert.equal(layout.find('h2').length, 1);
+        assert.equal(layout.find('p').length, 1);
+        assert.equal(layout.find('img[alt][width][height]').length, 1);
+        const imageFirst = example.attr('aria-label') === 'Image left, text right';
+        assert.equal(columns.first().find('img').length, imageFirst ? 1 : 0, 'Layout image order must match its label');
+        assert.equal(layout.find('script, [style]').length, 0);
+        return;
+      }
+      if (route === '/ui/heroes/') {
+        const hero = preview.children('section.flex-md');
+        assert.equal(hero.children('.flex-1').length, 2, 'Hero must have two flexible columns');
+        assert.equal(hero.find('h1').text(), 'Develop');
+        assert.equal(hero.find('a').length, 2, 'Hero must have two calls to action');
+        assert.equal(hero.find('img[alt][width][height]').length, 1);
+        assert.equal(hero.find('script, [style]').length, 0, 'Hero uses existing utilities without custom scripts or styles');
+        return;
+      }
       assert.equal(card.length, 1);
       if (example.attr('aria-label') === 'Vertical blog card') {
         assert.equal(card.attr('style'), 'max-width: 344px');
@@ -74,7 +106,7 @@ module.exports = function checkUi(output) {
         assert.ok(card.hasClass('flex-col') && card.hasClass('md-flex-row') && card.hasClass('gap-24'));
         assert.equal(preview.find('[style]').length, 0, 'Horizontal card must use existing utilities');
       }
-      assert.equal(card.find('img.border-r-16[alt][width="484"][height="242"]').length, 1);
+      assert.equal(card.find('img.border-r-16.mb-0[alt][width="484"][height="242"]').length, 1, 'Card image must override article image bottom margin');
       assert.equal(card.find('h3').text().trim(), 'Second Web Design Post');
       assert.equal(card.find('h3').attr('class'), 'clr-primary mt-0 mb-24');
       assert.match(card.find('div.mb-24').text().replace(/\s+/g, ' ').trim(), /^by admin on Mar 11, 2020$/);
