@@ -4,19 +4,20 @@
 <p class="fs-12 lh-16">Epic CSS © All Rights Reserved 2026<br>Website by <a href="https://design2seo.com/">Design 2 SEO</a>
 </p>
 </div>
+<nav aria-label="Sitemap">
+<div class="flex flex-wrap gap-40">
+{% for group in collections.footerSitemap %}
 <div>
-<p class="mb-24">Sitemap:</p>
-<ul class="fs-16 list-none">
+<ul class="fs-16 list-none" aria-label="{{ group.title }}">
+{% for item in group.pages %}
 <li class="mb-12">
-<a href="/" class="{{ 'active' if tag == "home-page"}}">Home</a>
+<a href="{{ item.url }}"{% if page.url == item.url %} class="active" aria-current="page"{% endif %}>{{ item.title }}</a>
 </li>
-<li class="mb-12">
-<a href="/11ty-theme/" class="{{ 'active' if tag == "eleventy-page"}}">11ty theme</a>
-</li>
-<li>
-<a href="/npm-custom-install/" class="{{ 'active' if tag == "npm-page"}}">NPM custom install</a>
-</li>
+{% endfor %}
 </ul>
 </div>
+{% endfor %}
+</div>
+</nav>
 </div>
 </footer>

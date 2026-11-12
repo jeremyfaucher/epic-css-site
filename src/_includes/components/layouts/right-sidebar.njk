@@ -1,0 +1,24 @@
+{% set archiveId = archiveId | default("archive", true) %}
+<section aria-labelledby="{{ archiveId }}-posts-heading">
+  <h2 id="{{ archiveId }}-posts-heading" class="fs-32 lh-37 mt-0 mb-24">Design notes</h2>
+  <div class="grid grid-sidebar-right-344 gap-40 items-start">
+  <section aria-label="Posts">
+    <article class="clr-primary-bg p-24 border-r-16 mb-24">
+      <h3 class="fs-24 lh-32 mt-0 mb-16"><a href="/docs/wrapper-and-container/">Give content room to breathe</a></h3>
+      <p class="mb-0">Consistent spacing helps readers see what belongs together. Leave more space between groups than between related elements.</p>
+    </article>
+    <article class="clr-primary-bg p-24 border-r-16">
+      <h3 class="fs-24 lh-32 mt-0 mb-16"><a href="/docs/typography/">Make the hierarchy easy to scan</a></h3>
+      <p class="mb-0">Use headings to introduce each topic. A consistent type scale helps readers move between the main idea and supporting details.</p>
+    </article>
+  </section>
+  <aside class="clr-primary-bg p-24 border-r-16" aria-labelledby="{{ archiveId }}-sidebar-heading">
+    <h2 id="{{ archiveId }}-sidebar-heading" class="fs-24 lh-32 mt-0 mb-16">Keep exploring</h2>
+    <p>Group related reading in the sidebar so readers can explore without losing their place.</p>
+    <ul class="list-none pl-0 mb-0">
+      <li class="mb-12"><a href="/docs/colors/">Color and readability</a></li>
+      <li><a href="/docs/grid/">Responsive grids</a></li>
+    </ul>
+  </aside>
+</div>
+</section>

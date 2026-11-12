@@ -5,14 +5,14 @@
   <div data-example-code{% if codeId %} id="{{ codeId }}"{% endif %}>
   <div class="flex flex-wrap items-center gap-12 py-12">
     <span class="fs-14">HTML</span>
-    <button class="py-8 px-12 border-r-4 cursor-pointer" type="button" data-copy-example>Copy HTML</button>
+    <button class="btn btn-secondary py-8 px-12" type="button" data-copy-example>Copy HTML</button>
     <span class="clr-secondary fs-14" role="status" data-copy-feedback></span>
   </div>
   <pre class="m-0 p-16 fs-14 lh-24"><code class="language-html">{{ markup | trim | escape }}</code></pre>
   {% if script %}
   <div class="flex flex-wrap items-center gap-12 py-12">
     <span class="fs-14">JavaScript</span>
-    <button class="py-8 px-12 border-r-4 cursor-pointer" type="button" data-copy-example data-copy-language="javascript">Copy JavaScript</button>
+    <button class="btn btn-secondary py-8 px-12" type="button" data-copy-example data-copy-language="javascript">Copy JavaScript</button>
   </div>
   <pre class="m-0 p-16 fs-14 lh-24"><code class="language-javascript">{{ script | trim | escape }}</code></pre>
   {% endif %}

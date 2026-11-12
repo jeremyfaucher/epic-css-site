@@ -9,6 +9,31 @@ const markdownIt = require("markdown-it");
 const sass = require("sass");
 const highlightCode = require("./scripts/highlight-code.cjs");
 module.exports = function(eleventyConfig) {
+  // Derive footer navigation from public HTML pages, rather than a second URL list.
+  eleventyConfig.addCollection("footerSitemap", collectionApi => {
+    const groups = [
+      { title: "Site", pages: [] },
+      { title: "Documentation", pages: [] },
+      { title: "UI library", pages: [] }
+    ];
+    for (const item of collectionApi.getAll()) {
+      if (!item.url || !item.outputPath || !item.outputPath.endsWith(".html") ||
+          item.url === "/404.html" || item.data.sitemap === false) continue;
+      const title = item.url === "/" ? "Home" : item.url === "/11ty-theme/" ? "11ty theme" :
+        item.url === "/ui/" ? "UI library" :
+        item.data.title || item.url.split("/").filter(Boolean).pop().replaceAll("-", " ");
+      const group = item.url.startsWith("/docs/") ? groups[1] :
+        item.url.startsWith("/ui/") ? groups[2] : groups[0];
+      group.pages.push({ url: item.url, title });
+    }
+    for (const group of groups) {
+      group.pages.sort((a, b) => {
+        const landing = url => ["/", "/docs/", "/ui/"].includes(url);
+        return Number(landing(b.url)) - Number(landing(a.url)) || a.title.localeCompare(b.title);
+      });
+    }
+    return groups.filter(group => group.pages.length);
+  });
   // Render site-only documentation CSS independently of the portable library.
   eleventyConfig.addShortcode("docsStyles", () =>
     new CleanCSS({}).minify(sass.compile("src/site-styles/index.scss").css).styles);

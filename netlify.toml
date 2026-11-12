@@ -7,6 +7,12 @@
   NODE_VERSION = "22"
 
 [[redirects]]
+  from = "/npm-custom-install/"
+  to = "/docs/installation/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "jovial-goldstine-83c0bc.netlify.app/*"
   to = "https://design2seo.com/"
   status = 200

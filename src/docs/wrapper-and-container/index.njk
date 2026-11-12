@@ -10,18 +10,18 @@ docTopic: wrapper-and-container
 <p class="docs-lead">Start with side gutters, add a centered width cap when you need one, then arrange the content inside with flex or grid.</p>
 <h2 id="customize-container-width">Customize your container width</h2>
 <p>Set your preferred maximum in <code>src/my-epic-css/_custom.scss</code>. This site uses:</p>
-<pre><code class="language-scss">$container-width: 980px;</code></pre>
-<p>Keep using <code>class="container"</code>. Run <code>npm start</code> to recompile and preview, or <code>npm run build</code> for production. The library fallback is a 1000-pixel maximum; this site's override is 980 pixels. Neither is a fixed width. This setting changes <code>container</code>; <code>container-post</code> stays at its hardcoded 1000-pixel maximum.</p>
+<pre><code class="language-scss">$container-width: 1040px;</code></pre>
+<p>Keep using <code>class="container"</code>. Run <code>npm start</code> to recompile and preview, or <code>npm run build</code> for production. The library fallback is a 1000-pixel maximum; this site's override is 1040 pixels. Neither is a fixed width. This setting changes <code>container</code>; <code>container-post</code> stays at its hardcoded 1000-pixel maximum.</p>
 <h2 id="current-behavior">What the classes do</h2>
 <table>
   <thead><tr><th>Class</th><th>Current CSS</th><th>Use it for</th></tr></thead>
   <tbody>
     <tr><td><code>wrapper</code></td><td><code>padding: 0 5%</code></td><td>Left and right gutters, with no top or bottom padding.</td></tr>
-    <tr><td><code>container</code></td><td><code>margin: 0 auto; max-width: 980px; box-sizing: border-box</code> on this site</td><td>A centered maximum width, including the container's own padding and border.</td></tr>
+    <tr><td><code>container</code></td><td><code>margin: 0 auto; max-width: 1040px; box-sizing: border-box</code> on this site</td><td>A centered maximum width, including the container's own padding and border.</td></tr>
   </tbody>
 </table>
 <p>A container fills the available block width up to its cap, then centers with automatic side margins. It adds no gutters. A wrapper adds 5% padding on each side, measured against its containing block's width.</p>
-<p><strong>Preview boundaries:</strong> backgrounds show the nested regions inside this docs column, not the viewport. This site's 980-pixel cap does not engage in these narrow previews.</p>
+<p><strong>Preview boundaries:</strong> backgrounds show the nested regions inside this docs column, not the viewport. This site's 1040-pixel cap does not engage in these narrow previews.</p>
 <h2 id="wrapper-plus-container">Gutters and a centered width cap</h2>
 <p>Use a wrapper around a container for the usual page-content pattern. The wrapper supplies breathing room at the edges; the container limits long rows on wider screens.</p>
 {% set markup %}<div class="wrapper clr-primary-bg">

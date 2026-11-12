@@ -10,9 +10,13 @@ Develop and document the shared utility library here, then port verified changes
 - Eleventy's `docsStyles` shortcode embeds that separate stylesheet only on documentation pages. The shared Sass entry and its full pre-light output remain free of docs styles.
 - [src/_includes/docs.njk](src/_includes/docs.njk) is the shared docs layout. Topic pages live in [src/docs](src/docs/): overview, installation, Flexbox, grid, colors and typography.
 - [docs-example.njk](src/_includes/docs-example.njk) creates a live preview and escaped copyable code from the same markup. [docs.js](src/assets/js/docs.js) handles copying and legacy topic links.
-- `.eleventy.js` reads `src` and writes `_site`. `base.njk` minifies and embeds the library CSS include; docs pages also get the independent site stylesheet. Existing homepage, old npm-install page and starter-page content includes remain separate from this docs pass.
+- `.eleventy.js` reads `src` and writes `_site`. `base.njk` minifies and embeds the library CSS include; docs pages also get the independent site stylesheet. Homepage and starter-page content includes remain separate. Installation is maintained in `src/docs/installation/index.njk`; Netlify permanently redirects `/npm-custom-install/` there.
 
 ## Develop
+
+The footer sitemap derives Site, Documentation, and UI examples groups from Eleventy's public HTML page collection. Give new pages a descriptive front-matter `title`; they appear automatically. Error/XML routes are excluded; set `sitemap: false` or `eleventyExcludeFromCollections: true` for nonpublic pages.
+
+Follow [DEMO-COPY.md](DEMO-COPY.md) for short, meaningful teaching content in UI examples, including shared content ownership and copy checks.
 
 From this directory:
 
@@ -35,6 +39,8 @@ npm run build
 Both commands run [check-docs.cjs](scripts/check-docs.cjs), verifying isolated topics, active sidebar navigation, unique IDs, navigation targets, preview/code consistency, retention of example utilities in filtered CSS, sticky sidebar styles, the docs script asset, and separation of docs presentation from library CSS.
 
 ## Pre-light and utility coverage
+
+Spacing tokens (`$spacer` and `$spacers`) live in the no-output `_spacer-settings.scss` partial. `_variables.scss` imports it for compatibility with existing variables-only and selective imports. Keep variables early in the entry point and `_spacers.scss` last: token availability and utility CSS order are separate concerns. The spacer generator uses namespaced defaults only when caller values are absent, preserving overrides made after importing variables. Other tokens remain in `_variables.scss`.
 
 Pre-light is the whole compiled stylesheet from the selected library Sass imports. The light command compares literal source class attributes against it and writes a filtered version. Both paths use [epicConfig.js](epicConfig.js). The legacy `epic-build` and `epic-light` commands remain available; the full-build copy hardcodes `style.css`, while the filter honors `outputFileName`.
 

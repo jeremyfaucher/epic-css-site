@@ -10,8 +10,8 @@ module.exports = function checkCards(output, core) {
   const normalize = html => cheerio.load(html, null, false).html().replace(/>\s+</g, '><').replace(/\s+/g, ' ').trim();
   assert.equal(home('head style').first().text().trim(), core, 'Homepage must load compiled Epic CSS');
   assert.ok(!home('head style').text().includes('.docs-layout'), 'Homepage must not load docs CSS');
-  for (const variant of ['Vertical', 'Horizontal']) {
-    const selector = '[data-example][aria-label="' + variant + ' blog card"]';
+  for (const variant of ['Vertical', 'Horizontal', 'Horizontal image-right']) {
+    const selector = '[data-example][aria-label="' + (variant === 'Horizontal image-right' ? 'Horizontal image-right card' : variant + ' blog card') + '"]';
     const homeExample = home(selector), uiExample = cards(selector);
     assert.equal(homeExample.length, 1);
     assert.equal(uiExample.length, 1);
@@ -33,7 +33,7 @@ module.exports = function checkCards(output, core) {
   const ids = home('[id]').map((_, element) => home(element).attr('id')).get();
   assert.equal(new Set(ids).size, ids.length, 'Duplicate homepage IDs');
   assert.equal(home('[data-showcase-controls][hidden]').length, 1, 'Uninitialized controls should stay hidden');
-  assert.equal(home('[data-showcase-panel]:not([hidden])').length, 2, 'Both examples must remain available without JS');
+  assert.equal(home('[data-showcase-panel]:not([hidden])').length, 3, 'All examples must remain available without JS');
   assert.equal(home('[data-example-code][hidden]').length, 0, 'Code must remain available without JS');
   home('[aria-controls]').each((_, element) => {
     for (const id of home(element).attr('aria-controls').split(/\s+/)) assert.equal(home('[id="' + id + '"]').length, 1, 'Missing controlled element ' + id);
@@ -41,7 +41,7 @@ module.exports = function checkCards(output, core) {
   for (const script of ['card-showcase.js', 'examples.js']) assert.equal(home('script[src="/assets/js/' + script + '"]').length, 1);
   for (const file of ['src/ui/cards/index.njk', 'src/_includes/card-showcase.njk']) {
     const source = fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
-    for (const variant of ['vertical', 'horizontal']) assert.equal(source.split('include "components/cards/' + variant + '.njk"').length - 1, 1, file + ': use each component exactly once');
+    for (const variant of ['vertical', 'horizontal', 'horizontal-right']) assert.equal(source.split('include "components/cards/' + variant + '.njk"').length - 1, 1, file + ': use each component exactly once');
     assert.ok(!source.includes('Second Web Design Post'), file + ': card content should come from shared data');
     assert.ok(!source.includes('style="max-width: 344px"'), file + ': card markup should come from the shared template');
   }

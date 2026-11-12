@@ -1,0 +1,21 @@
+// Spacers - gap, margin and padding - using rem
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  4: $spacer * 0.25,
+  6: $spacer * 0.375,
+  8: $spacer * 0.5,
+  10: $spacer * 0.625,
+  12: $spacer * 0.75,
+  16: $spacer * 1,
+  18: $spacer * 1,
+  20: $spacer * 1.25,
+  24: $spacer * 1.5,
+  32: $spacer * 2,
+  40: $spacer * 2.5,
+  56: $spacer * 3.5,
+  60: $spacer * 3.75,
+  64: $spacer * 4,
+  80: $spacer * 5,
+  100: $spacer * 6.25,
+);

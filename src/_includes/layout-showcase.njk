@@ -1,0 +1,9 @@
+{% from "ui-example.njk" import example %}
+{% set archiveId = "home-archive" %}
+{% set sidebar %}{% include "components/layouts/right-sidebar.njk" %}{% endset %}
+<section class="my-80" data-code-showcase aria-labelledby="home-layout-heading">
+  <h2 class="fs-32 lh-32 mb-16" id="home-layout-heading">Give the page a clear structure</h2>
+  <p class="mb-24">Keep post summaries together and related reading alongside them. This <a href="/ui/layouts/">page layout</a> stacks in reading order on smaller screens.</p>
+  <button class="btn btn-secondary py-8 px-16" type="button" data-code-showcase-toggle aria-expanded="true" aria-controls="home-archive-code" hidden>Hide code</button>
+  {{ example(sidebar, "Posts with a right sidebar", "", false, "home-archive-code") }}
+</section>

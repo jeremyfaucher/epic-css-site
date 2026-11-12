@@ -20,6 +20,17 @@ docTopic: colors
 </div>{% endset %}
 {{ example(markup, "Primary and secondary color pairs") }}
 <p><code>xs-w-50</code> gives each box half the width. Vertical padding supplies the box height while the flex utilities center the labels.</p>
+<h2 id="buttons">Buttons</h2>
+<p>Use <code>btn</code> for an inline-flex button with inherited typography, padding, a border, rounded corners, and a visible keyboard focus outline. Add <code>btn-primary</code> or <code>btn-secondary</code> to use the matching foreground and background palette values. The base button inherits text color and has a transparent background, so it can also be used inside a colored region.</p>
+{% set markup %}<div class="flex flex-wrap gap-16 items-center">
+  <button class="btn btn-primary" type="button">Primary button</button>
+  <button class="btn btn-secondary" type="button">Secondary button</button>
+  <button class="btn btn-primary" type="button" disabled>Unavailable action</button>
+  <a class="btn btn-secondary" href="/docs/installation/">Installation guide</a>
+</div>{% endset %}
+{{ example(markup, "Primary and secondary buttons") }}
+<p>These sample buttons demonstrate appearance; they do not run an action. Use a native <code>button</code> for actions and an anchor with a real destination for navigation. Native <code>disabled</code> prevents the unavailable button from activating; it also receives a dimmed appearance. Do not add <code>disabled</code> to an anchor.</p>
+<p>Use existing spacing and layout utilities for variations, such as <code>btn btn-primary py-8 px-16</code>. Palette overrides flow through both button variants. Check text, borders, focus outlines, and disabled states against their actual surroundings when customizing colors; the named pairs do not guarantee accessible contrast for every palette.</p>
 <h3 id="inherited-and-white-text">Inherited and fixed text colors</h3>
 {% set markup %}<div class="clr-secondary-bg p-24 border-r-16">
   <p>This paragraph inherits the body text color.</p>

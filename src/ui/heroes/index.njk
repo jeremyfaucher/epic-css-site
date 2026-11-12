@@ -5,7 +5,7 @@ title: Heroes
 description: Responsive hero layouts built with Epic CSS flex utilities.
 ---
 {% from "ui-example.njk" import example %}
-<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI examples</a> / <a href="/ui/heroes/" aria-current="page">Heroes</a></nav>
+<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/heroes/" aria-current="page">Heroes</a></nav>
 <h2 class="fs-37 lh-37 mb-24">Hero layouts</h2>
 <p class="mb-32">Start with a heading, supporting text, two calls to action, and an image. This first example focuses on the layout; the image frame, section background, and final button styling can be added next.</p>
 <h2 class="fs-24 lh-32 mb-16">Text left, image right</h2>
@@ -13,5 +13,4 @@ description: Responsive hero layouts built with Epic CSS flex utilities.
 {% set markup %}{% include "components/heroes/split.njk" %}{% endset %}
 {{ example(markup, "Split hero with text and image") }}
 <p>The local illustration is a replaceable image. Use your own photo and update its alternative text and dimensions when adapting the hero. The hero contains the page's <code>h1</code>; use an appropriate heading level if you place it within an existing page.</p>
-<p><a href="/docs/flexbox/">Flexbox utilities</a> · <a href="/docs/images/">Image utilities</a></p>
 <script src="/assets/js/examples.js" defer></script>

@@ -1,24 +1,37 @@
 ---
 layout: base.njk
 tag: ui-page
-title: UI examples
+title: UI library
 description: Reusable interface examples built with existing Epic CSS utilities.
 ---
-<h1 class="fs-37 lh-37 mb-24">UI examples</h1>
+<h1 class="fs-37 lh-37 mb-24">UI library</h1>
 <p class="mb-24">Start with a working interface, then copy its HTML and adapt the content for your project.</p>
-<section class="clr-primary-bg p-24 border-r-16 mb-24">
+<section class="flex flex-col gap-24" aria-label="UI library categories">
+<div class="flex flex-col md-flex-row gap-24">
+<div class="clr-primary-bg p-24 border-r-16 flex-1">
   <h2 class="fs-24 lh-32 mb-12"><a href="/ui/layouts/">Layouts</a></h2>
-  <p>Responsive structures for arranging images, text, and other components. Start with equal-width image and text columns in either order.</p>
-</section>
-<section class="clr-primary-bg p-24 border-r-16 mb-24">
+  <p>Page structures for main content, a right sidebar, and groups of cards. Keep the reading order clear as the layout adapts.</p>
+</div>
+<div class="clr-primary-bg p-24 border-r-16 flex-1">
   <h2 class="fs-24 lh-32 mb-12"><a href="/ui/heroes/">Heroes</a></h2>
   <p>Responsive hero layouts with a heading, supporting text, calls to action, and an image.</p>
-</section>
-<section class="clr-primary-bg p-24 border-r-16">
+</div>
+</div>
+<div class="flex flex-col md-flex-row gap-24">
+<div class="clr-primary-bg p-24 border-r-16 flex-1">
   <h2 class="fs-24 lh-32 mb-12"><a href="/ui/cards/">Cards</a></h2>
-  <p>Vertical and horizontal blog cards with a shared image, post title, author, date, and excerpt.</p>
-</section>
-<section class="clr-primary-bg p-24 border-r-16 mt-24">
+  <p>Vertical and horizontal cards with image-left and image-right options, shared content, and a short lesson on spacing.</p>
+</div>
+<div class="clr-primary-bg p-24 border-r-16 flex-1">
   <h2 class="fs-24 lh-32 mb-12"><a href="/ui/sliders/">Sliders</a></h2>
   <p>A horizontal scroll slider with eight numbered gradient cards and Previous and Next controls.</p>
+</div>
+</div>
+<div class="flex flex-col md-flex-row gap-24">
+<div class="clr-primary-bg p-24 border-r-16 flex-1">
+  <h2 class="fs-24 lh-32 mb-12"><a href="/ui/buttons/">Buttons</a></h2>
+  <p>Simple button styles, navigation links, and unavailable states. Use clear labels and keep keyboard focus easy to follow.</p>
+</div>
+<div class="flex-1" aria-hidden="true"></div>
+</div>
 </section>

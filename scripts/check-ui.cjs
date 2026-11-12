@@ -9,7 +9,7 @@ module.exports = function checkUi(output) {
   const core = new CleanCSS({}).minify(fs.readFileSync(path.join(__dirname, '../src/_includes/style.css'), 'utf8')).styles;
   const selectors = [];
   postcss.parse(core).walkRules(rule => selectors.push(rule.selector));
-  for (const route of ['/ui/', '/ui/cards/', '/ui/sliders/', '/ui/heroes/', '/ui/layouts/']) {
+  for (const route of ['/ui/', '/ui/buttons/', '/ui/cards/', '/ui/sliders/', '/ui/heroes/', '/ui/layouts/']) {
     const $ = cheerio.load(fs.readFileSync(path.join(output, route, 'index.html'), 'utf8'));
     assert.equal($('head style').first().text().trim(), core, route + ': missing compiled Epic CSS');
     assert.ok(!$('head style').text().includes('.docs-layout'), route + ': unexpected docs decoration');
@@ -27,8 +27,13 @@ module.exports = function checkUi(output) {
       const target = $(element).attr('href') || $(element).attr('src');
       // Faithful homepage extraction retains the original, unavailable sample post.
       if (target === '/blog/web-design/second-web-design-post/' && $(element).closest('[data-example-preview]').length) return;
-      const file = path.join(output, target, target.endsWith('/') ? 'index.html' : '');
+      const [pathname, fragment] = target.split('#');
+      const file = path.join(output, pathname, pathname.endsWith('/') ? 'index.html' : '');
       assert.ok(fs.existsSync(file), route + ': broken local target ' + target);
+      if (fragment) {
+        const destination = cheerio.load(fs.readFileSync(file, 'utf8'));
+        assert.ok(destination('[id]').toArray().some(element => destination(element).attr('id') === decodeURIComponent(fragment)), route + ': missing fragment ' + target);
+      }
     });
     $('[data-example]').each((_, element) => {
       const example = $(element);
@@ -39,6 +44,12 @@ module.exports = function checkUi(output) {
       assert.equal(example.find('[data-copy-example]').length, route === '/ui/sliders/' ? 2 : 1);
       assert.equal(example.find('[data-copy-feedback][role="status"]').length, 1);
       const preview = example.find('[data-example-preview]');
+      if (route === '/ui/buttons/') {
+        assert.ok(preview.find('.btn').length >= 2);
+        assert.equal(preview.find('a:not([href]), a[disabled], button:not([type="button"])').length, 0);
+        assert.equal(preview.find('[onclick], script').length, 0);
+        return;
+      }
       if (route === '/ui/sliders/') {
         assert.equal($('main').children('[data-example]').length, 1, 'Slider example must break out of the container');
         assert.equal(preview.parents('.container, .wrapper').length, 0, 'Live slider must be viewport-wide');
@@ -78,15 +89,16 @@ module.exports = function checkUi(output) {
           });
           return;
         }
-        const layout = preview.children('section.flex-md.items-center');
-        const columns = layout.children('.flex-1');
-        assert.equal(columns.length, 2, 'Layout must have two equal flex columns');
-        assert.equal(layout.find('h2').length, 1);
-        assert.equal(layout.find('p').length, 1);
-        assert.equal(layout.find('img[alt][width][height]').length, 1);
-        const imageFirst = example.attr('aria-label') === 'Image left, text right';
-        assert.equal(columns.first().find('img').length, imageFirst ? 1 : 0, 'Layout image order must match its label');
-        assert.equal(layout.find('script, [style]').length, 0);
+        const wrapper = preview.children('section[aria-labelledby="archive-posts-heading"]');
+        const layout = wrapper.children('.grid.grid-sidebar-right-344');
+        assert.equal(wrapper.children('h2#archive-posts-heading').length, 1);
+        assert.equal(layout.children('section').children().first().prop('tagName'), 'ARTICLE');
+        assert.equal(layout.children('section').length, 1);
+        assert.equal(layout.children('aside[aria-labelledby]').length, 1);
+        assert.equal(layout.children('section').find('article').length, 2);
+        assert.ok(layout.hasClass('gap-40'));
+        assert.equal(layout.find('style, script, [data-archive-layout]').length, 0);
+        assert.ok(selectors.includes('.grid-sidebar-right-344'));
         return;
       }
       if (route === '/ui/heroes/') {
@@ -103,21 +115,23 @@ module.exports = function checkUi(output) {
         assert.equal(card.attr('style'), 'max-width: 344px');
         assert.equal(preview.find('[style]').length, 1, 'Only the original width cap needs an inline style');
       } else {
-        assert.ok(card.hasClass('flex-col') && card.hasClass('md-flex-row') && card.hasClass('gap-24'));
+        assert.ok(card.hasClass('flex-md') && card.hasClass('gap-24'));
+        assert.equal(card.children('.flex-1').length, 2);
+        assert.equal(card.find('.md-w-50').length, 0);
         assert.equal(preview.find('[style]').length, 0, 'Horizontal card must use existing utilities');
       }
       assert.equal(card.find('img.border-r-16.mb-0[alt][width="484"][height="242"]').length, 1, 'Card image must override article image bottom margin');
-      assert.equal(card.find('h3').text().trim(), 'Second Web Design Post');
+      const data = require('../src/_data/cardExample');
+      assert.equal(card.find('h3').text().trim(), data.title);
       assert.equal(card.find('h3').attr('class'), 'clr-primary mt-0 mb-24');
-      assert.match(card.find('div.mb-24').text().replace(/\s+/g, ' ').trim(), /^by admin on Mar 11, 2020$/);
-      assert.equal(card.find('p').text().replace(/\s+/g, ' ').trim(), "YOLO pop-up synth fixie slow-carb fingerstache before they sold out twee readymade church-key DIY meh umami crucifix offal. PBR&B craft beer photo booth lyft gastropub 90's. This is a Read more...");
-      assert.equal(card.find('a[href="/blog/web-design/second-web-design-post/"]').length, 3);
-      assert.ok($('main').text().includes('sample blog page is not included'));
+      assert.equal(card.find('p').text().replace(/\s+/g, ' ').trim(), data.excerpt + ' ' + data.linkLabel);
+      assert.equal(card.find('a[href="' + data.href + '"]').length, 3);
+      if (example.attr('aria-label') === 'Horizontal image-right card') assert.equal(card.children().last().prop('tagName'), 'A');
+
     });
   }
   const home = cheerio.load(fs.readFileSync(path.join(output, 'index.html'), 'utf8'));
   assert.ok(home('a[href="/ui/cards/"]').length, 'Missing homepage Cards link');
-  assert.ok(home('a[href="/ui/sliders/"]').length, 'Missing homepage Sliders link');
   assert.equal(home('[data-slider], .slider-container, .prev-btn, .next-btn').length, 0, 'Homepage slider remains');
   assert.ok(!home('main script').text().includes('scrollBy'), 'Homepage slider script remains');
   assert.ok(!home('main pre').text().includes('slider-container'), 'Homepage slider snippet remains');
@@ -125,5 +139,5 @@ module.exports = function checkUi(output) {
   assert.ok(fs.existsSync(path.join(output, 'assets/js/examples.js')));
   require('./test-sliders.cjs')();
   require('./check-card-components.cjs')(output, core);
-  console.log('UI checks: core CSS, utilities, assets, matching live/copy HTML, original blog card content and width. Original sample post route remains unavailable.');
+  console.log('UI checks: core CSS, utilities, assets, matching live/copy HTML, shared teaching copy, responsive card variants, and page layouts.');
 };

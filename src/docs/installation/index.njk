@@ -2,11 +2,18 @@
 layout: docs.njk
 tag: docs-page
 title: Installation
-description: Install Epic CSS, compile its Sass, and create optional project-specific light CSS.
+description: Use Epic CSS from the CDN, or install the package for Sass customization and optional project-specific light CSS.
 docTopic: installation
 ---
 <h1 id="installation">Installation</h1>
-<p class="docs-lead">Use Epic CSS in an existing Node project, or start with the Eleventy theme. The output is ordinary CSS that you can load in your own site.</p>
+<p class="docs-lead">Use Epic CSS from the CDN, install it in an existing Node project, or start with the Eleventy theme. Each option gives you ordinary CSS to use in your site.</p>
+<h2 id="cdn">Use the CDN</h2>
+<p>Add this stylesheet link to your page's <code>&lt;head&gt;</code> to load the full Epic CSS <code>0.14.1</code> library without a build step:</p>
+<pre><code class="language-html">&lt;link
+  rel="stylesheet"
+  href="https://cdn.epiccss.com/0.14.1.css"
+/&gt;</code></pre>
+<p>For customization, follow the <a href="#npm">npm installation</a> and <a href="#sass-entry">Sass setup</a> below. The optional <a href="#light-build">Epic Light build</a> filters your compiled CSS into a smaller stylesheet for your project.</p>
 <h2 id="npm">Install the package</h2>
 <p>From a project with a package manifest, install the library and Sass:</p>
 <pre><code class="language-bash">npm install epic-css sass</code></pre>

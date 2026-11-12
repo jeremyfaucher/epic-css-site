@@ -6,23 +6,18 @@ description: Reusable responsive layouts for arranging images, text, and other c
 ---
 {% from "ui-example.njk" import example %}
 <article>
-<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI examples</a> / <a href="/ui/layouts/" aria-current="page">Layouts</a></nav>
+<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/layouts/" aria-current="page">Layouts</a></nav>
 <h1 class="fs-37 lh-37 mb-24">Layouts</h1>
-<p class="mb-32">Use these structures to arrange your content, then replace the images and copy with your own. Each example includes a live preview and matching HTML.</p>
-<h2 class="fs-24 lh-32 mb-16">Image left, text right</h2>
-<p class="mb-24">A fifty-fifty layout with an image beside a vertically centered heading and paragraph. <code>flex-md</code> enables flex from 820 pixels, <code>flex-1</code> shares the available width between columns, and <code>items-center</code> handles vertical alignment. Below medium, the image appears above the text.</p>
-{% set left %}{% include "components/layouts/image-left.njk" %}{% endset %}
-{{ example(left, "Image left, text right") }}
-<h2 class="fs-24 lh-32 mb-16">Text left, image right</h2>
-<p class="mb-24">The same structure with the content order swapped. Below medium, the heading and paragraph appear before the image. Both examples preserve their HTML reading order.</p>
-{% set right %}{% include "components/layouts/image-right.njk" %}{% endset %}
-{{ example(right, "Text left, image right") }}
+<p class="mb-32">Arrange the main regions of a page, then compose cards and other components inside them. Each example includes a live preview and matching HTML.</p>
+<h2 class="fs-24 lh-32 mb-16">Posts with a right sidebar</h2>
+<p class="mb-24">An archive section holds two post summaries, followed by a related-reading sidebar. <code>grid</code> enables the layout, and <code>grid-sidebar-right-344</code> sets <code>minmax(0, 1fr) 344px</code> from 1040 pixels. Below that, the sidebar stacks after the posts. <code>gap-40</code> supplies the 40-pixel gap at the default root font size.</p>
+{% set sidebar %}{% include "components/layouts/right-sidebar.njk" %}{% endset %}
+{{ example(sidebar, "Main content with right sidebar") }}
 <h2 class="fs-24 lh-32 mb-16">Three column</h2>
 <p class="mb-24">A section heading followed by three existing vertical cards. <code>flex-md</code> switches the parent to flex from 820 pixels, and <code>flex-1</code> on each wrapper shares the available row width equally. Below medium the cards stack. <code>gap-24</code> separates columns, and <code>mb-24</code> separates stacked cards.</p>
 {% set three %}{% include "components/layouts/three-column.njk" %}{% endset %}
 {{ example(three, "Three column") }}
-<p class="mb-24">The cards reuse the existing sample content and its 344-pixel width cap. Replace the sample links when adapting the layout; the sample blog post is not included in this site.</p>
-<p>Replace the static placeholders with your own images, updating their alternative text and dimensions. Layout section headings use <code>h2</code>; the cards retain their <code>h3</code> headings.</p>
-<p><a href="/docs/flexbox/">Flexbox utilities</a> · <a href="/docs/images/">Image utilities</a></p>
+<p class="mb-24">The cards share the spacing lesson and retain their 344-pixel maximum width.</p>
+<p>Layout section headings use <code>h2</code>; the cards retain their <code>h3</code> headings.</p>
 </article>
 <script src="/assets/js/examples.js" defer></script>

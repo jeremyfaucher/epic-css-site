@@ -6,18 +6,20 @@ description: Copy vertical and horizontal blog cards built from shared Epic CSS 
 ---
 {% from "ui-example.njk" import example %}
 <article>
-<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI examples</a> / <a href="/ui/cards/" aria-current="page">Cards</a></nav>
+<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/cards/" aria-current="page">Cards</a></nav>
 <h1 class="fs-37 lh-37 mb-24">Cards</h1>
-<p class="mb-32">The original vertical blog card and a horizontal variant share the same image, post title, author, date, and excerpt.</p>
+<p class="mb-32">The vertical card and two horizontal variants share the same image, heading, topic labels, and short lesson on spacing.</p>
 <h2 class="fs-24 lh-32 mb-16">Vertical card</h2>
 <p class="mb-24">The card keeps its original <code>max-width: 344px</code> and shrinks with the available space. Both the card and its image use <code>border-r-16</code>.</p>
 {% set markup %}{% include "components/cards/vertical.njk" %}{% endset %}
 {{ example(markup, "Vertical blog card") }}
-<h2 class="fs-24 lh-32 mb-16">Horizontal card</h2>
-<p class="mb-24">The same image and content use a column on small screens and a row from 820 pixels up, with <code>flex-col</code>, <code>md-flex-row</code>, and <code>gap-24</code>.</p>
+<h2 class="fs-24 lh-32 mb-16">Horizontal card, image left</h2>
+<p class="mb-24"><code>flex-md</code> places the image and content side by side from 820 pixels, with equal <code>flex-1</code> halves and <code>gap-24</code> between them. Below medium, the image stacks above the text.</p>
 {% set horizontal %}{% include "components/cards/horizontal.njk" %}{% endset %}
 {{ example(horizontal, "Horizontal blog card") }}
-<p class="mb-24">This example preserves the original sample post links. The sample blog page is not included in this site, so replace those links when using the card in your project.</p>
-<p><a href="/docs/images/">Image utilities</a> · <a href="/docs/colors/">Colors and palettes</a></p>
+<h2 class="fs-24 lh-32 mb-16">Horizontal card, image right</h2>
+<p class="mb-24">Put the content first and image second. The image appears on the right from medium screens and below the text on smaller screens, preserving the HTML reading order.</p>
+{% set horizontalRight %}{% include "components/cards/horizontal-right.njk" %}{% endset %}
+{{ example(horizontalRight, "Horizontal image-right card") }}
 </article>
 <script src="/assets/js/examples.js" defer></script>

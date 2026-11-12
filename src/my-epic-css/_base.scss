@@ -12,8 +12,9 @@ p {
   line-height: $lh-p;
 }
 
-// set base/reset for browsers
-h1, h2, h3, h4, h5, h6, p, ul {
+// set base/reset for browsers headings
+h1, h2, h3, h4, h5, h6 {
+  line-height: normal;
   margin: 0;
   padding: 0;
 }
@@ -34,6 +35,43 @@ a.active,
 a:hover {
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+a.btn {
+  color: inherit;
+  text-decoration: none;
+}
+
+.btn:hover,
+a.btn:hover {
+  text-decoration: none;
+}
+
+.btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 ul.list-none {
@@ -64,7 +102,7 @@ main {
 
 }
 
-article {
+article.post {
   h1 {
     font-size: var(--fs-40);
     line-height: var(--lh-40);

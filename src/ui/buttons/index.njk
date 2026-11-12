@@ -1,0 +1,36 @@
+---
+layout: base.njk
+tag: ui-page
+title: Buttons
+description: Simple palette-based buttons, navigation links, and native disabled states with copyable HTML.
+---
+{% from "ui-example.njk" import example %}
+<article>
+<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/buttons/" aria-current="page">Buttons</a></nav>
+<h1 class="fs-37 lh-37 mb-24">Buttons</h1>
+<p class="mb-32">Make the next step clear with a short, descriptive label. Use a button for an action and a link for navigation.</p>
+<h2 class="fs-24 lh-32 mb-16">Base and palette variants</h2>
+<p class="mb-24"><code>btn</code> provides the shape, spacing, and inherited typography. Add <code>btn-primary</code> or <code>btn-secondary</code> to use an existing palette pair. These sample buttons demonstrate appearance and do not run an action.</p>
+{% set variants %}<div class="flex flex-wrap gap-16 items-center">
+  <button class="btn" type="button">Base button</button>
+  <button class="btn btn-primary" type="button">Primary button</button>
+  <button class="btn btn-secondary" type="button">Secondary button</button>
+</div>{% endset %}
+{{ example(variants, "Base and palette buttons") }}
+<h2 class="fs-24 lh-32 mb-16">Navigation and unavailable actions</h2>
+<p class="mb-24">Keep navigation as a real link, even when it looks like a button. Use the native <code>disabled</code> attribute for an unavailable button; it prevents activation. Anchors do not support that attribute.</p>
+{% set states %}<div class="flex flex-wrap gap-16 items-center">
+  <a class="btn btn-primary" href="/docs/installation/">Read the installation guide</a>
+  <button class="btn btn-secondary" type="button" disabled>Action unavailable</button>
+</div>{% endset %}
+{{ example(states, "Navigation link and disabled button") }}
+<h2 class="fs-24 lh-32 mb-16">Spacing and keyboard focus</h2>
+<p class="mb-24">Use spacing utilities to adjust the base padding. Tab through the enabled controls to see the focus outline; a focused link opens with Enter, while a native button supports Enter and Space. The disabled button is skipped in the normal Tab sequence.</p>
+{% set spacing %}<div class="flex flex-wrap gap-16 items-center">
+  <a class="btn btn-secondary py-8 px-16" href="/docs/colors/#buttons">Explore button colors</a>
+  <button class="btn btn-primary py-8 px-16" type="button">Compact button</button>
+</div>{% endset %}
+{{ example(spacing, "Compact buttons and focus") }}
+<p>Button colors follow the existing foreground and background variables. Customize them through the <a href="/docs/colors/#buttons">Colors and palettes guide</a>, then check text, borders, and focus outlines against their surroundings. A named palette pair does not guarantee accessible contrast.</p>
+</article>
+<script src="/assets/js/examples.js" defer></script>

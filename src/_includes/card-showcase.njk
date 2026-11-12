@@ -1,16 +1,18 @@
 {% from "ui-example.njk" import example %}
 {% set vertical %}{% include "components/cards/vertical.njk" %}{% endset %}
 {% set horizontal %}{% include "components/cards/horizontal.njk" %}{% endset %}
+{% set horizontalRight %}{% include "components/cards/horizontal-right.njk" %}{% endset %}
 <section class="my-40" data-card-showcase aria-labelledby="home-cards-heading">
-  <h2 class="fs-32 lh-32 mb-16" id="home-cards-heading">One card, two layouts</h2>
-  <p class="mb-24">Explore the same card in two layouts, then show and copy its HTML. These are the same examples maintained on the <a href="/ui/cards/">Cards page</a>.</p>
+  <h2 class="fs-32 lh-32 mb-16" id="home-cards-heading">One card, three layouts</h2>
+  <p class="mb-24">Explore the same card in three layouts, then show and copy its HTML. These are the same examples maintained on the <a href="/ui/cards/">Cards page</a>.</p>
   <div data-showcase-controls hidden>
     <div class="flex flex-wrap gap-12 items-center">
-      <div class="flex gap-8" data-showcase-tabs aria-label="Card layout">
-        <button class="py-8 px-16 border-r-4 cursor-pointer" type="button" id="home-card-vertical-tab" data-showcase-tab="vertical" aria-controls="home-card-vertical">Vertical</button>
-        <button class="py-8 px-16 border-r-4 cursor-pointer" type="button" id="home-card-horizontal-tab" data-showcase-tab="horizontal" aria-controls="home-card-horizontal">Horizontal</button>
+      <div class="flex flex-wrap gap-8" data-showcase-tabs aria-label="Card layout">
+        <button class="btn btn-secondary py-8 px-16" type="button" id="home-card-vertical-tab" data-showcase-tab="vertical" aria-controls="home-card-vertical">Vertical</button>
+        <button class="btn btn-secondary py-8 px-16" type="button" id="home-card-horizontal-tab" data-showcase-tab="horizontal" aria-controls="home-card-horizontal">Image left</button>
+        <button class="btn btn-secondary py-8 px-16" type="button" id="home-card-horizontal-right-tab" data-showcase-tab="horizontal-right" aria-controls="home-card-horizontal-right">Image right</button>
       </div>
-      <button class="py-8 px-16 border-r-4 cursor-pointer" type="button" data-showcase-code-toggle aria-expanded="true" aria-controls="home-card-vertical-code home-card-horizontal-code">Hide code</button>
+      <button class="btn btn-secondary py-8 px-16" type="button" data-showcase-code-toggle aria-expanded="true" aria-controls="home-card-vertical-code home-card-horizontal-code home-card-horizontal-right-code">Hide code</button>
     </div>
   </div>
   <section class="my-24" id="home-card-vertical" data-showcase-panel="vertical">
@@ -18,8 +20,11 @@
     {{ example(vertical, "Vertical blog card", "", false, "home-card-vertical-code") }}
   </section>
   <section class="my-24" id="home-card-horizontal" data-showcase-panel="horizontal">
-    <h3 class="fs-24 lh-32 mb-16">Horizontal card</h3>
+    <h3 class="fs-24 lh-32 mb-16">Horizontal card, image left</h3>
     {{ example(horizontal, "Horizontal blog card", "", false, "home-card-horizontal-code") }}
   </section>
-  <p class="fs-14 lh-20">The sample blog page is not included in this site; replace the example post links in your project.</p>
+  <section class="my-24" id="home-card-horizontal-right" data-showcase-panel="horizontal-right">
+    <h3 class="fs-24 lh-32 mb-16">Horizontal card, image right</h3>
+    {{ example(horizontalRight, "Horizontal image-right card", "", false, "home-card-horizontal-right-code") }}
+  </section>
 </section>
