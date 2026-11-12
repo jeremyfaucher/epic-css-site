@@ -1,4 +1,18 @@
 
+// Optional SVG sizing, independent of any icon collection.
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+@each $size in (16, 24, 32, 48) {
+  .icon-#{$size} {
+    width: #{$size}px;
+    height: #{$size}px;
+  }
+}
+
 img {
     max-width: 100%;
     height: auto;

@@ -45,6 +45,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addWatchTarget("./src/site-styles/");
   eleventyConfig.addWatchTarget("./src/my-epic-css/_custom.scss");
   eleventyConfig.addWatchTarget("./src/my-epic-css/_variables.scss");
+  // The changelog page reads this copy of the library CHANGELOG.md.
+  eleventyConfig.addWatchTarget("./CHANGELOG.md");
   // Add plugins
   eleventyConfig.addPlugin(syntaxHighlight, { lineSeparator: "\n" });
   // e.g. Use syntax highlighters in njk and md Eleventy templates (not liquid)

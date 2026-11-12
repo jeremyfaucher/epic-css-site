@@ -413,6 +413,32 @@ pre code {
   border: none;
 }
 
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.icon-16 {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-24 {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-32 {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-48 {
+  width: 48px;
+  height: 48px;
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -597,6 +623,15 @@ img.center {
   display: grid;
 }
 
+.grid-sidebar-right-268 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1040px) {
+  .grid-sidebar-right-268 {
+    grid-template-columns: minmax(0, 1fr) 268px;
+  }
+}
 .grid-sidebar-right-344 {
   grid-template-columns: minmax(0, 1fr);
 }

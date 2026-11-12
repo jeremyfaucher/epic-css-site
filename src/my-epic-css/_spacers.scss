@@ -1,9 +1,3 @@
-@use "spacer-settings" as spacing;
-
-// Preserve caller values after importing variables; also support this partial alone.
-$spacer: spacing.$spacer !default;
-$spacers: spacing.$spacers !default;
-
 // Generate utility classes
 @each $key, $value in $spacers {
   .gap-#{$key} {

@@ -32,7 +32,7 @@ async function main() {
   assert.equal(site.published_deploy.context, 'production');
   assert.equal(site.published_deploy.commit_ref, commit, 'Production is not on the expected site commit');
 
-  const routes = ['/', '/docs/', '/docs/installation/', '/docs/flexbox/', '/docs/grid/', '/docs/colors/', '/docs/typography/', '/npm-custom-install/', '/11ty-theme/', '/assets/favicon.png'];
+  const routes = ['/', '/docs/', '/docs/installation/', '/docs/flexbox/', '/docs/grid/', '/docs/colors/', '/docs/typography/', '/docs/changelog/', '/npm-custom-install/', '/11ty-theme/', '/assets/favicon.png'];
   let docs;
   let home;
   for (const route of routes) {
@@ -49,6 +49,10 @@ async function main() {
       if (route === '/docs/typography/') {
         assert.deepEqual(page('[data-utility="fs-32"] td').map((_, cell) => page(cell).text()).get(), ['fs-32', '32px', '24px']);
         assert.ok(page('.docs-example-preview .fw-700').length, 'Typography preview is missing');
+      }
+      if (route === '/docs/changelog/') {
+        const latest = require('./changelog.cjs').readChangelog().latest;
+        assert.equal(page('.docs-release-badge').closest('.docs-release').attr('data-version'), latest.version, 'Production changelog is not current');
       }
     }
   }

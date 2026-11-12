@@ -11,6 +11,12 @@ async function main() {
   process.chdir(path.resolve(__dirname, '..'));
   const check = process.argv.includes('--check');
   assert.ok(process.argv.slice(2).every(arg => arg === '--check'), 'Use --check or no arguments');
+  const sync = require('./sync-changelog.cjs').checkChangelogSync();
+  if (sync.status === 'out-of-sync') {
+    const message = `CHANGELOG.md differs from ${sync.source}. Run npm run changelog:sync.`;
+    if (check) throw new Error(message);
+    console.warn('Warning: ' + message);
+  }
   const config = require('../epicConfig');
   const prelight = path.resolve(config.epicThemeDir, 'pre-light.css');
   const include = path.resolve(config.projectStyleDir, config.outputFileName);

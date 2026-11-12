@@ -21,6 +21,10 @@ layout: base.njk
         <li><a class="clr-secondary py-8 px-12 border-r-4" href="/docs/colors/"{% if docTopic == "colors" %} aria-current="page"{% endif %}>Colors and palettes</a></li>
         <li><a class="clr-secondary py-8 px-12 border-r-4" href="/docs/images/"{% if docTopic == "images" %} aria-current="page"{% endif %}>Images</a></li>
       </ul>
+      <p class="docs-nav-heading clr-secondary fs-14 fw-600 mb-8">Project</p>
+      <ul class="list-none m-0 mb-20 p-0 flex flex-wrap gap-4">
+        <li><a class="clr-secondary py-8 px-12 border-r-4" href="/docs/changelog/"{% if docTopic == "changelog" %} aria-current="page"{% endif %}>Changelog</a></li>
+      </ul>
     </nav>
   </aside>
   <article class="docs-article" id="docs-content" data-doc-topic="{{ docTopic }}">

@@ -168,6 +168,16 @@ $grid-fractions: (
 }
 
 // Main content followed by a fixed-width right sidebar; stack on smaller screens.
+.grid-sidebar-right-268 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1040px) {
+  .grid-sidebar-right-268 {
+    grid-template-columns: minmax(0, 1fr) 268px;
+  }
+}
+
 .grid-sidebar-right-344 {
   grid-template-columns: minmax(0, 1fr);
 }

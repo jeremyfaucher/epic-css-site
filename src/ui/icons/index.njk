@@ -1,0 +1,76 @@
+---
+layout: base.njk
+tag: ui-page
+title: Icons
+description: Copyable outline SVG icons, optional pixel sizing utilities, and accessible interface examples.
+css_include: /assets/css/icons.css
+---
+{% from "ui-example.njk" import example %}
+<article data-icon-library>
+<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/icons/" aria-current="page">Icons</a></nav>
+<h1 class="fs-37 lh-37 mb-24">Icons</h1>
+<p class="mb-24">Simple outlines for familiar interface actions. Each icon uses a 24-unit viewBox, rounded strokes and <code>currentColor</code>, so it scales with its dimensions and inherits the surrounding text color.</p>
+<div class="clr-primary-bg p-24 border-r-16 mb-32 flex flex-wrap gap-16 items-center">
+<label for="icon-size" class="fw-600">Preview and copy size</label>
+<select id="icon-size" data-icon-size disabled>
+<option value="16">16px</option><option value="24" selected>24px</option><option value="32">32px</option><option value="48">48px</option>
+</select>
+<span class="fs-12">SVG source includes its size; no stylesheet is needed to use a copied icon.</span>
+</div>
+<noscript><p>Open an icon's SVG source to copy it manually. Live sizing and clipboard buttons require JavaScript.</p></noscript>
+{% for group in icons.groups %}
+<section class="mb-40" aria-labelledby="icons-{{ group.id }}">
+<h2 id="icons-{{ group.id }}" class="fs-24 lh-32 mb-16">{{ group.name }}</h2>
+<ul class="grid gap-16 list-none p-0 m-0" data-icon-gallery>
+{% for icon in group.items %}
+<li class="clr-primary-bg p-24 border-r-16" data-icon-card data-icon-name="{{ icon.name }}">
+<div class="flex items-center justify-center clr-primary mb-16" data-icon-preview>{{ icon.svg | safe }}</div>
+<h3 class="fs-16 mt-0 mb-16">{{ icon.name }}</h3>
+<button type="button" class="btn btn-secondary" data-copy-icon aria-label="Copy {{ icon.name }} SVG" hidden>Copy SVG</button>
+<p class="fs-12 mb-12" role="status" aria-live="polite" aria-atomic="true" data-icon-feedback></p>
+<details><summary class="fs-12">SVG source</summary><textarea readonly data-icon-source aria-label="{{ icon.name }} SVG source">{{ icon.svg | escape }}</textarea></details>
+</li>
+{% endfor %}
+</ul>
+</section>
+{% endfor %}
+<h2 id="size-and-color" class="fs-24 lh-32 mb-16">Size and color</h2>
+<p>See <a href="/docs/images/#icons">Images: inline SVG icon utilities</a> for the utility reference and optional module details.</p>
+<p>Optional <code>icon-16</code>, <code>icon-24</code>, <code>icon-32</code> and <code>icon-48</code> set width and height in pixels, independent of the root font size. <code>icon</code> adds inline alignment and prevents flex shrinking. These utilities work with external SVG collections too; they do not change an icon's paths or stroke style.</p>
+{% set sizing %}<div class="flex flex-wrap gap-24 items-center clr-primary">
+  <svg class="icon icon-16" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 12 5 5L20 6"/></svg>
+  <svg class="icon icon-24" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 12 5 5L20 6"/></svg>
+  <svg class="icon icon-32" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 12 5 5L20 6"/></svg>
+  <svg class="icon icon-48" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 12 5 5L20 6"/></svg>
+</div>{% endset %}
+{{ example(sizing, "Icon sizes and inherited color") }}
+<h2 class="fs-24 lh-32 mb-16">Icons with labels</h2>
+<p>Use visible text where possible. Decorative SVGs use <code>aria-hidden="true"</code> and <code>focusable="false"</code>. Give an icon-only button its action name with <code>aria-label</code>; a tooltip alone is not its label.</p>
+{% set buttons %}<div class="flex flex-wrap gap-16 items-start">
+  <details>
+    <summary class="btn btn-secondary gap-8">Browse {{ icons.byId['chevron-down'] | safe }}</summary>
+    <nav aria-label="Browse topics" class="p-16"><a href="/docs/">Documentation</a></nav>
+  </details>
+  <a class="btn btn-primary gap-8" href="/docs/installation/">{{ icons.byId['arrow-right'] | safe }} Read installation guide</a>
+  <button class="btn btn-secondary" type="button" aria-label="Search" disabled>{{ icons.byId.search | safe }}</button>
+  <a class="btn btn-secondary gap-8" href="/ui/">{{ icons.byId.menu | safe }} UI navigation</a>
+</div>{% endset %}
+{{ example(buttons, "Dropdown, labeled link and icon-only button") }}
+<p>The native disclosure opens the Browse menu. The Search button demonstrates an accessible icon-only label; it is disabled because this example has no search service.</p>
+<h2 class="fs-24 lh-32 mb-16">Engagement in a card</h2>
+{% set card %}<div class="clr-primary-bg p-24 border-r-16">
+  <h3 class="fs-24 mt-0 mb-16">Leave room between related groups</h3>
+  <p class="mb-24">Spacing makes the relationship between a heading, a paragraph and its supporting details easier to see.</p>
+  <div class="flex flex-wrap gap-24 items-center" aria-label="Sample engagement counts">
+    <span class="flex gap-8 items-center">{{ icons.byId.heart | safe }} 12 likes</span>
+    <span class="flex gap-8 items-center">{{ icons.byId.comment | safe }} 3 comments</span>
+  </div>
+</div>{% endset %}
+{{ example(card, "Decorative engagement icons with visible labels") }}
+<h2 class="fs-24 lh-32 mb-16">Use in HTML or Nunjucks</h2>
+<p>Copy an SVG and paste the markup directly into an HTML page or a Nunjucks include. Keep its <code>xmlns</code>, <code>viewBox</code>, paths and paint attributes. Set the surrounding text color, or add a color utility to the SVG. An external image loaded with <code>img</code> does not inherit the page's <code>currentColor</code>.</p>
+<p>The CSS utilities live in the optional <code>images</code> module (<code>src/_images.scss</code> in the package), also included by the full library entry point. Import that partial alone for sizing without any icon assets. The gallery geometry lives only in workshop data at <code>src/_data/icons.js</code>; no collection or runtime dependency ships with the CSS package.</p>
+<p>These original geometric outlines were created for this workshop and use the site repository's MIT license. No third-party SVG collection was imported. When using another library, keep its required attribution and license notices.</p>
+</article>
+<script src="/assets/js/icons.js" defer></script>
+<script src="/assets/js/examples.js" defer></script>

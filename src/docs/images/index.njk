@@ -2,12 +2,13 @@
 layout: docs.njk
 tag: docs-page
 title: Images
-description: Responsive images, rounded corners, centering classes, and article spacing in Epic CSS.
+description: Responsive images, rounded corners, centering classes, and optional inline SVG icon sizing in Epic CSS.
 docTopic: images
 ---
 {% from "docs-example.njk" import example %}
 <h1 id="images">Images</h1>
 <p class="docs-lead">Use <code>border-r-16</code> to choose rounded image corners, and add <code>img-center</code> or <code>center</code> to center a smaller image. Responsive sizing is automatic.</p>
+<p>For inline SVGs, see <a href="#icons">icon sizing and color</a> below, or browse the <a href="/ui/icons/">copyable Icons gallery</a>.</p>
 <h2 id="automatic-styles">Responsive images with a radius utility</h2>
 <p>Add <code>border-r-16</code> directly to the image for a 16-pixel radius. Epic CSS also gives every <code>img</code> <code>max-width: 100%</code> and <code>height: auto</code>. Large images shrink to fit their container while keeping their aspect ratio; small images do not stretch to full width automatically.</p>
 {% set markup %}<img class="border-r-16" src="/assets/placeholder.png"
@@ -46,3 +47,5 @@ docTopic: images
 </article>{% endset %}
 {{ example(markup, "Automatic article image spacing") }}
 <p>This documentation page itself uses an <code>article</code> wrapper, so all image previews above also receive the article spacing. Outside an article, the global image styles do not add that bottom margin. Other surrounding margins can affect the visible gap.</p>
+<h2 id="icons">Inline SVG icons</h2>
+<p>The optional image module also includes <code>icon</code> for inline alignment and flex-shrink prevention, plus <code>icon-16</code>, <code>icon-24</code>, <code>icon-32</code> and <code>icon-48</code> for pixel width and height. These helpers work with external SVG collections and include no icon assets. See the <a href="/ui/icons/#size-and-color">Icons gallery's size and color guide</a> for usage, copyable examples and accessible labeling.</p>

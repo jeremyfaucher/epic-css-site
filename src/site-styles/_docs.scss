@@ -28,6 +28,19 @@
 .docs-topic-list strong { color: $clr-primary; margin-bottom: .5rem; }
 .docs-topic-list span { color: $clr-body; }
 .docs-page-footer { border-top: 1px solid rgba($clr-body, .2); }
+.docs-release-index { margin: 1.5rem 0 0; }
+.docs-release-index a { display: inline-block; padding: .25rem .6rem; border: 1px solid rgba($clr-body, .25); border-radius: .35rem; font-size: .95rem; text-decoration: none; }
+.docs-release-index a:hover, .docs-release-index a:focus-visible { color: $clr-primary; border-color: $clr-primary; }
+.docs-release { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba($clr-body, .2); scroll-margin-top: 1.5rem; }
+.docs-release h2 { font-size: 1.5rem; line-height: 1.3; margin: 0 0 .5rem; }
+.docs-release h3 { color: $clr-secondary; font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 .5rem; }
+.docs-release p { margin: 0 0 1rem; }
+.docs-release ul:not(.docs-release-links) { list-style-type: disc; margin: 0; padding-left: 1.25rem; }
+.docs-release li { line-height: 1.6; margin-bottom: .5rem; }
+.docs-release-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; font-size: .95rem; }
+.docs-release-badge { padding: .1rem .55rem; border-radius: 1rem; color: $clr-primary; background: $clr-primary-bg; font-size: .8rem; font-weight: 600; }
+.docs-release-links { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: 1.25rem 0 0; padding: 0; list-style: none; font-size: .95rem; }
+.docs-release-source { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba($clr-body, .2); font-size: .95rem; }
 @media (min-width: 960px) {
   .docs-layout { grid-template-columns: 13rem minmax(0, 1fr); gap: 3rem; }
   .docs-sidebar { position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; }

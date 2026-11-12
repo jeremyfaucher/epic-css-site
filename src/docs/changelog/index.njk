@@ -1,0 +1,46 @@
+---
+layout: docs.njk
+tag: docs-page
+title: Changelog
+description: Release history for the epic-css package, newest first, with dates and changes for each version.
+docTopic: changelog
+---
+{% macro release(item, latest, latestVersion) %}
+<section class="docs-release" id="{{ item.slug }}" aria-labelledby="{{ item.slug }}-title" data-version="{{ item.version }}"{% if item.links.cdn %} data-cdn="{{ item.links.cdn }}"{% endif %}>
+  <h2 id="{{ item.slug }}-title">{{ item.title }}</h2>
+  <p class="docs-release-meta">
+    {%- if latest %}<span class="docs-release-badge">Latest</span>{% endif -%}
+    <span>
+    {%- if item.unreleased %}Planned changes after {{ latestVersion }}, not yet published
+    {%- elif item.date %}Released <time datetime="{{ item.date }}">{{ item.displayDate }}</time>
+    {%- else %}Release date not recorded{% endif -%}
+    </span>
+  </p>
+  {% for note in item.notes %}<p>{{ note | safe }}</p>{% endfor %}
+  {% for group in item.groups %}
+  <h3>{{ group.title }}</h3>
+  <ul>
+    {% for change in group.items %}<li>{{ change | safe }}</li>{% endfor %}
+  </ul>
+  {% endfor %}
+  {% if item.links.npm or item.links.source or item.links.cdn %}
+  <ul class="docs-release-links" aria-label="{{ item.title }} links">
+    {% if item.links.npm %}<li><a href="{{ item.links.npm }}">npm {{ item.version }}</a></li>{% endif %}
+    {% if item.links.source %}<li><a href="{{ item.links.source.url }}">{{ item.links.source.label }}</a></li>{% endif %}
+    {% if item.links.cdn %}<li><a href="{{ item.links.cdn }}">CDN stylesheet</a></li>{% endif %}
+  </ul>
+  {% endif %}
+</section>
+{% endmacro %}
+<h1 id="changelog">Changelog</h1>
+<p class="docs-lead">Release history for the <code>epic-css</code> package, newest first. The latest release is <a href="#{{ changelog.latest.slug }}">{{ changelog.latest.version }}</a>.</p>
+<p>Dates are UTC publication dates. Early entries were reconstructed from the repository history; where a version has no recorded source, its entry says so instead of listing changes. To pin a version, replace the number in <code>npm install epic-css@{{ changelog.latest.version }} --save-exact</code>.</p>
+<nav class="docs-release-index" aria-label="Release versions">
+  <ul class="list-none m-0 p-0 flex flex-wrap gap-8">
+    {% if changelog.unreleased %}<li><a href="#unreleased">Unreleased</a></li>{% endif %}
+    {% for item in changelog.releases %}<li><a href="#{{ item.slug }}">{{ item.version }}</a></li>{% endfor %}
+  </ul>
+</nav>
+{% if changelog.unreleased %}{{ release(changelog.unreleased, false, changelog.latest.version) }}{% endif %}
+{% for item in changelog.releases %}{{ release(item, loop.first, changelog.latest.version) }}{% endfor %}
+<p class="docs-release-source">These notes come from <a href="{{ changelog.repository }}/blob/main/CHANGELOG.md">CHANGELOG.md</a> in the library repository.</p>

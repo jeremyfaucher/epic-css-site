@@ -7,7 +7,7 @@ const CleanCSS = require('clean-css');
 
 module.exports = function checkDocs(output, libraryCss) {
   if (libraryCss) assert.ok(!libraryCss.includes('.docs-'), 'Docs presentation leaked into the portable library stylesheet');
-  const topics = ['overview', 'installation', 'wrapper-and-container', 'flexbox', 'grid', 'colors', 'typography', 'images'];
+  const topics = ['overview', 'installation', 'wrapper-and-container', 'flexbox', 'grid', 'colors', 'typography', 'images', 'changelog'];
   const coreCss = new CleanCSS({}).minify(fs.readFileSync(path.join(__dirname, '../src/_includes/style.css'), 'utf8')).styles;
   const utilityCss = postcss.parse(libraryCss || coreCss);
   const declarations = selector => {
@@ -78,9 +78,33 @@ module.exports = function checkDocs(output, libraryCss) {
       }
       assert.equal(paired.find('.docs-example-preview [style]').length, 0, 'Color boxes must use utilities');
     }
+    if (topic === 'changelog') {
+      const { readChangelog, GROUPS } = require('./changelog.cjs');
+      const log = readChangelog();
+      const expected = (log.unreleased ? [log.unreleased] : []).concat(log.releases);
+      const sections = $('article .docs-release');
+      assert.deepEqual(sections.map((_, el) => $(el).attr('data-version')).get(), expected.map(item => item.version), 'Changelog versions differ from CHANGELOG.md');
+      assert.deepEqual($('.docs-release-index a').map((_, el) => $(el).attr('href')).get(), expected.map(item => '#' + item.slug), 'Version index differs from releases');
+      assert.equal($('.docs-release-badge').length, 1, 'Exactly one latest release badge expected');
+      assert.equal($('#' + log.latest.slug + ' .docs-release-badge').length, 1, 'Latest badge is on the wrong release');
+      if (log.unreleased?.plannedVersion) {
+        const upcoming = $('#' + log.unreleased.slug);
+        assert.equal(upcoming.find('h2').text(), `${log.unreleased.plannedVersion} (Unreleased)`);
+        assert.equal(upcoming.find('time, .docs-release-badge, a[href*="npmjs.com"]').length, 0, 'Upcoming version must not imply publication');
+        assert.ok(upcoming.text().includes('not yet published'));
+      }
+      sections.each((_, el) => {
+        const item = expected.find(release => release.version === $(el).attr('data-version'));
+        assert.equal($(el).attr('id'), item.slug);
+        assert.equal($(el).find('time').attr('datetime'), item.date || undefined, item.version + ': wrong date');
+        assert.deepEqual($(el).find('h3').map((_, h) => $(h).text()).get(), item.groups.map(group => group.title));
+        assert.ok($(el).find('h3').get().every(h => GROUPS.includes($(h).text())), item.version + ': unknown group');
+        assert.equal($(el).find('.docs-release-links a[href="' + item.links.cdn + '"]').length, item.links.cdn ? 1 : 0, item.version + ': CDN link');
+      });
+    }
     const ids = $('[id]').map((_, el) => $(el).attr('id')).get();
     assert.equal(new Set(ids).size, ids.length, route + ': duplicate IDs');
-    for (const other of ['wrapper-and-container', 'flexbox', 'grid', 'colors', 'typography', 'images'].filter(other => other !== topic)) {
+    for (const other of ['wrapper-and-container', 'flexbox', 'grid', 'colors', 'typography', 'images', 'changelog'].filter(other => other !== topic)) {
       assert.equal($('article h1#' + other + ', article h2#' + other).length, 0, route + ': contains another topic');
     }
     $('nav[aria-label="Documentation"] a').each((_, link) => {

@@ -28,8 +28,9 @@ docTopic: grid
 <p>The values are rem-based Sass multipliers, not a general pixel parser. In the current scale both <code>gap-16</code> and <code>gap-18</code> resolve to one rem.</p>
 <h2 id="sidebar">Sidebar layouts</h2>
 <h3 id="right-sidebar">Fixed-width right sidebar</h3>
-<p>Use <code>grid grid-sidebar-right-344 gap-40</code> with main content first and an <code>aside</code> second. <code>grid</code> supplies <code>display: grid</code>; <code>grid-sidebar-right-344</code> sets one <code>minmax(0, 1fr)</code> track below 1040 pixels and <code>minmax(0, 1fr) 344px</code> from 1040 pixels. The sidebar is a fixed 344-pixel track on desktop, not a maximum width. The main track takes the remaining space.</p>
+<p>Use <code>grid grid-sidebar-right-268 gap-40</code> with main content first and an <code>aside</code> second. <code>grid</code> supplies <code>display: grid</code>; <code>grid-sidebar-right-268</code> sets one <code>minmax(0, 1fr)</code> track below 1040 pixels and <code>minmax(0, 1fr) 268px</code> from 1040 pixels. The sidebar is a fixed 268-pixel track on desktop, not a maximum width. The main track takes the remaining space.</p>
 <p><code>gap-40</code> supplies a 2.5rem row and column gap (40 pixels at a 16-pixel root font size). The breakpoint follows the viewport; use the two-column layout where the containing region has enough room for both tracks and the gap. See the <a href="/ui/layouts/">posts and right-sidebar example</a> in the 1040-pixel site container.</p>
+<p>For a wider fixed track, <code>grid-sidebar-right-344</code> uses the same stacking behavior and breakpoint, with <code>minmax(0, 1fr) 344px</code> on desktop. Both utilities require <code>grid</code>.</p>
 <h3>Percentage-width left sidebars</h3>
 <p>Combine <code>grid</code> and <code>grid-sidebar-left</code> for a one-column starting layout, then select a large-screen sidebar width.</p>
 {% set markup %}<div class="grid grid-sidebar-left lg-grid-sidebar-left-25 gap-24">

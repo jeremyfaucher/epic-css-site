@@ -1,0 +1,6 @@
+/* Workshop presentation only; portable SVG sizing lives in the image module. */
+[data-icon-gallery] { grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
+[data-icon-preview] { min-height: 80px; }
+[data-icon-feedback] { min-height: 3em; }
+[data-icon-card] { min-width: 0; }
+[data-icon-source] { box-sizing: border-box; width: 100%; min-height: 9rem; font: inherit; font-size: .75rem; }

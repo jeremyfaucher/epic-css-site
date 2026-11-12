@@ -1,11 +1,19 @@
 # Site-first release workflow
 
+During feature/fix work, add consumer-facing notes to the library's planned
+Unreleased section immediately, then sync the site copy. Keep package and lockfile
+versions unchanged until release preparation is explicitly requested. An upcoming
+version has no release date and is not a publication. Independent theme versions
+remain separate. These release steps are not standing authorization to commit,
+tag, publish or deploy.
+
 1. Develop and validate the Epic CSS site with `npm run validate`, review/commit/push its `main`.
 2. Netlify builds with Node 22, `npm run build`, output `_site`. After deployment, run `npm run verify:production`: it checks the exact published site HEAD, the docs topic routes, existing site routes, and all eight palette values. Visually review changed layouts/interactions too.
-3. Port verified shared source and relevant usage docs into `jeremyfaucher/epic-css`. Keep consumer palettes separate from library defaults. Run package tests, inspect the pack contents, and test a candidate in a disposable consumer. Commit/push only reviewed source; preserve unrelated working edits.
-4. The **user creates/publishes the GitHub release** for the reviewed package version. The assistant does not create another release or run a local publish as part of consumer updates.
-5. The library's `.github/workflows/npm-publish.yml` runs Node 22 tests, then publishes using npm 11 and OIDC trusted publishing. Check both jobs succeeded and confirm the published version/artifact.
-6. Install the actual published version in the starter and site through the approved configured registry, review manifest/lockfile changes, verify palette overrides and the full filtered build, then commit/push. Do not substitute a local candidate for published-artifact verification. Re-run the site's production gate after its deployment.
+3. Port verified shared source and relevant usage docs into `jeremyfaucher/epic-css`. Keep consumer palettes separate from library defaults. Record each feature/fix as it happens under the planned next-version heading, currently `## [Unreleased] - 0.14.4`, in the library's `CHANGELOG.md` (see its README "Release notes"). Run package tests, inspect the pack contents, and test a candidate in a disposable consumer. Commit/push only reviewed source; preserve unrelated working edits.
+4. Only when release preparation is explicitly requested, rename the planned Unreleased heading to `## [X.Y.Z] - YYYY-MM-DD` (the actual UTC release date), add a new empty `## [Unreleased] - NEXT.VERSION` for the next agreed target, and update the link definitions (`[X.Y.Z]` to the release tag, `[Unreleased]` to compare from the new tag). Commit this with the version bump. Then run `npm run changelog:sync` and `npm run validate` here and commit the synced `CHANGELOG.md`.
+5. The **user creates/publishes the GitHub release** for the reviewed package version. The assistant does not create another release or run a local publish as part of consumer updates.
+6. The library's `.github/workflows/npm-publish.yml` runs Node 22 tests, then publishes using npm 11 and OIDC trusted publishing. Check both jobs succeeded and confirm the published version/artifact.
+7. Install the actual published version in the starter and site through the approved configured registry, review manifest/lockfile changes, verify palette overrides and the full filtered build, then commit/push. Do not substitute a local candidate for published-artifact verification. Re-run the site's production gate after its deployment; it checks that `/docs/changelog/` shows the latest release.
 
 ## Trusted publisher configuration
 
@@ -43,4 +51,4 @@ Production is Netlify site `cdn-epic-css`, ID `76ae57fc-00f3-460c-bf44-f2cc8458f
 
 Use `npm start` for development, `npm run build` for Sass/filter/Eleventy, and `npm run validate` for temporary output with restored CSS. Stop watchers first. `build-production` is the legacy Eleventy-only command. The aggregate `node validate.cjs` is a local convenience outside these repositories.
 
-The class filter uses literal source attributes and substring matching; preview dynamic classes and responsive layouts after filtering. Palettes are compile-time Sass values. The CDN remains a separate release surface with no verified upload configuration here.
+The class filter uses literal source attributes and substring matching; preview dynamic classes and responsive layouts after filtering. Palettes are compile-time Sass values. The CDN remains a separate release surface with no verified upload configuration here. When versioned CDN assets exist, add `[X.Y.Z-cdn]: https://…` definitions to the library changelog so the site's changelog links each release to its stylesheet; keep the definitions for retained older versions.

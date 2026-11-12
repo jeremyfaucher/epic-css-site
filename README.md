@@ -8,7 +8,7 @@ Develop and document the shared utility library here, then port verified changes
 - Installed `epic-css` provides the shared `epic-build.js` and `epic-light.js` commands. Maintain shared JavaScript in the npm library source and test it through a consumer; do not copy that logic into the Sass directory or rely on disposable node_modules edits.
 - [src/site-styles/index.scss](src/site-styles/index.scss) compiles documentation presentation separately. It reads the palette and loads [docs styling](src/site-styles/_docs.scss); it imports no utility implementation. Do not copy this folder into the npm library.
 - Eleventy's `docsStyles` shortcode embeds that separate stylesheet only on documentation pages. The shared Sass entry and its full pre-light output remain free of docs styles.
-- [src/_includes/docs.njk](src/_includes/docs.njk) is the shared docs layout. Topic pages live in [src/docs](src/docs/): overview, installation, Flexbox, grid, colors and typography.
+- [src/_includes/docs.njk](src/_includes/docs.njk) is the shared docs layout. Topic pages live in [src/docs](src/docs/): overview, installation, Flexbox, grid, colors, typography and the changelog.
 - [docs-example.njk](src/_includes/docs-example.njk) creates a live preview and escaped copyable code from the same markup. [docs.js](src/assets/js/docs.js) handles copying and legacy topic links.
 - `.eleventy.js` reads `src` and writes `_site`. `base.njk` minifies and embeds the library CSS include; docs pages also get the independent site stylesheet. Homepage and starter-page content includes remain separate. Installation is maintained in `src/docs/installation/index.njk`; Netlify permanently redirects `/npm-custom-install/` there.
 
@@ -17,6 +17,16 @@ Develop and document the shared utility library here, then port verified changes
 The footer sitemap derives Site, Documentation, and UI examples groups from Eleventy's public HTML page collection. Give new pages a descriptive front-matter `title`; they appear automatically. Error/XML routes are excluded; set `sitemap: false` or `eleventyExcludeFromCollections: true` for nonpublic pages.
 
 Follow [DEMO-COPY.md](DEMO-COPY.md) for short, meaningful teaching content in UI examples, including shared content ownership and copy checks.
+
+The [Icons UI page](src/ui/icons/index.njk) renders 21 original outline SVGs from
+`src/_data/icons.js`, with live pixel sizing, copy feedback and manual source
+fallback. The original gallery is covered by this site's MIT license; no external
+icon collection is bundled. Optional `.icon`, `.icon-16`, `.icon-24`, `.icon-32`
+and `.icon-48` helpers live in the shared image partial and work independently of
+the gallery, including with other SVG libraries. SVGs inherit `currentColor`;
+decorative icons are hidden from assistive technology and icon-only controls need
+an accessible action label. `npm run test:icons` checks the built page, standalone
+module and copy/size behavior; `npm run validate` includes its markup checks.
 
 From this directory:
 
@@ -38,9 +48,31 @@ npm run build
 
 Both commands run [check-docs.cjs](scripts/check-docs.cjs), verifying isolated topics, active sidebar navigation, unique IDs, navigation targets, preview/code consistency, retention of example utilities in filtered CSS, sticky sidebar styles, the docs script asset, and separation of docs presentation from library CSS.
 
+## Changelog
+
+The [changelog page](src/docs/changelog/index.njk) at `/docs/changelog/` renders [CHANGELOG.md](CHANGELOG.md), an exact copy of the library's `CHANGELOG.md`. The library file is the source of truth; never edit the site copy directly. [changelog.cjs](scripts/changelog.cjs) parses it for [src/_data/changelog.js](src/_data/changelog.js) and fails the build on malformed entries: version or date order, unknown or misordered groups, stray list items, and link definitions that match no version.
+
+During each feature/fix task, add its note to the library's planned next-version
+section (`## [Unreleased] - 0.14.4` at present), not to an already published release.
+The page labels this as `0.14.4 (Unreleased)` without a date or npm link;
+`0.14.3` remains the latest published release. Keep package/lockfile versions and
+the theme's independent version unchanged until an explicit release request.
+See [RELEASING.md](RELEASING.md) for finalizing the heading and release date.
+
+After editing the library changelog, with the library checked out at `../epic-css` (or `EPIC_CSS_DIR` set to its path), run:
+
+```sh
+npm run changelog:sync
+npm run validate
+```
+
+`validate` runs [test-changelog.cjs](scripts/test-changelog.cjs) first, then fails if the copies differ. `build` only warns about a stale copy. Both skip the comparison when no library checkout exists, as on Netlify. `npm run changelog:check` runs the comparison alone.
+
+Release links come from the changelog's link definitions: `[X.Y.Z]` becomes the GitHub release, commit, or compare link, and an optional `[X.Y.Z-cdn]: https://…` becomes a "CDN stylesheet" link for that version. Add a CDN definition only after that versioned asset is published, and keep definitions for retained older versions. The npm link is generated for every released version.
+
 ## Pre-light and utility coverage
 
-Spacing tokens (`$spacer` and `$spacers`) live in the no-output `_spacer-settings.scss` partial. `_variables.scss` imports it for compatibility with existing variables-only and selective imports. Keep variables early in the entry point and `_spacers.scss` last: token availability and utility CSS order are separate concerns. The spacer generator uses namespaced defaults only when caller values are absent, preserving overrides made after importing variables. Other tokens remain in `_variables.scss`.
+Spacing tokens (`$spacer` and `$spacers`) live in the centralized `_variables.scss` alongside the other tokens. Keep variables early in the entry point and `_spacers.scss` last so tokens are available before utilities are generated. For selective spacing imports, import variables first, apply any custom `$spacers` map, then import spacers. The generator reads that shared scope; it has no separate defaults module.
 
 Pre-light is the whole compiled stylesheet from the selected library Sass imports. The light command compares literal source class attributes against it and writes a filtered version. Both paths use [epicConfig.js](epicConfig.js). The legacy `epic-build` and `epic-light` commands remain available; the full-build copy hardcodes `style.css`, while the filter honors `outputFileName`.
 

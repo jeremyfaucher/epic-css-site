@@ -9,7 +9,7 @@ module.exports = function checkUi(output) {
   const core = new CleanCSS({}).minify(fs.readFileSync(path.join(__dirname, '../src/_includes/style.css'), 'utf8')).styles;
   const selectors = [];
   postcss.parse(core).walkRules(rule => selectors.push(rule.selector));
-  for (const route of ['/ui/', '/ui/buttons/', '/ui/cards/', '/ui/sliders/', '/ui/heroes/', '/ui/layouts/']) {
+  for (const route of ['/ui/', '/ui/buttons/', '/ui/cards/', '/ui/sliders/', '/ui/heroes/', '/ui/layouts/', '/ui/icons/']) {
     const $ = cheerio.load(fs.readFileSync(path.join(output, route, 'index.html'), 'utf8'));
     assert.equal($('head style').first().text().trim(), core, route + ': missing compiled Epic CSS');
     assert.ok(!$('head style').text().includes('.docs-layout'), route + ': unexpected docs decoration');
@@ -44,6 +44,20 @@ module.exports = function checkUi(output) {
       assert.equal(example.find('[data-copy-example]').length, route === '/ui/sliders/' ? 2 : 1);
       assert.equal(example.find('[data-copy-feedback][role="status"]').length, 1);
       const preview = example.find('[data-example-preview]');
+      if (route === '/ui/icons/') {
+        const icons = preview.find('svg');
+        assert.ok(icons.length, 'Icon example must contain SVG previews');
+        // HTML selectors normalize attribute names, while SVG preserves viewBox casing.
+        // Read attributes directly, and verify every icon rather than one selector match.
+        icons.each((_, icon) => {
+          const svg = $(icon);
+          assert.equal(svg.attr('viewBox'), '0 0 24 24', 'SVG must retain its scalable coordinate system');
+          assert.equal(svg.attr('stroke'), 'currentColor', 'SVG must inherit its stroke color');
+          assert.equal(svg.attr('aria-hidden'), 'true', 'Decorative SVG must be hidden from assistive technology');
+          assert.equal(svg.attr('focusable'), 'false', 'Decorative SVG must not become a focus target');
+        });
+        return;
+      }
       if (route === '/ui/buttons/') {
         assert.ok(preview.find('.btn').length >= 2);
         assert.equal(preview.find('a:not([href]), a[disabled], button:not([type="button"])').length, 0);
@@ -90,7 +104,7 @@ module.exports = function checkUi(output) {
           return;
         }
         const wrapper = preview.children('section[aria-labelledby="archive-posts-heading"]');
-        const layout = wrapper.children('.grid.grid-sidebar-right-344');
+        const layout = wrapper.children('.grid.grid-sidebar-right-268');
         assert.equal(wrapper.children('h2#archive-posts-heading').length, 1);
         assert.equal(layout.children('section').children().first().prop('tagName'), 'ARTICLE');
         assert.equal(layout.children('section').length, 1);
@@ -98,7 +112,7 @@ module.exports = function checkUi(output) {
         assert.equal(layout.children('section').find('article').length, 2);
         assert.ok(layout.hasClass('gap-40'));
         assert.equal(layout.find('style, script, [data-archive-layout]').length, 0);
-        assert.ok(selectors.includes('.grid-sidebar-right-344'));
+        assert.ok(selectors.includes('.grid-sidebar-right-268'));
         return;
       }
       if (route === '/ui/heroes/') {
@@ -139,5 +153,6 @@ module.exports = function checkUi(output) {
   assert.ok(fs.existsSync(path.join(output, 'assets/js/examples.js')));
   require('./test-sliders.cjs')();
   require('./check-card-components.cjs')(output, core);
+  require('./test-icons.cjs')(output);
   console.log('UI checks: core CSS, utilities, assets, matching live/copy HTML, shared teaching copy, responsive card variants, and page layouts.');
 };
