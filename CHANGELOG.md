@@ -6,7 +6,9 @@ This file is the source of truth for release notes. The Epic CSS site keeps an i
 
 Dates are UTC: npm publication dates through 0.14.0, then GitHub release publication dates, which trigger the npm publish workflow. Entries before 0.14.1 were reconstructed in November 2026 from this repository's commits and the npm version list. Where npm versions have no matching commit, the entry says so rather than guessing. Version 0.8.0 was never published.
 
-## [Unreleased] - 0.14.4
+## [Unreleased]
+
+## [0.14.4] - 2026-11-13
 
 ### Added
 
@@ -203,7 +205,8 @@ First version with source in this repository.
 
 First npm publication. The repository has no source or notes for this version.
 
-[Unreleased]: https://github.com/jeremyfaucher/epic-css/compare/v0.14.3...HEAD
+[Unreleased]: https://github.com/jeremyfaucher/epic-css/compare/v.0.14.4...HEAD
+[0.14.4]: https://github.com/jeremyfaucher/epic-css/releases/tag/v.0.14.4
 [0.14.3]: https://github.com/jeremyfaucher/epic-css/releases/tag/v0.14.3
 [0.14.2]: https://github.com/jeremyfaucher/epic-css/releases/tag/v0.14.2
 [0.14.1]: https://github.com/jeremyfaucher/epic-css/releases/tag/v0.14.1
