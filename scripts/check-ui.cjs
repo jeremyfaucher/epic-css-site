@@ -91,6 +91,10 @@ module.exports = function checkUi(output) {
         return;
       }
       const card = preview.children('div.clr-primary-bg.p-24.border-r-16');
+      if (example.attr('aria-label') === 'Sidebar author profile') {
+        assert.equal(preview.children('section[aria-label="Demo author profile"]').length, 1);
+        return; // Detailed author structure/provenance checks run below.
+      }
       if (route === '/ui/layouts/') {
         if (example.attr('aria-label') === 'Three column') {
           const section = preview.children('section');
@@ -154,5 +158,6 @@ module.exports = function checkUi(output) {
   require('./test-sliders.cjs')();
   require('./check-card-components.cjs')(output, core);
   require('./test-icons.cjs')(output);
+  require('./check-author-card.cjs')(output);
   console.log('UI checks: core CSS, utilities, assets, matching live/copy HTML, shared teaching copy, responsive card variants, and page layouts.');
 };

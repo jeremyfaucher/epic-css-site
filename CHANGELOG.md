@@ -10,10 +10,18 @@ Dates are UTC: npm publication dates through 0.14.0, then GitHub release publica
 
 ### Added
 
+- Workshop author/sidebar profile example with wrapping portrait/text row, full-width bio and labeled demo social links. The site-only Icons gallery adds X, LinkedIn, GitHub and RSS from Bootstrap Icons v1.11.3 with retained MIT notices.
+
+- Semantic `--clr-*` runtime color properties and optional complete light/dark `$color-modes` pairs, preserving central Sass defaults and existing utility names. The workshop adds a persisted, keyboard-operable Dark mode toggle; other consumers keep their own palettes.
+- Named Harbor (blue), Dusk (charcoal/lavender) and Neon (black/coral/teal) workshop presets, each with light/dark modes selected at build time through `$palette-name` in the site's custom Sass. Saved original palette references remain available.
 - Optional SVG helpers in the image module: `.icon` for inline alignment and flex-shrink prevention, and `.icon-16`, `.icon-24`, `.icon-32`, `.icon-48` for explicit pixel dimensions. The helpers work with any SVG collection and include no icon assets.
 - Workshop Icons page with 21 original outline SVGs, live sizing, copy controls and labeled interface examples.
 
 ### Changed
+
+- Moved the workshop theme toggle to the right side of the wrapping header navigation and reduced its padding and filled-button emphasis, preserving dark defaults and saved light/dark choices.
+
+- Deepened the Neon light secondary surface to separate nested primary-surface cards from their example preview backgrounds, retaining the existing card markup and accent colors.
 
 - The npm publish workflow retries its post-publish install check while the registry makes a new version available.
 

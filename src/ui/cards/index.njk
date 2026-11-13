@@ -2,13 +2,14 @@
 layout: base.njk
 tag: ui-page
 title: Cards
-description: Copy vertical and horizontal blog cards built from shared Epic CSS example templates.
+description: Copy vertical, horizontal and author profile cards built from shared Epic CSS example templates.
 ---
 {% from "ui-example.njk" import example %}
 <article>
 <nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/cards/" aria-current="page">Cards</a></nav>
 <h1 class="fs-37 lh-37 mb-24">Cards</h1>
 <p class="mb-32">The vertical card and two horizontal variants share the same image, heading, topic labels, and short lesson on spacing.</p>
+<nav class="flex flex-wrap gap-16 mb-24" aria-label="Card examples"><a href="#author-profile">Author profile</a></nav>
 <h2 class="fs-24 lh-32 mb-16">Vertical card</h2>
 <p class="mb-24">The card keeps its original <code>max-width: 344px</code> and shrinks with the available space. Both the card and its image use <code>border-r-16</code>.</p>
 {% set markup %}{% include "components/cards/vertical.njk" %}{% endset %}
@@ -21,5 +22,11 @@ description: Copy vertical and horizontal blog cards built from shared Epic CSS 
 <p class="mb-24">Put the content first and image second. The image appears on the right from medium screens and below the text on smaller screens, preserving the HTML reading order.</p>
 {% set horizontalRight %}{% include "components/cards/horizontal-right.njk" %}{% endset %}
 {{ example(horizontalRight, "Horizontal image-right card") }}
+<h2 id="author-profile" class="fs-24 lh-32 mb-16">Author profile for a sidebar</h2>
+<p class="mb-24">An unboxed profile capped at 344px, also usable in a 268px sidebar. The portrait sits beside a vertically centered name, role and social row; the biography spans the width below. Flex wrapping moves the text below the portrait when space becomes tight. The few inline dimensions keep the copied example self-contained without adding library utilities.</p>
+{% set author %}{% include "components/cards/author.njk" %}{% endset %}
+{{ example(author, "Sidebar author profile", "", false, "author-profile-code", authorExample.copyNotice) }}
+<p>Alex Example is a demo author. Links point to example.com; replace them with your own profile and feed URLs. Replace the neutral avatar with an image you can use. Its empty alt avoids repeating the adjacent name; write meaningful alt text if your replacement conveys additional information.</p>
+<p>Social marks use inherited text color and labeled links. The displayed code omits license comments for readability; <strong>Copy HTML includes one consolidated Bootstrap Icons MIT notice</strong> for the complete card. Keep that notice when reusing it. Read the <a href="/assets/licenses/bootstrap-icons-LICENSE.txt">full notice</a> or browse <a href="/ui/icons/#icons-social-and-feeds">individual social/feed SVGs and brand guidance</a>. Standalone Copy SVG includes each icon's notice.</p>
 </article>
 <script src="/assets/js/examples.js" defer></script>

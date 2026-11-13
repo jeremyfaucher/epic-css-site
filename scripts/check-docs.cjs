@@ -20,6 +20,7 @@ module.exports = function checkDocs(output, libraryCss) {
   assert.ok(container['max-width'], 'Missing container width cap');
   assert.deepEqual(Object.fromEntries(Object.entries(container).filter(([property]) => property !== 'max-width')), { margin: '0 auto', 'box-sizing': 'border-box' }, 'Documented container behavior changed');
   require('./test-container-width.cjs')();
+  require('./test-theme.cjs').checkTheme(output, libraryCss || coreCss);
   for (const [selector, property, value] of [
     ['.pt-24', 'padding-top', '1.5rem'], ['.py-24', 'padding-bottom', '1.5rem'],
     ['.mb-80', 'margin-bottom', '5rem'], ['.gap-24', 'gap', '1.5rem'], ['.gap-40', 'gap', '2.5rem']

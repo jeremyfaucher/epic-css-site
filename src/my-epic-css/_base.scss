@@ -4,7 +4,7 @@ body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: $fs-body;
   line-height: $lh-body;
-  color: $clr-body;
+  color: var(--clr-body, #{$clr-body});
   margin: 0px;
 }
 
@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
   text-decoration: none;
-  color: $clr-body;
+  color: var(--clr-body, #{$clr-body});
 
   &:hover {
     text-decoration: underline;
@@ -74,6 +74,12 @@ a.btn:hover {
   cursor: not-allowed;
 }
 
+a:focus-visible, button:focus-visible, select:focus-visible,
+summary:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--clr-primary, #{$clr-primary});
+  outline-offset: 3px;
+}
+
 ul.list-none {
   list-style-type: none;
 }
@@ -81,21 +87,21 @@ ul.list-none {
 main {
 
   a {
-    color: $clr-body;
+    color: var(--clr-body, #{$clr-body});
     text-decoration: underline;
     text-underline-offset: 4px;
 
     &:hover {
-      color: $clr-primary;
+      color: var(--clr-primary, #{$clr-primary});
       text-underline-offset: 4px;
     }
 
     &.clr-underline {
-      color: $clr-primary;
+      color: var(--clr-primary, #{$clr-primary});
     }
 
     &.clr-underline:hover {
-      color: $clr-primary-light;
+      color: var(--clr-primary-light, #{$clr-primary-light});
     }
 
   }
@@ -167,11 +173,11 @@ article.post {
 
 hr {
   border: 0;
-  border-top: 1px dotted #efefef;
+  border-top: 1px dotted var(--clr-secondary, #{$clr-secondary});
 }
 
 pre {
-  background: $clr-secondary-bg;
+  background: var(--clr-secondary-bg, #{$clr-secondary-bg});
   padding: 1.5em 14px;
   margin-bottom: 2rem;
   overflow-x: auto;
@@ -179,10 +185,10 @@ pre {
 }
 
 code:not(pre code) {
-  background: $clr-secondary-bg;
+  background: var(--clr-secondary-bg, #{$clr-secondary-bg});
   padding: 2px 8px;
   font-size: 1.2rem;
-  color: $clr-secondary;
+  color: var(--clr-secondary, #{$clr-secondary});
   overflow: auto;
   border-radius: 4px;
 }

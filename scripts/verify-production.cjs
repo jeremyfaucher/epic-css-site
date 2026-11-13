@@ -70,6 +70,12 @@ async function main() {
     ['.clr-primary-bg', 'background'], ['.clr-secondary', 'color'],
     ['.clr-secondary-bg', 'background'], ['.clr-white', 'color'],
   ]) assert.equal(value(live, selector, property), value(local, selector, property), `Production differs: ${selector}`);
+  for (const selector of [':root', 'html[data-theme=light]', 'html[data-theme=dark]']) {
+    for (const role of ['body', 'body-bg', 'primary', 'primary-light', 'primary-bg', 'secondary', 'secondary-bg', 'white']) {
+      assert.equal(value(live, selector, `--clr-${role}`), value(local, selector, `--clr-${role}`), `Production differs: ${selector} ${role}`);
+    }
+  }
+  assert.equal(home('[data-theme-toggle][aria-label="Dark mode"]').length, 1);
   console.log(`Verified production ${commit}: ${routes.length} routes, isolated docs navigation and all eight palette values.`);
 }
 main().catch(error => { console.error(error.message); process.exitCode = 1; });

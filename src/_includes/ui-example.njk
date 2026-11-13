@@ -1,4 +1,4 @@
-{% macro example(markup, label="UI example", script="", fullWidth=false, codeId="") %}
+{% macro example(markup, label="UI example", script="", fullWidth=false, codeId="", copyNotice="") %}
 <section class="my-24" data-example aria-label="{{ label }}">
   <div class="{{ 'w-100' if fullWidth else 'p-24 clr-secondary-bg border-r-16' }}" data-example-preview>{{ markup | safe }}</div>
   {% if fullWidth %}<div class="wrapper"><div class="container">{% endif %}
@@ -9,6 +9,13 @@
     <span class="clr-secondary fs-14" role="status" data-copy-feedback></span>
   </div>
   <pre class="m-0 p-16 fs-14 lh-24"><code class="language-html">{{ markup | trim | escape }}</code></pre>
+  {% if copyNotice %}
+  <template data-example-copy-notice>{{ copyNotice | escape }}</template>
+  <div data-example-copy-fallback hidden>
+    <p class="fs-14">Complete HTML, including the consolidated license notice:</p>
+    <textarea class="w-100" readonly rows="8" aria-label="Complete HTML with license notice" data-example-copy-source></textarea>
+  </div>
+  {% endif %}
   {% if script %}
   <div class="flex flex-wrap items-center gap-12 py-12">
     <span class="fs-14">JavaScript</span>

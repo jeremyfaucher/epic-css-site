@@ -1,35 +1,60 @@
+// Semantic roles are emitted here so selective base imports retain Sass fallbacks.
+$color-defaults: (
+  body: $clr-body, body-bg: $clr-body-bg,
+  primary: $clr-primary, primary-light: $clr-primary-light, primary-bg: $clr-primary-bg,
+  secondary: $clr-secondary, secondary-bg: $clr-secondary-bg, "white": $clr-white
+);
+:root {
+  @each $role, $value in $color-defaults { --clr-#{$role}: #{$value}; }
+}
+@if length($color-modes) > 0 {
+  @if length($color-modes) != 2 or not map-has-key($color-modes, light) or not map-has-key($color-modes, dark) {
+    @error "Color modes require both light and dark maps.";
+  }
+  @each $mode, $palette in $color-modes {
+    @if length($palette) != length($color-defaults) { @error "Each color mode must define all eight semantic roles."; }
+    @each $role, $value in $color-defaults {
+      @if not map-has-key($palette, $role) { @error "Missing color role #{$role} in #{$mode}."; }
+    }
+    html[data-theme="#{$mode}"] {
+      color-scheme: #{$mode};
+      @each $role, $value in $palette { --clr-#{$role}: #{$value}; }
+    }
+  }
+}
+
 .clr-body-bg {
-  background-color: $clr-body-bg;
+  background-color: var(--clr-body-bg, #{$clr-body-bg});
 }
 
 .clr-primary {
-  color: $clr-primary;
+  color: var(--clr-primary, #{$clr-primary});
 }
 
 .clr-primary-bg {
-  background: $clr-primary-bg;
+  background: var(--clr-primary-bg, #{$clr-primary-bg});
 }
 
 .clr-secondary {
-  color: $clr-secondary;
+  color: var(--clr-secondary, #{$clr-secondary});
 }
 
 .clr-secondary-bg {
-  background: $clr-secondary-bg;
+  background: var(--clr-secondary-bg, #{$clr-secondary-bg});
 }
 
 .btn.btn-primary {
-  color: $clr-primary;
-  background: $clr-primary-bg;
+  color: var(--clr-primary, #{$clr-primary});
+  background: var(--clr-primary-bg, #{$clr-primary-bg});
 }
 
 .btn.btn-secondary {
-  color: $clr-secondary;
-  background: $clr-secondary-bg;
+  color: var(--clr-secondary, #{$clr-secondary});
+  background: var(--clr-secondary-bg, #{$clr-secondary-bg});
 }
 
 .clr-white {
-  color: $clr-white;
+  color: var(--clr-white, #{$clr-white});
 }
 
 .border-r-4 {

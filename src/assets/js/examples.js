@@ -20,11 +20,24 @@ document.addEventListener('click', async (event) => {
   const example = button.closest('[data-example], .docs-example');
   if (!example) return;
   const feedback = example.querySelector('[data-copy-feedback], .docs-copy-feedback');
+  const selector = button.dataset.copyLanguage === 'javascript' ? 'pre code.language-javascript' : 'pre code';
+  const code = example.querySelector(selector).textContent.trim();
+  const notice = button.dataset.copyLanguage === 'javascript' ? '' :
+    example.querySelector('[data-example-copy-notice]')?.content.textContent.trim();
+  const payload = notice ? `${notice}\n${code}` : code;
+  const fallback = example.querySelector('[data-example-copy-fallback]');
   try {
-    const selector = button.dataset.copyLanguage === 'javascript' ? 'pre code.language-javascript' : 'pre code';
-    await navigator.clipboard.writeText(example.querySelector(selector).textContent.trim());
+    await navigator.clipboard.writeText(payload);
     feedback.textContent = 'Copied';
+    if (fallback) fallback.hidden = true;
   } catch {
-    feedback.textContent = 'Select the code below to copy it.';
+    if (notice && fallback) {
+      fallback.hidden = false;
+      const source = fallback.querySelector('[data-example-copy-source]');
+      source.value = payload;
+      source.focus();
+      source.select();
+      feedback.textContent = 'Clipboard unavailable. Complete HTML with license selected below; copy it manually.';
+    } else feedback.textContent = 'Select the code below to copy it.';
   }
 });

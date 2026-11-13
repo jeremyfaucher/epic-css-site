@@ -34,7 +34,7 @@ docTopic: colors
 <h3 id="inherited-and-white-text">Inherited and fixed text colors</h3>
 {% set markup %}<div class="clr-secondary-bg p-24 border-r-16">
   <p>This paragraph inherits the body text color.</p>
-  <p class="clr-white">White text stays white when the palette changes.</p>
+  <p class="clr-white p-16 border-r-4" style="background: #0f172a;">White text stays white when the palette changes. This example keeps a dark surface in both modes.</p>
 </div>{% endset %}
 {{ example(markup, "Inherited body text and fixed white text") }}
 <table>
@@ -48,18 +48,11 @@ docTopic: colors
 <tr><td><code>clr-white</code></td><td><code>$clr-white</code></td><td>Text color</td></tr>
 </tbody>
 </table>
-<h2 id="switch-palette">Switch a palette</h2>
-<p>Overrides depend on the library declaring fallback colors with <code>!default</code>. This site's local Sass supports that. npm <code>0.14.0</code> overwrites earlier assignments; the published <code>0.14.1</code> patch fixes this. Upgrade the starter dependency and lockfile to that release before relying on these overrides. Corporate registries may take time to expose a new release.</p>
-<p>In the Eleventy theme or this site's <code>src/my-epic-css/_custom.scss</code>, comment out the eight assignments in the active palette, then uncomment the eight assignments in another palette. Keep one complete palette active. Sass compiles the chosen values into CSS; this does not create a runtime light/dark switch.</p>
-<pre><code class="language-scss">// Example light palette
-$clr-body: #1e1e1e;
-$clr-body-bg: #f4f6fa;
-$clr-primary: #0067b8;
-$clr-primary-light: #4f9eea;
-$clr-primary-bg: #dceeff;
-$clr-secondary: #7a7574;
-$clr-secondary-bg: #ececec;
-$clr-white: #ffffff;</code></pre>
-<p><code>$clr-body</code> sets the base text color. <code>$clr-primary-light</code> sets the accent on <code>main a.clr-underline:hover</code>. There are no standalone <code>clr-body</code> or <code>clr-primary-light</code> utilities. Changing a palette updates existing declarations, rather than generating new color class names.</p>
-<p>Run <code>npm start</code> to preview palette changes. Check text, links, hover states, code blocks, and the examples above. White text can disappear on a light surface: keep it on a sufficiently dark background or use an appropriate semantic text color. The example palettes are starting points; their names do not guarantee contrast for every combination.</p>
-<p>Stop the development server, then run <code>npm run build</code> to compile Sass, filter CSS using literal source classes, and generate the production site. Run <code>npm run validate</code> for the same check with temporary output and restored CSS files. Always preview important pages after filtering, especially if class names are assembled dynamically.</p>
+<h2 id="switch-palette">Light and dark palettes</h2>
+<p>The header's <strong>Dark mode</strong> button switches the HTML <code>data-theme</code> attribute between <code>dark</code> and <code>light</code>. Dark is the initial default, including when JavaScript or storage is unavailable. A valid saved choice is applied before styles load. The site deliberately does not follow the operating system's color preference; the explicit choice persists locally when storage is available.</p>
+<p>In <code>src/my-epic-css/_custom.scss</code>, set <code>$palette-name: "Harbor";</code> (blue), <code>$palette-name: "Dusk";</code> (charcoal/lavender), or <code>$palette-name: "Neon";</code> (black/coral/teal), then rebuild Sass. Dusk uses charcoal-violet surfaces and lavender accents in dark mode, with pale lavender surfaces and deeper violet accents in light mode. Neon uses bright coral and teal on black/charcoal in dark mode, with deeper accents on warm near-white surfaces in light mode. These three presets form the finished set. The runtime button switches light/dark within that compiled preset; there is no runtime palette picker. <code>index.scss</code> imports custom settings before centralized <code>_variables.scss</code>. Keep <code>!default</code> on library values: it means “use this fallback only when no value has been assigned.” The library's purple/green defaults remain separate from the workshop's named presets.</p>
+<p>The selected record in the site's <code>$palettes</code> map supplies the eight existing <code>$clr-*</code> defaults and the <code>$color-modes</code> pair. Each named preset contains complete <code>light</code> and <code>dark</code> variants using the same eight roles: <code>body</code>, <code>body-bg</code>, <code>primary</code>, <code>primary-light</code>, <code>primary-bg</code>, <code>secondary</code>, <code>secondary-bg</code> and <code>white</code>. To customize a preset, edit its complete pair inside <code>$palettes</code> and select its exact name with <code>$palette-name</code>. Unknown names or incomplete modes/roles fail compilation. Saved original commented palettes are deliberately retained as references; they do not select the active palette. Every variant keeps the quoted <code>"white": #ffffff</code> role; it is not a semantic body-text alias.</p>
+<p>The optional colors module emits default <code>--clr-*</code> properties on <code>:root</code> and mode overrides on <code>html[data-theme="light"]</code> and <code>html[data-theme="dark"]</code>. Existing utilities, base text, links, buttons and SVG <code>currentColor</code> use those properties. Single-palette consumers can leave <code>$color-modes</code> empty. Base rules also have Sass-value fallbacks, so selective imports keep working without the colors module. Import central variables before base or colors.</p>
+<p><code>$clr-body</code> sets base text. <code>$clr-primary-light</code> sets the accent on <code>main a.clr-underline:hover</code>. There are no standalone <code>clr-body</code> or <code>clr-primary-light</code> utilities. Changing modes updates semantic values without adding alternate utility names. Literal artwork and demo gradients keep their own colors.</p>
+<p>Run <code>npm start</code> after editing Sass. Check text, links, focus outlines, disabled buttons and code examples in both modes. Fixed white text still needs a dark surface. Active light presets adjust some accent colors from the saved original samples for readability; calculated color-pair checks do not establish accessibility for an entire page.</p>
+<p>Stop development watchers before <code>npm run build</code> or <code>npm run validate</code>. The build compiles Sass, filters CSS using source classes, and generates the site. Validation uses temporary output and restores CSS inputs. Preview both modes after filtering.</p>

@@ -65,6 +65,9 @@ $clr-secondary: #c6c9e5 !default;
 $clr-secondary-bg: #412677 !default;
 $clr-white: #ffffff !default;
 
+// Optional complete light/dark role maps; empty preserves legacy single-palette consumers.
+$color-modes: () !default;
+
 
 // borders
 $base-border-thickness: 1px !default;

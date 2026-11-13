@@ -1,0 +1,17 @@
+<section aria-label="Demo author profile" style="max-width: 344px;">
+  <div class="flex flex-wrap items-center gap-16 mb-16">
+    <img src="/assets/author-placeholder.svg" alt="" width="96" height="96" class="mb-0" style="border-radius: 50%; flex-shrink: 0;">
+    <div style="flex: 1 1 144px; min-width: 0;">
+      <h3 class="fs-20 lh-24 m-0">{{ authorExample.name }}</h3>
+      <p class="fs-14 lh-20 mt-4 mb-8">{{ authorExample.role }}</p>
+      <nav aria-label="Author social profiles and feed">
+        <ul class="flex flex-wrap gap-4 list-none p-0 m-0">
+        {% for link in authorExample.links %}
+          <li><a href="{{ link.href }}" aria-label="{{ link.label }}" class="flex items-center justify-center p-4" style="color: inherit;">{{ authorExample.icons[link.icon] | safe }}</a></li>
+        {% endfor %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <p class="mb-0">{{ authorExample.bio }}</p>
+</section>

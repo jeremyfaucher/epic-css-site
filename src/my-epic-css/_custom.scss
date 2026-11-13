@@ -1,37 +1,111 @@
-// This file is for custom styles that are not part of the default theme.
-// You can override the default theme variables here.
-
+// ============================================================================
+// LAYOUT / CONTAINER
+// ============================================================================
 $container-width: 1040px;
 
-// $clr-body: #1e1e1e;
-// $clr-body-bg: #f8f8fc;
+// ============================================================================
+// COLORS / PALETTE SELECTION
+// AVAILABLE PRESETS (finished set):
+// Harbor — blue. Dusk — charcoal/lavender. Neon — black/coral/teal.
+// Set $palette-name below, then rebuild Sass.
+// Scroll to NAMED PRESETS just below for each preset's light and dark maps.
+// The runtime button selects light/dark within this compiled palette only.
+// !default also lets a build set the name before importing this file.
+// ============================================================================
+$palette-name: "Neon" !default;
 
-// $clr-primary: #00796b;
-// $clr-primary-light: #33ab9f;
-// $clr-primary-bg: #e0f2f1;
+// NAMED PRESETS
+// Each preset must define both modes with the same eight semantic roles.
+// body/body-bg: normal text/page; primary/primary-bg: accent text/surface;
+// primary-light: accent hover; secondary/secondary-bg: supporting text/surface.
+// "white" is fixed white in both modes, never an alias for normal body text.
+// Customize a complete pair here; keep the saved original references below.
+$palettes: (
+  "Harbor": (
+    dark: (
+      body: #ffffff, body-bg: #0f172a,
+      primary: #4f9eea, primary-light: #93c5fd, primary-bg: #1e293b,
+      secondary: #94a3b8, secondary-bg: #1c1f2c, "white": #ffffff
+    ),
+    light: (
+      body: #1e1e1e, body-bg: #f4f6fa,
+      primary: #0067b8, primary-light: #00579b, primary-bg: #dceeff,
+      secondary: #5b5655, secondary-bg: #ececec, "white": #ffffff
+    )
+  ),
+  // Charcoal/lavender direction inspired by the supplied dark/light references.
+  "Dusk": (
+    dark: (
+      body: #f4f2f8, body-bg: #201f2b,
+      primary: #b09aee, primary-light: #d3c5ff, primary-bg: #302a42,
+      secondary: #c3bfd0, secondary-bg: #282731, "white": #ffffff
+    ),
+    light: (
+      body: #27252f, body-bg: #f8f7fc,
+      primary: #51419a, primary-light: #443583, primary-bg: #e9e3fa,
+      secondary: #5f596d, secondary-bg: #eeecf3, "white": #ffffff
+    )
+  ),
+  // Bold coral and teal accents on neutral surfaces; original reference artwork is not used.
+  "Neon": (
+    dark: (
+      body: #ffffff, body-bg: #000000,
+      primary: #ff7956, primary-light: #ffb39d, primary-bg: #202020,
+      secondary: #63dacb, secondary-bg: #282828, "white": #ffffff
+    ),
+    light: (
+      body: #181818, body-bg: #fffaf5,
+      primary: #a93216, primary-light: #862407, primary-bg: #f3ede7,
+      secondary: #00685c, secondary-bg: #c7dcd4, "white": #ffffff
+    )
+  )
+);
 
-// $clr-secondary: #5c6bc0;
-// $clr-secondary-bg: #e8eaf6;
+// Validate names and complete pairs rather than silently using another palette.
+@if not map-has-key($palettes, $palette-name) {
+  @error "Unknown palette '#{$palette-name}'. Choose Harbor, Dusk or Neon.";
+}
+@each $name, $modes in $palettes {
+  @if length($modes) != 2 or not map-has-key($modes, light) or not map-has-key($modes, dark) {
+    @error "Palette '#{$name}' requires both light and dark modes.";
+  }
+  @each $mode, $roles in $modes {
+    @each $role in (body, body-bg, primary, primary-light, primary-bg, secondary, secondary-bg, "white") {
+      @if not map-has-key($roles, $role) { @error "Palette '#{$name}' #{$mode} is missing role '#{$role}'."; }
+    }
+    @if length($roles) != 8 { @error "Palette '#{$name}' #{$mode} must have exactly eight roles."; }
+    @if map-get($roles, "white") != #ffffff { @error "Palette '#{$name}' must keep white as #ffffff in both modes."; }
+  }
+}
 
-// $clr-white: #ffffff;
+// SEMANTIC WIRING
+// Custom settings precede central _variables.scss !default fallbacks.
+// Dark is the no-preference default; both runtime modes use the selected record.
+$color-modes: map-get($palettes, $palette-name);
+$default-colors: map-get($color-modes, dark);
+$clr-body: map-get($default-colors, body);
+$clr-body-bg: map-get($default-colors, body-bg);
+$clr-primary: map-get($default-colors, primary);
+$clr-primary-light: map-get($default-colors, primary-light);
+$clr-primary-bg: map-get($default-colors, primary-bg);
+$clr-secondary: map-get($default-colors, secondary);
+$clr-secondary-bg: map-get($default-colors, secondary-bg);
+$clr-white: map-get($default-colors, "white");
 
-// Neutral light text for readability
-// Deep dark background with a hint of blue-gray
-// MS blue (core branding color)
-// Lighter version of primary for accents and hovers
-// Deep tinted background for callouts
-// Muted gray for secondary text/elements
-// Dark neutral background for contrast and depth
-// Base white, used in cards, buttons, etc.
-$clr-body: #ffffff;
-$clr-body-bg: #0f172a;
-$clr-primary: #4f9eea;
-$clr-primary-light: #93c5fd;
-$clr-primary-bg: #1e293b;
-$clr-secondary: #94a3b8;
-$clr-secondary-bg: #1c1f2c;
-$clr-white: #ffffff;
+// ============================================================================
+// OTHER SITE BEHAVIOR
+// Keep the nonfunctional control hidden without JS, even though .btn sets display.
+// ============================================================================
+[data-theme-toggle][hidden] { display: none; }
 
+// ============================================================================
+// SAVED ORIGINAL PALETTE REFERENCES — intentionally retained
+// Active presets adjust some accents for readable text/surface combinations.
+// ============================================================================
+// Saved alternatives are intentionally retained as commented references.
+// These are the original tested palettes, not the active runtime light/dark maps.
+
+// Saved original blue/neutral light palette reference.
 // Neutral dark text for readability
 // Soft light background with a hint of blue-gray
 // MS blue (core branding color)
@@ -41,10 +115,10 @@ $clr-white: #ffffff;
 // Light neutral background for contrast and depth
 // Base white, used in cards, buttons, etc.
 // $clr-body: #1e1e1e;
-// $clr-body-bg: #f4f6fa;         
-// $clr-primary: #0067b8;         
-// $clr-primary-light: #4f9eea;   
+// $clr-body-bg: #f4f6fa;
+// $clr-primary: #0067b8;
+// $clr-primary-light: #4f9eea;
 // $clr-primary-bg: #dceeff;
-// $clr-secondary: #7a7574;       
-// $clr-secondary-bg: #ececec;    
+// $clr-secondary: #7a7574;
+// $clr-secondary-bg: #ececec;
 // $clr-white: #ffffff;

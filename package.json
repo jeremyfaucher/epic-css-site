@@ -4,6 +4,8 @@
   "description": "11ty Starter Theme",
   "main": "index.njk",
   "scripts": {
+    "test:copy": "node scripts/test-example-copy.cjs",
+    "test:theme": "node scripts/test-theme.cjs",
     "test:icons": "node scripts/test-icons.cjs",
     "build": "node scripts/build.cjs",
     "validate": "node scripts/test-changelog.cjs && node scripts/build.cjs --check",

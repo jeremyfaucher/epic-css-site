@@ -2,14 +2,14 @@
 layout: base.njk
 tag: ui-page
 title: Icons
-description: Copyable outline SVG icons, optional pixel sizing utilities, and accessible interface examples.
+description: Copyable interface, social and feed SVG icons, optional pixel sizing utilities, and labeled interface examples.
 css_include: /assets/css/icons.css
 ---
 {% from "ui-example.njk" import example %}
 <article data-icon-library>
 <nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/icons/" aria-current="page">Icons</a></nav>
 <h1 class="fs-37 lh-37 mb-24">Icons</h1>
-<p class="mb-24">Simple outlines for familiar interface actions. Each icon uses a 24-unit viewBox, rounded strokes and <code>currentColor</code>, so it scales with its dimensions and inherits the surrounding text color.</p>
+<p class="mb-24">Outline icons for interface actions and monochrome social marks. Each uses a 24-unit viewBox and <code>currentColor</code> for its stroke or fill, so it scales with its dimensions and inherits text color.</p>
 <div class="clr-primary-bg p-24 border-r-16 mb-32 flex flex-wrap gap-16 items-center">
 <label for="icon-size" class="fw-600">Preview and copy size</label>
 <select id="icon-size" data-icon-size disabled>
@@ -24,7 +24,7 @@ css_include: /assets/css/icons.css
 <ul class="grid gap-16 list-none p-0 m-0" data-icon-gallery>
 {% for icon in group.items %}
 <li class="clr-primary-bg p-24 border-r-16" data-icon-card data-icon-name="{{ icon.name }}">
-<div class="flex items-center justify-center clr-primary mb-16" data-icon-preview>{{ icon.svg | safe }}</div>
+<div class="flex items-center justify-center{% if group.id != 'social-and-feeds' %} clr-primary{% endif %} mb-16" data-icon-preview>{{ icon.svg | safe }}</div>
 <h3 class="fs-16 mt-0 mb-16">{{ icon.name }}</h3>
 <button type="button" class="btn btn-secondary" data-copy-icon aria-label="Copy {{ icon.name }} SVG" hidden>Copy SVG</button>
 <p class="fs-12 mb-12" role="status" aria-live="polite" aria-atomic="true" data-icon-feedback></p>
@@ -70,7 +70,8 @@ css_include: /assets/css/icons.css
 <h2 class="fs-24 lh-32 mb-16">Use in HTML or Nunjucks</h2>
 <p>Copy an SVG and paste the markup directly into an HTML page or a Nunjucks include. Keep its <code>xmlns</code>, <code>viewBox</code>, paths and paint attributes. Set the surrounding text color, or add a color utility to the SVG. An external image loaded with <code>img</code> does not inherit the page's <code>currentColor</code>.</p>
 <p>The CSS utilities live in the optional <code>images</code> module (<code>src/_images.scss</code> in the package), also included by the full library entry point. Import that partial alone for sizing without any icon assets. The gallery geometry lives only in workshop data at <code>src/_data/icons.js</code>; no collection or runtime dependency ships with the CSS package.</p>
-<p>These original geometric outlines were created for this workshop and use the site repository's MIT license. No third-party SVG collection was imported. When using another library, keep its required attribution and license notices.</p>
+<p>The 21 original outline icons use this site's MIT license. The four social/feed SVGs are adapted from <a href="https://github.com/twbs/icons/tree/v1.11.3">Bootstrap Icons v1.11.3</a>, under its <a href="/assets/licenses/bootstrap-icons-LICENSE.txt">MIT license and copyright notice</a>. The 16-unit geometry is scaled proportionally to the shared 24-unit viewBox. Each copied social SVG includes the full upstream notice.</p>
+<p>Brand marks identify their services; they do not imply endorsement. The software license does not replace brand rules. Review the <a href="https://about.x.com/en/who-we-are/brand-toolkit">X</a>, <a href="https://brand.linkedin.com/downloads">LinkedIn</a> and <a href="https://brand.github.com/foundations/logo">GitHub</a> guidance when adapting a design. Social previews and the <a href="/ui/cards/#author-profile">author profile example</a> inherit neutral text color rather than accent colors.</p>
 </article>
 <script src="/assets/js/icons.js" defer></script>
 <script src="/assets/js/examples.js" defer></script>

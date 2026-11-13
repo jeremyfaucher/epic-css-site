@@ -8,12 +8,13 @@ const data = require('../src/_data/icons');
 
 function checkIcons(output) {
   const $ = cheerio.load(fs.readFileSync(path.join(output, 'ui/icons/index.html'), 'utf8'));
-  assert.equal($('[data-icon-card]').length, 21);
-  assert.equal($('[data-icon-gallery]').length, 4);
+  assert.equal($('[data-icon-card]').length, 25);
+  assert.equal($('[data-icon-gallery]').length, 5);
   $('[data-icon-card]').each((_, card) => {
     const item = $(card);
     assert.equal(item.find('[data-icon-preview] svg').attr('viewBox'), '0 0 24 24');
-    assert.equal(item.find('[data-icon-preview] svg').attr('stroke'), 'currentColor');
+    const svg = item.find('[data-icon-preview] svg');
+    assert(svg.attr('stroke') === 'currentColor' || svg.attr('fill') === 'currentColor');
     assert.equal(item.find('[data-copy-icon]').attr('aria-label'), `Copy ${item.attr('data-icon-name')} SVG`);
     assert.equal(item.find('[data-icon-feedback][role="status"][aria-live="polite"]').length, 1);
     const source = cheerio.load(item.find('textarea[readonly]').val(), null, false);
@@ -28,7 +29,17 @@ function checkIcons(output) {
   assert(!css.includes('<svg'), 'No assets in portable CSS');
   const landing = cheerio.load(fs.readFileSync(path.join(output, 'ui/index.html'), 'utf8'));
   assert.equal(landing('main a[href="/ui/icons/"]').length, 1);
-  console.log('Icon markup: 21 original SVGs, four groups/sizes, labeled controls, fallback source, navigation and optional standalone image module passed.');
+  const social = data.groups.find(group => group.id === 'social-and-feeds');
+  assert.deepEqual(social.items.map(icon => icon.id), ['x', 'linkedin', 'github', 'rss']);
+  for (const icon of social.items) {
+    assert(icon.svg.includes('Copyright (c) 2019-2024 The Bootstrap Authors'));
+    assert(icon.svg.includes('Permission is hereby granted'));
+    assert(icon.svg.includes('THE SOFTWARE IS PROVIDED'));
+    assert(icon.svg.includes('transform="scale(1.5)"'));
+    assert(icon.source.includes('/v1.11.3/'));
+  }
+  assert(fs.existsSync(path.join(output, 'assets/licenses/bootstrap-icons-LICENSE.txt')));
+  console.log('Icon markup: 25 SVGs, five groups, four sizes, original/Bootstrap attribution, labeled controls, source fallback and optional image module passed.');
 }
 
 async function testBehavior() {
@@ -67,7 +78,7 @@ async function testBehavior() {
   delete navigator.clipboard;
   await cards[1].button.click();
   assert.match(cards[1].feedback.textContent, /Clipboard unavailable/);
-  console.log('Icon behavior: all 21 SVGs at all four sizes, exact clipboard payload/success feedback, denied/missing clipboard fallback and focus/selection passed.');
+  console.log('Icon behavior: all 25 SVGs at all four sizes, exact clipboard payload including license/success feedback, denied/missing clipboard fallback and focus/selection passed.');
 }
 
 module.exports = checkIcons;

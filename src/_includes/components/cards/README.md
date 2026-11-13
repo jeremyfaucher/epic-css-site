@@ -8,3 +8,17 @@
 - Review prose docs and sync/version the portable library separately when intentional utility changes are ready. These steps are not automatic.
 
 Follow [the demo-copy workflow](../../../../DEMO-COPY.md) when writing sample content. The shared card links to the existing layout guide. The vertical card retains its original inline width cap because the library has no matching max-width utility.
+
+## Sidebar author profile
+
+`author.njk` and `src/_data/authorExample.js` own the Cards-only author example.
+It is unboxed, capped at 344px, and designed for a 268px sidebar; the portrait/text
+row wraps in tighter space while the bio remains below it. The neutral avatar is
+original site artwork. Demo links use example.com and must be replaced by real
+profile/feed URLs. SVGs come from shared Icons data. The displayed card code omits repeated notices;
+Copy HTML includes one consolidated Bootstrap Icons MIT notice for the complete
+card. This is disclosed beside the example, and the clipboard-denial fallback
+selects the complete licensed payload. Standalone gallery SVGs keep their own
+notices. See [ICON-LICENSES.md](../../../../ICON-LICENSES.md).
+The few inline dimensions travel with the copied markup; no new utility module
+or runtime script is needed. The homepage and theme About are unchanged.
