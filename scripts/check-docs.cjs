@@ -42,7 +42,7 @@ module.exports = function checkDocs(output, libraryCss) {
     assert.equal($('head style').first().text().trim(), coreCss, route + ': compiled Epic CSS must load first');
     const coreSelectors = [];
     postcss.parse(coreCss).walkRules(rule => coreSelectors.push(rule.selector));
-    const shared = $('.docs-layout, .docs-sidebar nav p, .docs-sidebar ul, .docs-sidebar a, .docs-eyebrow, .docs-page-footer, .docs-example, .docs-example-preview, .docs-example-toolbar, [data-copy-example], .docs-copy-feedback, .docs-example > pre');
+    const shared = $('.grid.grid-sidebar-left-lg-208px, .docs-sidebar nav p, .docs-sidebar ul, .docs-sidebar a, .docs-eyebrow, .docs-page-footer, .docs-example, .docs-example-preview, .docs-example-toolbar, [data-copy-example], .docs-copy-feedback, .docs-example > pre');
     shared.each((_, element) => {
       for (const name of ($(element).attr('class') || '').split(/\s+/).filter(Boolean)) {
         if (name.startsWith('docs-') || name.startsWith('language-')) continue;

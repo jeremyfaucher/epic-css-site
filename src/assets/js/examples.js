@@ -1,3 +1,10 @@
+document.querySelectorAll('[data-example-details]').forEach(details => {
+  const summary = details.querySelector('summary');
+  details.addEventListener('toggle', () => {
+    summary.textContent = details.open ? 'Hide code' : 'Show code';
+  });
+});
+
 document.querySelectorAll('[data-code-showcase]').forEach(showcase => {
   const toggle = showcase.querySelector('[data-code-showcase-toggle]');
   const code = showcase.querySelector('[data-example-code]');

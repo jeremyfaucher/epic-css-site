@@ -53,7 +53,17 @@ docTopic: flexbox
 <tr><td><code>xl-flex-row</code></td><td>1200 px</td></tr>
 </tbody></table>
 <p>These prefixes change direction, not display. Keep <code>flex</code> on the parent for an always-active flex layout. To enable flex only from medium, use <code>flex-md</code> instead. Note the existing names: <code>md-flex-row</code> changes direction, while <code>flex-md</code> enables display. The current stylesheet does not generate <code>md-flex</code> or <code>inline-flex</code> utilities.</p>
+<h2 id="ordering">Responsive ordering</h2>
+<p><code>flex-lg</code> enables <code>display: flex</code> from the large breakpoint, 960 pixels, leaving display unchanged below it.</p>
+<p><code>order-lg-last</code> sets <code>order: 1</code> from 960 pixels. Apply it to a direct flex or grid child to place it after siblings with the default order. Below large, HTML order applies. The <a href="/ui/cards/">image-right card</a> keeps its image first in the HTML, then moves its image link wrapper last when <code>flex-lg</code> enables the horizontal layout. Visual ordering leaves reading and keyboard navigation order unchanged.</p>
 <h2 id="alignment">Alignment</h2>
+<h3 id="responsive-bottom-spacing">Bottom spacing while stacked</h3>
+<p>Use <code>mb-24 mb-lg-0</code> on an image wrapper to separate it from the copy below. The base margin is 1.5rem; from 960 pixels the margin resets to zero and the horizontal gap supplies the spacing.</p>
+{% set markup %}<div class="flex-lg gap-24">
+  <div class="docs-demo-item flex-1 mb-24 mb-lg-0">Image area</div>
+  <div class="docs-demo-item flex-1">Card copy</div>
+</div>{% endset %}
+{{ example(markup, "Stacked spacing resets at large") }}
 <p>Justification distributes items along the main axis. Item alignment positions them along the cross axis; those axes change when the direction is a column.</p>
 {% set markup %}<div class="flex justify-between items-center gap-16">
   <span class="docs-demo-item">Brand</span>

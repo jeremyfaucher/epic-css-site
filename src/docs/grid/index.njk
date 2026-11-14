@@ -27,30 +27,39 @@ docTopic: grid
 <p><code>0, 4, 6, 8, 10, 12, 16, 18, 20, 24, 32, 40, 56, 60, 64, 80, 100</code>.</p>
 <p>The values are rem-based Sass multipliers, not a general pixel parser. In the current scale both <code>gap-16</code> and <code>gap-18</code> resolve to one rem.</p>
 <h2 id="sidebar">Sidebar layouts</h2>
-<h3 id="right-sidebar">Fixed-width right sidebar</h3>
-<p>Use <code>grid grid-sidebar-right-268 gap-40</code> with main content first and an <code>aside</code> second. <code>grid</code> supplies <code>display: grid</code>; <code>grid-sidebar-right-268</code> sets one <code>minmax(0, 1fr)</code> track below 1040 pixels and <code>minmax(0, 1fr) 268px</code> from 1040 pixels. The sidebar is a fixed 268-pixel track on desktop, not a maximum width. The main track takes the remaining space.</p>
-<p><code>gap-40</code> supplies a 2.5rem row and column gap (40 pixels at a 16-pixel root font size). The breakpoint follows the viewport; use the two-column layout where the containing region has enough room for both tracks and the gap. See the <a href="/ui/layouts/">posts and right-sidebar example</a> in the 1040-pixel site container.</p>
-<p>For a wider fixed track, <code>grid-sidebar-right-344</code> uses the same stacking behavior and breakpoint, with <code>minmax(0, 1fr) 344px</code> on desktop. Both utilities require <code>grid</code>.</p>
-<h3>Percentage-width left sidebars</h3>
-<p>Combine <code>grid</code> and <code>grid-sidebar-left</code> for a one-column starting layout, then select a large-screen sidebar width.</p>
-{% set markup %}<div class="grid grid-sidebar-left lg-grid-sidebar-left-25 gap-24">
+<p>Combine <code>grid</code>, a sidebar utility, and a gap utility. Both sidebars use one <code>minmax(0, 1fr)</code> track below the <code>lg</code> breakpoint (960 pixels), then a fixed-width sidebar beside flexible main content. The breakpoint follows the viewport; allow enough container space for both tracks and the gap.</p>
+<h3 id="left-sidebar">Fixed-width left sidebar</h3>
+<p>Put the sidebar first. The docs use <code>grid grid-sidebar-left-lg-208px gap-32</code>: a 208-pixel left track from 960 pixels, with a two-rem gap.</p>
+{% set markup %}<div class="grid grid-sidebar-left-lg-208px gap-32">
   <div class="docs-demo-item">Sidebar</div>
   <div class="docs-demo-item">Main content</div>
 </div>{% endset %}
-{{ example(markup, "Responsive sidebar grid") }}
-<table><thead><tr><th>Class</th><th>Large-screen tracks</th></tr></thead><tbody>
-<tr><td><code>lg-grid-sidebar-left-25</code></td><td><code>25% 1fr</code></td></tr>
-<tr><td><code>lg-grid-sidebar-left-30</code></td><td><code>30% 1fr</code></td></tr>
-<tr><td><code>lg-grid-sidebar-left-40</code></td><td><code>40% 1fr</code></td></tr>
+{{ example(markup, "Responsive left sidebar grid") }}
+<h3 id="right-sidebar">Fixed-width right sidebar</h3>
+<p>Put main content first. Use <code>grid grid-sidebar-right-lg-344px gap-40</code> for a 344-pixel right track from 960 pixels, with a 2.5rem gap. See the <a href="/ui/layouts/">posts and right-sidebar example</a>.</p>
+{% set markup %}<div class="grid grid-sidebar-right-lg-344px gap-40">
+  <div class="docs-demo-item">Main content</div>
+  <div class="docs-demo-item">Sidebar</div>
+</div>{% endset %}
+{{ example(markup, "Responsive right sidebar grid") }}
+<table><thead><tr><th>Class</th><th>Tracks from 960 pixels</th></tr></thead><tbody>
+<tr><td><code>grid-sidebar-left-lg-208px</code></td><td><code>208px minmax(0, 1fr)</code></td></tr>
+<tr><td><code>grid-sidebar-right-lg-344px</code></td><td><code>minmax(0, 1fr) 344px</code></td></tr>
 </tbody></table>
-<p>The current sidebar rules start in the 960-pixel breakpoint but are overridden back to one column through 1024 pixels. The two-track sidebar layout therefore takes effect above 1024 pixels. That is the existing output; no extra example CSS changes its behavior here.</p>
-<h3>Other existing layout helpers</h3>
-<p><code>left-sidebar-sm</code> creates a grid from 756 pixels with tracks <code>minmax(140px, auto) 1fr</code> and a six-percent gap. <code>grid-1fr-4fr-md</code> uses <code>1fr 4fr</code> from 820 pixels; the current sidebar override temporarily stacks it between 960 and 1024 pixels. These describe the current rules, rather than additional utilities added for the docs.</p>
+<h3 id="customize-sidebar-width">Customize sidebar widths</h3>
+<p>Set <code>$sidebar-widths</code> near the top of <code>src/my-epic-css/_custom.scss</code>, then rebuild Sass. The fallback map in <code>_variables.scss</code> uses <code>!default</code>, preserving a map assigned before the library is imported.</p>
+<pre><code>$sidebar-widths: (
+  narrow: 208px,
+  wide: 344px,
+);</code></pre>
+<p>Each map value generates both left and right utilities: <code>grid-sidebar-left-lg-208px</code>, <code>grid-sidebar-right-lg-208px</code>, <code>grid-sidebar-left-lg-344px</code>, and <code>grid-sidebar-right-lg-344px</code>. Keep the narrow sidebar for navigation and use the wider left sidebar for author profiles.</p>
+<p>Map keys label the settings; widths and units form the class names. Add <code>medium: 280px</code> to generate both <code>grid-sidebar-left-lg-280px</code> and <code>grid-sidebar-right-lg-280px</code>. Update HTML when changing an existing width. The map replaces the individual left/right width settings.</p>
+<p>Replace the former fixed right-sidebar and percentage left-sidebar utilities with the configurable utilities and a separate gap utility. The former small-sidebar helper is removed. The fractional helper is now <code>grid-md-1fr-4fr</code>: combine it with <code>grid</code> for <code>1fr 4fr</code> tracks from 820 pixels.</p>
 <h2 id="containers">Containers and widths</h2>
 <table><thead><tr><th>Class</th><th>Effect</th></tr></thead><tbody>
 <tr><td><code>wrapper</code></td><td>Five percent padding on each side.</td></tr>
 <tr><td><code>container</code></td><td>Centered container with the Sass-configured maximum width: 1040 pixels on this site, with a 1000-pixel library fallback. See <a href="/docs/wrapper-and-container/#customize-container-width">container customization</a>.</td></tr>
-<tr><td><code>container-post</code></td><td>Centered container with a fixed maximum width of 1000 pixels.</td></tr>
+<tr><td><code>container-post</code></td><td>Centered container with an independently configured <code>$container-post-width</code>: 1000-pixel fallback and a 900-pixel custom setting. See <a href="/docs/wrapper-and-container/#customize-post-container">post container customization</a>.</td></tr>
 <tr><td><code>w-100</code></td><td>Full available width.</td></tr>
 <tr><td><code>margin-auto</code></td><td><code>margin: 0 auto</code>, resetting vertical margins and centering horizontally where the available width permits.</td></tr>
 <tr><td><code>sm-w-25</code>, <code>md-w-50</code>, <code>lg-w-75</code></td><td>Examples of breakpoint-prefixed 25%, 50%, and 75% widths.</td></tr>

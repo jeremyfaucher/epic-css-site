@@ -1,0 +1,16 @@
+<section data-marquee aria-label="Sample brand logo marquee">
+  <div class="wrapper"><div class="container flex flex-wrap items-center justify-between gap-16 mb-16">
+    <p class="m-0 fs-14 clr-secondary">Sample brand marks / layout demonstration</p>
+    <button data-marquee-toggle type="button" class="btn btn-secondary py-8 px-12" disabled>Pause scrolling</button>
+  </div></div>
+  <div data-marquee-viewport tabindex="0" role="region" aria-label="Brand logos; focus to pause, or use the pause control" class="overflow-x-auto scrollbar-none py-24">
+    <div data-marquee-track class="flex w-max">
+      <ul class="flex flex-shrink-0 min-w-screen items-center justify-around gap-64 list-none m-0 p-0 pr-64" aria-label="Sample brands">
+        {% for logo in logoExample %}<li class="flex flex-shrink-0 items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-40 w-auto flex-shrink-0" role="img" aria-label="{{ logo.name }}" focusable="false" viewBox="{{ logo.viewBox }}" width="{{ logo.width }}" height="{{ logo.height }}" fill="currentColor">{{ logo.paths | safe }}</svg></li>{% endfor %}
+      </ul>
+      <ul aria-hidden="true" inert class="flex flex-shrink-0 min-w-screen items-center justify-around gap-64 list-none m-0 p-0 pr-64">
+        {% for logo in logoExample %}<li class="flex flex-shrink-0 items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-40 w-auto flex-shrink-0" role="img" aria-label="{{ logo.name }}" focusable="false" viewBox="{{ logo.viewBox }}" width="{{ logo.width }}" height="{{ logo.height }}" fill="currentColor">{{ logo.paths | safe }}</svg></li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>

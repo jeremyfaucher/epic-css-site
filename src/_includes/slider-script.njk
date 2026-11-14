@@ -2,23 +2,86 @@
   function initializeSliders() {
     document.querySelectorAll('[data-slider]').forEach((slider) => {
       const viewport = slider.querySelector('[data-slider-viewport]');
-      const track = slider.querySelector('[data-slider-track]');
-      const card = slider.querySelector('[data-slider-card]');
-      const previous = slider.querySelector('[data-slider-previous]');
-      const next = slider.querySelector('[data-slider-next]');
-      if (!viewport || !track || !card || !previous || !next) return;
+      const tablist = slider.querySelector('[data-slider-tabs]');
+      const tabs = Array.from(slider.querySelectorAll('[data-slider-tab]'));
+      const panels = Array.from(slider.querySelectorAll('[data-slider-panel]'));
+      if (!viewport || !tablist || !tabs.length || tabs.length !== panels.length) return;
       if (slider.dataset.sliderReady) return;
       slider.dataset.sliderReady = 'true';
-
-      function move(direction) {
-        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-        viewport.scrollBy({
-          left: direction * (card.getBoundingClientRect().width + gap),
-          behavior: 'smooth'
+      let selected = 0;
+      let scrollTimer;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      tablist.setAttribute('role', 'tablist');
+      tabs.forEach((tab, index) => {
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('aria-controls', panels[index].id);
+        panels[index].setAttribute('role', 'tabpanel');
+        panels[index].setAttribute('aria-labelledby', tab.id);
+      });
+      function select(index) {
+        selected = index;
+        tabs.forEach((tab, i) => {
+          const active = i === index;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          tab.classList.toggle('btn-primary', active);
+          tab.classList.toggle('btn-secondary', !active);
+          panels[i].inert = !active;
         });
       }
-      previous.addEventListener('click', () => move(-1));
-      next.addEventListener('click', () => move(1));
+      function move(index, focus = false, animate = true) {
+        select(index);
+        if (focus) tabs[index].focus({ preventScroll: true });
+        const bounds = viewport.getBoundingClientRect();
+        const panel = panels[index].getBoundingClientRect();
+        viewport.scrollTo({
+          left: viewport.scrollLeft + panel.left - bounds.left - (viewport.clientWidth - panel.width) / 2,
+          behavior: animate && !reducedMotion.matches ? 'smooth' : 'instant'
+        });
+      }
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', (event) => {
+          event.preventDefault();
+          move(index);
+        });
+        tab.addEventListener('keydown', (event) => {
+          let next;
+          if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+          if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === 'Home') next = 0;
+          if (event.key === 'End') next = tabs.length - 1;
+          if (next === undefined) return;
+          event.preventDefault();
+          move(next, true);
+        });
+      });
+      function synchronize() {
+        const bounds = viewport.getBoundingClientRect();
+        const center = bounds.left + viewport.clientWidth / 2;
+        let nearest = 0;
+        let distance = Infinity;
+        panels.forEach((panel, index) => {
+          const rect = panel.getBoundingClientRect();
+          const delta = Math.abs(rect.left + rect.width / 2 - center);
+          if (delta < distance) { nearest = index; distance = delta; }
+        });
+        select(nearest);
+      }
+      // Use native completion when available; the timer is only a fallback.
+      if ('onscrollend' in viewport) {
+        viewport.addEventListener('scrollend', synchronize);
+      } else {
+        viewport.addEventListener('scroll', () => {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(synchronize, 120);
+        }, { passive: true });
+      }
+      window.addEventListener('resize', () => move(selected, false, false));
+      const example = slider.closest('[data-example-panel]');
+      if (example) example.addEventListener('examplevisibilitychange', () => {
+        if (!example.hidden) move(selected, false, false);
+      });
+      select(0);
     });
   }
   if (document.readyState === 'loading') {

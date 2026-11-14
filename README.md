@@ -53,11 +53,11 @@ Both commands run [check-docs.cjs](scripts/check-docs.cjs), verifying isolated t
 
 The [changelog page](src/docs/changelog/index.njk) at `/docs/changelog/` renders [CHANGELOG.md](CHANGELOG.md), an exact copy of the library's `CHANGELOG.md`. The library file is the source of truth; never edit the site copy directly. [changelog.cjs](scripts/changelog.cjs) parses it for [src/_data/changelog.js](src/_data/changelog.js) and fails the build on malformed entries: version or date order, unknown or misordered groups, stray list items, and link definitions that match no version.
 
-During each feature/fix task, add its note to the library's planned next-version
-section (`## [Unreleased] - 0.14.4` at present), not to an already published release.
-The page labels this as `0.14.4 (Unreleased)` without a date or npm link;
-`0.14.3` remains the latest published release. Keep package/lockfile versions and
-the theme's independent version unchanged until an explicit release request.
+During each feature/fix task, add its note to the library's `## [Unreleased]`
+section, not to an already published release. Add a planned version to the
+heading only when a target is agreed; it has no date or npm link.
+Keep package/lockfile versions and the theme's independent version unchanged
+until an explicit release request.
 See [RELEASING.md](RELEASING.md) for finalizing the heading and release date.
 
 After editing the library changelog, with the library checked out at `../epic-css` (or `EPIC_CSS_DIR` set to its path), run:

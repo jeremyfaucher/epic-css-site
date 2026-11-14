@@ -3,37 +3,75 @@ layout: base.njk
 tag: ui-page
 fullWidth: true
 title: Sliders
-description: A horizontal scroll slider with numbered gradient cards and Previous and Next controls.
+description: Three design studies in a tab-controlled scroll-snapping slider built with Epic CSS utilities.
 ---
 {% from "ui-example.njk" import example %}
+<div data-example-gallery>
 <div class="wrapper"><div class="container">
 <nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/sliders/" aria-current="page">Sliders</a></nav>
 <h1 class="fs-37 lh-37 mb-24">Sliders</h1>
-<h2 class="fs-24 lh-32 mb-16">Horizontal Scroll Slider</h2>
-<p class="mb-24">Scroll through eight numbered gradient cards, or use Previous and Next to move one card at a time. The cards keep their original 300-pixel width, 200-pixel height, rounded corners, and scroll snapping.</p>
+<nav data-example-picker aria-label="Slider examples" class="flex flex-wrap gap-24 mb-32">
+  <a href="#scroll-slider" data-example-choice class="active" aria-current="true">Scroll slider</a>
+  <a href="#logo-marquee" data-example-choice>Logo marquee</a>
+</nav>
 </div></div>
-{% set markup %}<div data-slider>
-<div data-slider-viewport tabindex="0" role="region" aria-label="Numbered gradient cards" class="slider-container position-relative w-100 flex items-center overflow-x-auto scroll-snap-x-mandatory scroll-smooth" style="scroll-padding-inline-start: calc((100vw - 1000px) / 2); scrollbar-width: none;">
-  <div data-slider-track class="slider flex gap-16 w-100 gap-12 p-20 margin-auto" style="max-width: 1000px;">
-    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">1</div>
-    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">2</div>
-    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">3</div>
-    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">4</div>
-    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">5</div>
-    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">6</div>
-    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">7</div>
-    <div data-slider-card class="card flex flex-basis-300 items-center clr-white border-r-16 snap-start justify-center" style="height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);">8</div>
-  </div>
-</div>
-<div class="flex gap-12 margin-auto" style="max-width: 1000px;">
-<button type="button" data-slider-previous class="prev-btn cursor-pointer p-20 border-none clr-white" aria-label="Previous" style="background: rgba(0, 0, 0, 0.5);">&#9665;</button>
-<button type="button" data-slider-next class="next-btn cursor-pointer p-20 border-none clr-white" aria-label="Next" style="background: rgba(0, 0, 0, 0.5);">&#9655;</button>
-</div>
-</div>{% endset %}
-{% set script %}{% include "slider-script.njk" %}{% endset %}
-{{ example(markup, "Horizontal scroll slider", script, true) }}
+<section id="scroll-slider" data-example-panel aria-labelledby="scroll-slider-heading">
 <div class="wrapper"><div class="container">
-<p class="mb-24">Copy both the HTML and JavaScript. The controls are scoped to each <code>data-slider</code> wrapper. The original inline styles preserve the gradient, height, width cap, scroll padding, and button backgrounds.</p>
+<h2 id="scroll-slider-heading" class="fs-24 lh-32 mb-16">Scroll slider</h2>
+<p class="mb-16">Use this tab-controlled slider to present a few related ideas in wide panels. Choose a tab, swipe, or scroll horizontally to move between panels; CSS scroll snapping settles each panel into place, and the selected tab follows the scroll position.</p>
+<p class="mb-24">The example pairs three design principles with original illustrations: hierarchy, spacing and balance. Its layout uses Epic CSS utilities, with a small script for tab controls, keyboard navigation and scroll synchronization. Copy both the HTML and JavaScript below the demo.</p>
 </div></div>
+{% set markup %}<section data-slider aria-label="Design studies">
+  <div class="wrapper"><div class="container">
+    <nav data-slider-tabs aria-label="Choose a design principle" class="flex flex-wrap gap-12 mb-24">
+      <a id="design-tab-hierarchy" href="#design-panel-hierarchy" data-slider-tab class="btn btn-primary py-12 px-24">Hierarchy</a>
+      <a id="design-tab-spacing" href="#design-panel-spacing" data-slider-tab class="btn btn-secondary py-12 px-24">Spacing</a>
+      <a id="design-tab-balance" href="#design-panel-balance" data-slider-tab class="btn btn-secondary py-12 px-24">Balance</a>
+    </nav>
+  </div></div>
+  <div data-slider-viewport tabindex="0" role="region" aria-label="Scrollable design studies" class="flex gap-24 overflow-x-auto scrollbar-none scroll-snap-x-mandatory scroll-gutter-container pb-16">
+    <section id="design-panel-hierarchy" data-slider-panel tabindex="0" class="flex-basis-100 snap-start clr-primary-bg border-r-16 p-20">
+      <p class="clr-secondary fs-14 mb-8">01 / Hierarchy</p>
+      <h3 class="fs-32 lh-37 mt-0 mb-12">Give the main idea a place to lead.</h3>
+      <p class="mb-16">A clear change in scale gives the eye a starting point. Let the supporting details stay quieter so the next step is easy to find.</p>
+      <img src="/assets/design-hierarchy.svg" width="1040" height="420" alt="Editorial layout study with an oversized headline, a coral circle and smaller supporting cards." class="w-100 mb-0 border-r-16">
+    </section>
+    <section id="design-panel-spacing" data-slider-panel tabindex="0" class="flex-basis-100 snap-start clr-primary-bg border-r-16 p-20">
+      <p class="clr-secondary fs-14 mb-8">02 / Spacing</p>
+      <h3 class="fs-32 lh-37 mt-0 mb-12">Let the space explain what belongs together.</h3>
+      <p class="mb-16">Keep related elements close and leave more room between groups. A repeated spacing rhythm helps a busy layout feel considered.</p>
+      <img src="/assets/design-spacing.svg" width="1040" height="420" alt="Warm editorial layout with three grouped columns and green guides highlighting the space between them." class="w-100 mb-0 border-r-16">
+    </section>
+    <section id="design-panel-balance" data-slider-panel tabindex="0" class="flex-basis-100 snap-start clr-primary-bg border-r-16 p-20">
+      <p class="clr-secondary fs-14 mb-8">03 / Balance</p>
+      <h3 class="fs-32 lh-37 mt-0 mb-12">Create balance without making everything equal.</h3>
+      <p class="mb-16">A large quiet shape can sit alongside a small vivid accent. Adjust their weight and position until each part has room to contribute.</p>
+      <img src="/assets/design-balance.svg" width="1040" height="420" alt="Asymmetric violet composition balancing a large dark rectangle against a smaller orange circle and fine type." class="w-100 mb-0 border-r-16">
+    </section>
+  </div>
+</section>{% endset %}
+{% set script %}{% include "slider-script.njk" %}{% endset %}
+{{ example(markup, "Design principle slider", script, true, "scroll-slider-code", collapsible=true) }}
+<div class="wrapper"><div class="container">
+<p class="mb-24">Copy the HTML and JavaScript together, and replace the three original SVG studies with your own images. All layout and button styling comes from Epic CSS utilities. The shared <code>flex-basis-100</code> utility gives each panel a full track width; <code>scroll-gutter-container</code> aligns the scroller with the configured container.</p>
+<p class="mb-24">Use Left and Right arrow keys, Home or End on the tabs. Swiping keeps the selected tab in sync. Reduced-motion preferences disable animated tab navigation; without JavaScript, the links still jump to each scrollable panel. Give every copied slider its own tab and panel IDs.</p>
+</div></div>
+</section>
+<section id="logo-marquee" data-example-panel aria-labelledby="logo-marquee-heading">
+<div class="wrapper"><div class="container">
+<h2 id="logo-marquee-heading" class="fs-24 lh-32 mb-16">Logo marquee</h2>
+<p class="mb-24">A single row moves at a steady pace and repeats without a visible jump. Use it for a compact collection of client, partner or product marks. This example uses familiar brand logos as sample artwork, with no customer or endorsement claim.</p>
+</div></div>
+{% set logos %}{% include "components/logo-marquee.njk" %}{% endset %}
+{% set marqueeScript %}{% include "marquee-script.njk" %}{% endset %}
+{{ example(logos, "Continuous logo marquee", marqueeScript, true, "logo-marquee-code", collapsible=true) }}
+<div class="wrapper"><div class="container">
+<p class="mb-24">The second logo group duplicates the first to make the loop seamless and is hidden from assistive technology. Layout and sizing use shared Epic CSS utilities; the browser's native animation API moves the row. Pause with the button, hover, or keyboard focus. Reduced motion leaves a static, horizontally scrollable row, which also works without JavaScript.</p>
+<p class="mb-24">The copied HTML includes the SVG marks. Replace the sample artwork with logos you are authorized to use, and keep the two groups identical. Brand marks belong to their respective owners.</p>
+</div></div>
+</section>
+</div>
 <script>{{ script | safe }}</script>
+<script>{{ marqueeScript | safe }}</script>
 <script src="/assets/js/examples.js" defer></script>
+<script src="/assets/js/example-picker.js" defer></script>

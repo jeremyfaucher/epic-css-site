@@ -15,11 +15,12 @@ description: Copy vertical, horizontal and author profile cards built from share
 {% set markup %}{% include "components/cards/vertical.njk" %}{% endset %}
 {{ example(markup, "Vertical blog card") }}
 <h2 class="fs-24 lh-32 mb-16">Horizontal card, image left</h2>
-<p class="mb-24"><code>flex-md</code> places the image and content side by side from 820 pixels, with equal <code>flex-1</code> halves and <code>gap-24</code> between them. Below medium, the image stacks above the text.</p>
+<p class="mb-24">Both horizontal variants give the image link wrapper <code>mb-24 mb-lg-0</code>: a 1.5rem bottom margin while stacked, reset to zero from 960 pixels when the horizontal gap takes over.</p>
+<p class="mb-24"><code>flex-lg</code> places the image and content side by side from 960 pixels, with equal <code>flex-1</code> halves and <code>gap-24</code> between them. Below large, the image stacks above the text.</p>
 {% set horizontal %}{% include "components/cards/horizontal.njk" %}{% endset %}
 {{ example(horizontal, "Horizontal blog card") }}
 <h2 class="fs-24 lh-32 mb-16">Horizontal card, image right</h2>
-<p class="mb-24">Put the content first and image second. The image appears on the right from medium screens and below the text on smaller screens, preserving the HTML reading order.</p>
+<p class="mb-24">Put the image first in the HTML so it stacks above the text on smaller screens. Add <code>order-lg-last</code> to the image link wrapper: from 960 pixels, <code>order: 1</code> moves it after the content, placing the image on the right when <code>flex-lg</code> makes the card horizontal.</p>
 {% set horizontalRight %}{% include "components/cards/horizontal-right.njk" %}{% endset %}
 {{ example(horizontalRight, "Horizontal image-right card") }}
 <h2 id="author-profile" class="fs-24 lh-32 mb-16">Author profile for a sidebar</h2>

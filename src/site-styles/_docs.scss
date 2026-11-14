@@ -42,7 +42,6 @@
 .docs-release-links { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: 1.25rem 0 0; padding: 0; list-style: none; font-size: .95rem; }
 .docs-release-source { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid color-mix(in srgb, var(--clr-body) 20%, transparent); font-size: .95rem; }
 @media (min-width: 960px) {
-  .docs-layout { grid-template-columns: 13rem minmax(0, 1fr); gap: 3rem; }
   .docs-sidebar { position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; }
   .docs-sidebar ul { display: block; }
 }

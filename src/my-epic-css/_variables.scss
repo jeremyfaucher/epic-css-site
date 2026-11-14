@@ -19,6 +19,11 @@ $fs-h4: 20px;
 
 // Grid
 $container-width: 1000px !default;
+$container-post-width: 1000px !default;
+$sidebar-widths: (
+  narrow: 208px,
+  wide: 344px,
+) !default;
 
 // Body font-size and color
 $fs-body: 1.125rem;

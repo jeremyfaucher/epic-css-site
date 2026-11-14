@@ -9,12 +9,40 @@ module.exports = function checkUi(output) {
   const core = new CleanCSS({}).minify(fs.readFileSync(path.join(__dirname, '../src/_includes/style.css'), 'utf8')).styles;
   const selectors = [];
   postcss.parse(core).walkRules(rule => selectors.push(rule.selector));
+  let largeOrder = false;
+  postcss.parse(core).walkRules('.order-lg-last', rule => {
+    assert.equal(rule.parent.type, 'atrule', 'Order utility must be responsive');
+    assert.equal(rule.parent.params, '(min-width:960px)', 'Order must match the card flex breakpoint');
+    rule.walkDecls('order', decl => { largeOrder = decl.value === '1'; });
+  });
+  assert.ok(largeOrder, 'Missing large image ordering utility');
   for (const route of ['/ui/', '/ui/buttons/', '/ui/cards/', '/ui/sliders/', '/ui/heroes/', '/ui/layouts/', '/ui/icons/']) {
     const $ = cheerio.load(fs.readFileSync(path.join(output, route, 'index.html'), 'utf8'));
     assert.equal($('head style').first().text().trim(), core, route + ': missing compiled Epic CSS');
     assert.ok(!$('head style').text().includes('.docs-layout'), route + ': unexpected docs decoration');
     assert.equal($('h1').length, 1, route + ': expected one page heading');
     assert.equal($('header a.active').attr('href'), '/ui/');
+    if (route === '/ui/sliders/') {
+      const underlineSelectors = [];
+      postcss.parse(core).walkRules(rule => {
+        rule.walkDecls('text-decoration', decl => {
+          if (decl.value === 'underline') underlineSelectors.push(...rule.selectors.filter(selector => !/:(hover|focus|active)/.test(selector)));
+        });
+      });
+      const underlined = link => underlineSelectors.some(selector => link.is(selector));
+      const breadcrumb = $('nav[aria-label="UI navigation"]');
+      assert.equal(underlined(breadcrumb.find('a').first()), false, 'Ancestor breadcrumb must not look active');
+      assert.equal(underlined(breadcrumb.find('a').last()), true, 'Current breadcrumb must be underlined');
+      const choices = $('[data-example-choice]');
+      assert.equal(underlined(choices.first()), true, 'Default example must be underlined');
+      assert.equal(underlined(choices.last()), false, 'Unselected example must not be underlined');
+      choices.first().removeClass('active').removeAttr('aria-current');
+      choices.last().addClass('active').attr('aria-current', 'true');
+      assert.equal(underlined(choices.first()), false, 'Previous example must lose its underline');
+      assert.equal(underlined(choices.last()), true, 'Selected example must gain its underline');
+      choices.last().removeClass('active').removeAttr('aria-current');
+      choices.first().addClass('active').attr('aria-current', 'true');
+    }
     $('main [class]').each((_, element) => {
       for (const name of $(element).attr('class').split(/\s+/).filter(Boolean)) {
         if (name.startsWith('language-') || name === 'token' || $(element).closest('pre').length) continue;
@@ -65,26 +93,47 @@ module.exports = function checkUi(output) {
         return;
       }
       if (route === '/ui/sliders/') {
-        assert.equal($('main').children('[data-example]').length, 1, 'Slider example must break out of the container');
+        assert.equal($('[data-example-panel]').children('[data-example]').length, 2, 'Both slider examples must break out of the container');
+        assert.equal($('[data-example-choice]').length, 2);
+        assert.equal(example.find('details[data-example-details]:not([open]) > summary').length, 1, 'Example code must start collapsed');
+        assert.equal(example.find('details [data-example-code] pre').length, 2, 'Both languages must remain inside the disclosure');
         assert.equal(preview.parents('.container, .wrapper').length, 0, 'Live slider must be viewport-wide');
         assert.equal(preview.attr('class'), 'w-100', 'Live slider preview must have no padding');
-        assert.equal($('main [data-slider-previous]').length, 1, 'Expected one live Previous control');
-        assert.equal($('main [data-slider-next]').length, 1, 'Expected one live Next control');
-        assert.equal(preview.find('script, pre').length, 0, 'Live preview contains stray source');
-        assert.equal(preview.find('.slider-container').length, 1, 'Expected one live slider');
-        assert.equal(preview.text().replace(/\s+/g, ''), '12345678◁▷', 'Preview contains stray source text');
-        assert.equal($('main script:not([src])').length, 1, 'Expected one executing slider script');
-        const cards = preview.find('[data-slider-card]');
-        assert.equal(cards.length, 8);
-        cards.each((index, card) => {
-          assert.equal($(card).text(), String(index + 1));
-          assert.equal($(card).attr('style'), 'height: 200px; background: linear-gradient(135deg, #6e45e2, #88d3ce);');
-          assert.ok($(card).hasClass('flex-basis-300') && $(card).hasClass('border-r-16'));
+        assert.equal(preview.find('[data-slider-previous], [data-slider-next]').length, 0, 'Tabs replace arrows');
+        assert.equal(preview.find('script, pre, style, [style]').length, 0, 'Slider must use library utilities only');
+        if (example.attr('aria-label') === 'Continuous logo marquee') {
+          const track = preview.find('[data-marquee-track]');
+          const groups = track.children('ul');
+          assert.equal(groups.length, 2);
+          assert.equal(groups.first().children('li').length, 12);
+          assert.equal(groups.last().attr('aria-hidden'), 'true');
+          assert.ok(groups.last().is('[inert]'));
+          assert.equal(normalize(groups.first().html()), normalize(groups.last().html()), 'Loop groups must be identical');
+          assert.equal(groups.first().find('svg[role="img"][aria-label]').length, 12);
+          assert.ok(track.hasClass('w-max') && track.hasClass('flex'));
+          assert.equal(preview.find('[data-marquee-toggle][type="button"]').length, 1);
+          const source = fs.readFileSync(path.join(__dirname, '../src/_includes/marquee-script.njk'), 'utf8').trim();
+          assert.equal(example.find('pre code.language-javascript').text().trim(), source);
+          assert.ok($('script:not([src])').toArray().some(script => $(script).text().trim() === source));
+          return;
+        }
+        assert.equal(preview.find('[data-slider]').length, 1);
+        assert.equal($('main script:not([src])').length, 2, 'Expected separate slider and marquee scripts');
+        const tabs = preview.find('[data-slider-tab]');
+        const panels = preview.find('[data-slider-panel]');
+        assert.equal(tabs.length, 3);
+        assert.equal(panels.length, 3);
+        assert.deepEqual(tabs.map((_, tab) => $(tab).text()).get(), ['Hierarchy', 'Spacing', 'Balance']);
+        panels.each((index, panel) => {
+          const item = $(panel);
+          assert.ok(item.hasClass('flex-basis-100') && item.hasClass('snap-start'));
+          assert.equal(tabs.eq(index).attr('href'), '#' + item.attr('id'));
+          assert.ok(item.find('h3').text().length > 15);
+          assert.equal(item.find('img.w-100[alt][width="1040"][height="420"]').length, 1);
+          assert.ok(item.find('img').attr('alt').length > 30);
         });
-        assert.equal(preview.find('[data-slider-track]').attr('style'), 'max-width: 1000px;');
-        assert.equal(preview.find('[data-slider-viewport]').attr('style'), 'scroll-padding-inline-start: calc((100vw - 1000px) / 2); scrollbar-width: none;');
-        assert.equal(preview.find('[data-slider-previous][aria-label="Previous"]').length, 1);
-        assert.equal(preview.find('[data-slider-next][aria-label="Next"]').length, 1);
+        const viewport = preview.find('[data-slider-viewport]');
+        assert.ok(viewport.hasClass('scroll-gutter-container') && viewport.hasClass('scroll-snap-x-mandatory'));
         const source = fs.readFileSync(path.join(__dirname, '../src/_includes/slider-script.njk'), 'utf8').trim();
         assert.equal(example.find('pre code.language-javascript').text().trim(), source, 'Copyable slider JS differs');
         assert.ok($('script:not([src])').toArray().some(script => $(script).text().trim() === source), 'Live slider JS differs');
@@ -108,7 +157,7 @@ module.exports = function checkUi(output) {
           return;
         }
         const wrapper = preview.children('section[aria-labelledby="archive-posts-heading"]');
-        const layout = wrapper.children('.grid.grid-sidebar-right-268');
+        const layout = wrapper.children('.grid.grid-sidebar-right-lg-344px');
         assert.equal(wrapper.children('h2#archive-posts-heading').length, 1);
         assert.equal(layout.children('section').children().first().prop('tagName'), 'ARTICLE');
         assert.equal(layout.children('section').length, 1);
@@ -116,7 +165,7 @@ module.exports = function checkUi(output) {
         assert.equal(layout.children('section').find('article').length, 2);
         assert.ok(layout.hasClass('gap-40'));
         assert.equal(layout.find('style, script, [data-archive-layout]').length, 0);
-        assert.ok(selectors.includes('.grid-sidebar-right-268'));
+        assert.ok(selectors.includes('.grid-sidebar-right-lg-344px'));
         return;
       }
       if (route === '/ui/heroes/') {
@@ -133,7 +182,8 @@ module.exports = function checkUi(output) {
         assert.equal(card.attr('style'), 'max-width: 344px');
         assert.equal(preview.find('[style]').length, 1, 'Only the original width cap needs an inline style');
       } else {
-        assert.ok(card.hasClass('flex-md') && card.hasClass('gap-24'));
+        assert.ok(card.hasClass('flex-lg') && card.hasClass('gap-24'));
+        assert.ok(card.children().first().hasClass('mb-24') && card.children().first().hasClass('mb-lg-0'), 'Image wrapper needs mobile spacing and a large-screen reset');
         assert.equal(card.children('.flex-1').length, 2);
         assert.equal(card.find('.md-w-50').length, 0);
         assert.equal(preview.find('[style]').length, 0, 'Horizontal card must use existing utilities');
@@ -144,7 +194,10 @@ module.exports = function checkUi(output) {
       assert.equal(card.find('h3').attr('class'), 'clr-primary mt-0 mb-24');
       assert.equal(card.find('p').text().replace(/\s+/g, ' ').trim(), data.excerpt + ' ' + data.linkLabel);
       assert.equal(card.find('a[href="' + data.href + '"]').length, 3);
-      if (example.attr('aria-label') === 'Horizontal image-right card') assert.equal(card.children().last().prop('tagName'), 'A');
+      if (example.attr('aria-label') === 'Horizontal image-right card') {
+        assert.equal(card.children().first().prop('tagName'), 'A', 'Image must precede content on mobile');
+        assert.ok(card.children().first().hasClass('order-lg-last'), 'Image wrapper must move last from large');
+      }
 
     });
   }
@@ -156,6 +209,8 @@ module.exports = function checkUi(output) {
   assert.ok(!home('main').text().includes('Vertical Card'), 'Old homepage card remains');
   assert.ok(fs.existsSync(path.join(output, 'assets/js/examples.js')));
   require('./test-sliders.cjs')();
+  require('./test-marquees.cjs')();
+  require('./test-example-picker.cjs')();
   require('./check-card-components.cjs')(output, core);
   require('./test-icons.cjs')(output);
   require('./check-author-card.cjs')(output);

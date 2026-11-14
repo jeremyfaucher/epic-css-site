@@ -32,6 +32,8 @@ a {
 }
 
 a.active,
+a[aria-current="page"],
+a[aria-current="true"],
 a:hover {
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -88,8 +90,12 @@ main {
 
   a {
     color: var(--clr-body, #{$clr-body});
-    text-decoration: underline;
-    text-underline-offset: 4px;
+
+    // Navigation uses the shared active/current state; prose stays underlined.
+    &:not(nav a) {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
 
     &:hover {
       color: var(--clr-primary, #{$clr-primary});
@@ -208,6 +214,14 @@ pre code {
 /* Utility styles */
 .overflow-x-auto {
   overflow-x: auto;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 .scroll-snap-x-mandatory {

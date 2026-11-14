@@ -1,7 +1,7 @@
 {% from "components/cards/parts.njk" import image, content %}
-<div class="clr-primary-bg p-24 border-r-16 flex-md gap-24 items-start">
-    <div class="flex-1 mb-24">
+<div class="clr-primary-bg p-24 border-r-16 flex-lg gap-24 items-start">
+    {{ image(cardExample, "flex flex-1 items-start order-lg-last mb-24 mb-lg-0", "w-100") }}
+    <div class="flex-1">
         {{ content(cardExample) }}
     </div>
-    {{ image(cardExample, "flex flex-1 items-start", "w-100") }}
 </div>

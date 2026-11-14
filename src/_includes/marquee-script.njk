@@ -1,0 +1,38 @@
+(() => {
+  function initializeMarquees() {
+    document.querySelectorAll('[data-marquee]').forEach((marquee) => {
+      const viewport = marquee.querySelector('[data-marquee-viewport]');
+      const track = marquee.querySelector('[data-marquee-track]');
+      const button = marquee.querySelector('[data-marquee-toggle]');
+      if (!viewport || !track || !button || !track.animate || marquee.dataset.marqueeReady) return;
+      marquee.dataset.marqueeReady = 'true';
+      const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const example = marquee.closest('[data-example-panel]');
+      const animation = track.animate([
+        { transform: 'translateX(0)' }, { transform: 'translateX(-50%)' }
+      ], { duration: 45000, iterations: Infinity, easing: 'linear' });
+      let paused = false, hovered = false, focused = false;
+      function update() {
+        button.disabled = motion.matches;
+        button.textContent = motion.matches ? 'Motion paused' : paused ? 'Resume scrolling' : 'Pause scrolling';
+        button.setAttribute('aria-pressed', String(paused || motion.matches));
+        if (motion.matches) animation.cancel();
+        else if (paused || hovered || focused || example?.hidden) animation.pause();
+        else { viewport.scrollLeft = 0; animation.play(); }
+      }
+      button.addEventListener('click', () => { paused = !paused; update(); });
+      viewport.addEventListener('mouseenter', () => { hovered = true; update(); });
+      viewport.addEventListener('mouseleave', () => { hovered = false; update(); });
+      viewport.addEventListener('focus', () => { focused = true; update(); });
+      viewport.addEventListener('blur', () => { focused = false; update(); });
+      motion.addEventListener('change', update);
+      if (example) example.addEventListener('examplevisibilitychange', update);
+      update();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeMarquees, { once: true });
+  } else {
+    initializeMarquees();
+  }
+})();

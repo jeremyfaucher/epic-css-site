@@ -8,6 +8,36 @@ Dates are UTC: npm publication dates through 0.14.0, then GitHub release publica
 
 ## [Unreleased]
 
+## [0.14.5] - 2026-11-14
+
+### Added
+
+- Configurable `$sidebar-widths` map with narrow (208px) and wide (344px) defaults. Each value generates both `grid-sidebar-left-lg-<width>` and `grid-sidebar-right-lg-<width>`, including the unit in the class name; consumers can add sizes in custom Sass.
+- `flex-lg`, `order-lg-last` and `mb-lg-0` utilities for flex display, visual ordering and bottom-margin reset from the large breakpoint (960px).
+- `flex-basis-100` and `scroll-gutter-container` for full-width scroll panels and gutters aligned with the configured container; `scrollbar-none` hides scrollbars without disabling scrolling.
+- Reusable `w-max`, `min-w-screen`, `flex-shrink-0`, `h-40` and `w-auto` sizing utilities for content-width tracks and proportionally sized SVG marks.
+- Workshop scroll slider with three original design studies, tab controls, native overflow and CSS snapping, keyboard navigation, swipe synchronization and reduced-motion handling.
+- Workshop logo marquee with twelve sample brand marks, a seamless duplicated row, native browser animation, pause/resume and hover/focus pausing. Reduced motion and missing JavaScript leave a static, scrollable row; sample logos imply no customer relationship or endorsement.
+
+### Changed
+
+- `container-post` uses an independent `$container-post-width: 1000px !default`. Custom Sass selects 900px, and individual theme posts apply it to `main`; the header and other pages keep the regular container.
+- Sidebar grids take effect from 960px, with the fixed track on the selected side and normal implicit grid tracks below the breakpoint. The former `grid-1fr-4fr-md` helper is now `grid-md-1fr-4fr`, with `1fr 4fr` tracks from 820px.
+- Both workshop horizontal card variants keep image-first HTML on mobile and become horizontal from 960px. The image-right variant uses `order-lg-last`; both image wrappers use `mb-24 mb-lg-0` for stacked spacing.
+- The docs layout uses the narrow left-sidebar utility and `gap-32` instead of a dedicated layout rule. Grid documentation explains size-map customization and generated names, and the right-sidebar example uses the new utility.
+- The Sliders page presents one example at a time through plain navigation links, with the scroll slider selected by default, shareable fragments, browser history support, full-width previews and collapsed code disclosures. Hidden marquee examples pause their animation.
+- Theme About uses the 344px left sidebar with the workshop author profile, its demo links and retained Bootstrap Icons license notice, a 40px gap and its heading above the main copy. Theme category templates retain their 268px right sidebar through an added custom map entry and the new utility name.
+- Active-link styling recognizes `aria-current="page"` and `aria-current="true"`. The npm README explains named palette selection and includes a complete consumer-owned preset setup instead of commenting color assignments in and out.
+
+### Removed
+
+- Legacy `grid-sidebar-right-268`, `grid-sidebar-right-344`, `grid-sidebar-left`, `lg-grid-sidebar-left-25`, `lg-grid-sidebar-left-30`, `lg-grid-sidebar-left-40` and `left-sidebar-sm` helpers. Migrate HTML to a generated large-breakpoint sidebar class and ensure its exact width exists in the size map.
+
+### Fixed
+
+- The left-sidebar utility places the fixed-width track before flexible main content.
+- Navigation links are excluded from the blanket main-content underline, so only active/current links remain underlined at rest while prose links retain their underline.
+
 ## [0.14.4] - 2026-11-13
 
 ### Added
@@ -205,7 +235,8 @@ First version with source in this repository.
 
 First npm publication. The repository has no source or notes for this version.
 
-[Unreleased]: https://github.com/jeremyfaucher/epic-css/compare/v.0.14.4...HEAD
+[Unreleased]: https://github.com/jeremyfaucher/epic-css/compare/v0.14.5...HEAD
+[0.14.5]: https://github.com/jeremyfaucher/epic-css/releases/tag/v0.14.5
 [0.14.4]: https://github.com/jeremyfaucher/epic-css/releases/tag/v.0.14.4
 [0.14.3]: https://github.com/jeremyfaucher/epic-css/releases/tag/v0.14.3
 [0.14.2]: https://github.com/jeremyfaucher/epic-css/releases/tag/v0.14.2

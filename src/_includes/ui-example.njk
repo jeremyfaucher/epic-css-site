@@ -1,7 +1,9 @@
-{% macro example(markup, label="UI example", script="", fullWidth=false, codeId="", copyNotice="") %}
+{% macro example(markup, label="UI example", script="", fullWidth=false, codeId="", copyNotice="", collapsible=false) %}
 <section class="my-24" data-example aria-label="{{ label }}">
   <div class="{{ 'w-100' if fullWidth else 'p-24 clr-secondary-bg border-r-16' }}" data-example-preview>{{ markup | safe }}</div>
   {% if fullWidth %}<div class="wrapper"><div class="container">{% endif %}
+  {% if collapsible %}<details data-example-details class="mt-16">
+    <summary class="btn btn-secondary py-8 px-12">Show code</summary>{% endif %}
   <div data-example-code{% if codeId %} id="{{ codeId }}"{% endif %}>
   <div class="flex flex-wrap items-center gap-12 py-12">
     <span class="fs-14">HTML</span>
@@ -24,6 +26,7 @@
   <pre class="m-0 p-16 fs-14 lh-24"><code class="language-javascript">{{ script | trim | escape }}</code></pre>
   {% endif %}
   </div>
+  {% if collapsible %}</details>{% endif %}
   {% if fullWidth %}</div></div>{% endif %}
 </section>
 {% endmacro %}

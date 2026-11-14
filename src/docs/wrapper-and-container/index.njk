@@ -11,7 +11,9 @@ docTopic: wrapper-and-container
 <h2 id="customize-container-width">Customize your container width</h2>
 <p>Set your preferred maximum in <code>src/my-epic-css/_custom.scss</code>. This site uses:</p>
 <pre><code class="language-scss">$container-width: 1040px;</code></pre>
-<p>Keep using <code>class="container"</code>. Run <code>npm start</code> to recompile and preview, or <code>npm run build</code> for production. The library fallback is a 1000-pixel maximum; this site's override is 1040 pixels. Neither is a fixed width. This setting changes <code>container</code>; <code>container-post</code> stays at its hardcoded 1000-pixel maximum.</p>
+<p>Keep using <code>class="container"</code>. Run <code>npm start</code> to recompile and preview, or <code>npm run build</code> for production. The library fallback is a 1000-pixel maximum; this site's override is 1040 pixels. Neither is a fixed width.</p>
+<h2 id="customize-post-container">A narrower post container</h2>
+<p>Set <code>$container-post-width: 900px;</code> in custom Sass and use <code>container-post</code> on the post's <code>main</code> element. It keeps <code>margin: 0 auto</code> and <code>box-sizing: border-box</code>, with an independent 1000-pixel fallback in the library. The theme uses a 900-pixel maximum for individual posts; its header and other pages keep the regular container.</p>
 <h2 id="current-behavior">What the classes do</h2>
 <table>
   <thead><tr><th>Class</th><th>Current CSS</th><th>Use it for</th></tr></thead>

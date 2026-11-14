@@ -82,14 +82,6 @@ $align-items-values: flex-start, flex-end, center, space-between space-stretch;
   }
 }
 
-// justify content classes
-// @each $val in $layout-values {
-//  .justify-#{$val} {
-//    justify-content: $val;
-//  }
-//}
-
-
 .flex-col {
   flex-direction: column;
 }
@@ -103,7 +95,6 @@ $align-items-values: flex-start, flex-end, center, space-between space-stretch;
 }
 
 // Start media querys
-
 $grid-fractions: (
   "25": 25%,
   "50": 50%,
@@ -121,26 +112,6 @@ $grid-fractions: (
   }
 }
 
-
-
-// gaps
-// @each $key, $val in $grid_gaps {
-//   .gap-#{$val} {
-//     gap: $val;
-//   }
-// }
-
-// gaps
-// @each $breakpoint, $size in $breakpoints {
-//   @media (min-width: #{$size}) {
-//     @each $key, $value in $grid-gaps {
-//       .#{$breakpoint}\:gap-#{$key} {
-//         gap: $value;
-//       }
-//     }
-//   }
-// }
-
 // flex direction
 @each $breakpoint, $size in $breakpoints {
   @media (min-width: #{$size}) {
@@ -153,7 +124,6 @@ $grid-fractions: (
 }
 
 // Start grid
-
 .grid-col-2 {
   grid-template-columns: repeat(auto-fit, minmax(331px, 1fr));
 }
@@ -167,26 +137,13 @@ $grid-fractions: (
   display: grid;
 }
 
-// Main content followed by a fixed-width right sidebar; stack on smaller screens.
-.grid-sidebar-right-268 {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-@media (min-width: 1040px) {
-  .grid-sidebar-right-268 {
-    grid-template-columns: minmax(0, 1fr) 268px;
-  }
-}
-
-.grid-sidebar-right-344 {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-@media (min-width: 1040px) {
-  .grid-sidebar-right-344 {
-    grid-template-columns: minmax(0, 1fr) 344px;
-  }
-}
+// Optional explicit single-column track; disabled while using implicit mobile tracks.
+// @each $name, $width in $sidebar-widths {
+//   .grid-sidebar-right-lg-#{$width},
+//   .grid-sidebar-left-lg-#{$width} {
+//     grid-template-columns: minmax(0, 1fr);
+//   }
+// }
 
 .flex-row {
   flex-direction: row;
@@ -198,6 +155,31 @@ $grid-fractions: (
 
 .flex-basis-300 {
   flex: 0 0 300px;
+}
+
+.flex-basis-100 {
+  flex: 0 0 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.w-max {
+  width: max-content;
+}
+
+.min-w-screen {
+  min-width: 100vw;
+  box-sizing: border-box;
+}
+
+// Align an overflowing scroller with the configured centered container.
+.scroll-gutter-container {
+  padding-inline: max(5vw, calc((100vw - #{$container-width}) / 2));
+  scroll-padding-inline: max(5vw, calc((100vw - #{$container-width}) / 2));
 }
 
 
@@ -212,6 +194,17 @@ $grid-fractions: (
 @include md {
   .flex-md {
     display: flex;
+  }
+
+}
+
+@include lg {
+  .flex-lg {
+    display: flex;
+  }
+
+  .order-lg-last {
+    order: 1;
   }
 }
 
@@ -236,70 +229,26 @@ $grid-fractions: (
 
 .container-post {
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: $container-post-width;
   box-sizing: border-box;
 }
 
-
-
-
-
-
-/* Default Mobile Stacking */
-.grid-sidebar-left {
-  grid-template-columns: 1fr;
-  /* Stacks sidebar on mobile */
-}
-
-
-
-
 // Start grid
 @media (min-width: map-get($breakpoints, md)) {
-  .grid-1fr-4fr-md {
+  .grid-md-1fr-4fr {
     grid-template-columns: 1fr 4fr;
   }
 }
 
 @media (min-width: map-get($breakpoints, lg)) {
-  .grid-1fr-4fr-md {
-    grid-template-columns: 1fr 4fr;
-  }
 
-  /* Left Sidebar (Percentage Widths) */
-  .lg-grid-sidebar-left-25 {
-    grid-template-columns: 25% 1fr;
-  }
-
-  .lg-grid-sidebar-left-30 {
-    grid-template-columns: 30% 1fr;
-  }
-
-  .lg-grid-sidebar-left-40 {
-    grid-template-columns: 40% 1fr;
-  }
-
-  /* Responsive Adjustments */
-  @media (max-width: 1024px) {
-
-    .lg-grid-sidebar-left-25,
-    .lg-grid-sidebar-left-30,
-    .lg-grid-sidebar-left-40,
-    .grid-1fr-4fr-md {
-      grid-template-columns: 1fr;
-      /* Stacks sidebar on smaller screens */
+  @each $name, $width in $sidebar-widths {
+    .grid-sidebar-right-lg-#{$width} {
+      grid-template-columns: minmax(0, 1fr) $width;
+    }
+    .grid-sidebar-left-lg-#{$width} {
+      grid-template-columns: $width minmax(0, 1fr);
     }
   }
 
-
-}
-
-
-
-@media (min-width: 756px) {
-  .left-sidebar-sm {
-    display: grid;
-    grid-template-columns: minmax(140px, auto) 1fr;
-    gap: 6%;
-  }
 }

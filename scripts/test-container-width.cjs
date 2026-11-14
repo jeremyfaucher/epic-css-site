@@ -16,11 +16,13 @@ module.exports = function testContainerWidth() {
   }
   assert.deepEqual(widths(''), { '.container': '1000px', '.container-post': '1000px' });
   assert.deepEqual(widths('$container-width: 1200px;'), { '.container': '1200px', '.container-post': '1000px' });
+  assert.deepEqual(widths('$container-post-width: 900px;'), { '.container': '1000px', '.container-post': '900px' });
+  assert.deepEqual(widths('$container-width: 1200px; $container-post-width: 800px;'), { '.container': '1200px', '.container-post': '800px' });
   // An assignment at the end of custom has this exact position in the entry:
   // after its other settings, before variables/grid. Keep files unchanged.
   const entry = fs.readFileSync(path.join(loadPaths[0], 'index.scss'), 'utf8');
   assert.ok(entry.includes('@import "_custom";'));
   const customizedEntry = entry.replace('@import "_custom";', '@import "_custom";\n$container-width: 1200px;');
-  assert.deepEqual(widths('', customizedEntry), { '.container': '1200px', '.container-post': '1000px' });
-  console.log('Container compilation: default 1000px, prior override 1200px, and unchanged container-post 1000px passed.');
+  assert.deepEqual(widths('', customizedEntry), { '.container': '1200px', '.container-post': '900px' });
+  console.log('Container compilation: independent 1000px defaults, consumer overrides and custom 900px post width passed.');
 };

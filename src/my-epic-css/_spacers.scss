@@ -66,3 +66,10 @@
   }
 
 }
+
+// Reset mobile bottom spacing when large-screen layouts become horizontal.
+@media (min-width: 960px) {
+  .mb-lg-0 {
+    margin-bottom: 0;
+  }
+}
