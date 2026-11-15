@@ -6,7 +6,23 @@ This file is the source of truth for release notes. The Epic CSS site keeps an i
 
 Dates are UTC: npm publication dates through 0.14.0, then GitHub release publication dates, which trigger the npm publish workflow. Entries before 0.14.1 were reconstructed in November 2026 from this repository's commits and the npm version list. Where npm versions have no matching commit, the entry says so rather than guessing. Version 0.8.0 was never published.
 
-## [Unreleased]
+## [Unreleased] - 0.14.6
+
+### Changed
+
+- Audited site SEO: corrected the sitemap and robots origins to `https://epiccss.com`, restricted the sitemap to public indexable HTML pages without unreliable last-modified dates, added self-canonical URLs and consistent descriptive Epic CSS titles, refreshed home/theme descriptions, added the theme-page H1, and excluded the 404 from indexing. Removed an obsolete unrelated Netlify-domain rewrite; retained the installation redirect. Added generated metadata/sitemap/internal-link checks.
+
+- Split link teaching into three rendered/copyable examples: an anchor in navigation (inactive/current), a paragraph containing a `clr-underline` anchor, and a plain anchor outside paragraph/navigation. `clr-underline` now supplies both primary color and an underline independently of paragraph context; hover uses primary-light and keeps the underline. Navigation still underlines only active/current links. `clr-primary` remains color-only without special primary-light hover behavior.
+
+- Default content underlines now apply to paragraph links outside navigation. Navigation links underline only when active/current, including links in nested paragraphs; hover color and focus outlines remain. Link demos and color docs explain these rules and the combined color and underline behavior of `clr-underline`.
+
+- Removed `docs-lead` from docs introductions and deleted its special font-size/line-height rule; introductions now use normal paragraph typography and retain existing paragraph spacing.
+- Reduced the shared body font size from `1.125rem` (18px) to `1rem` (16px) for typography review, with body line-height set to `1.6rem`; paragraph `1.9rem` and component-specific line heights are unchanged.
+
+- Primary buttons now use a solid existing palette accent with white text and modest rounded corners; paired light/dark palettes use the deeper light-mode primary accent in both modes. Secondary buttons now use transparent backgrounds, matching secondary-colored text and outlines, and fully rounded pill corners. Shared structural styling remains in base, with variants in colors.
+- Renamed the UI Buttons presentation to Links and buttons while retaining `/ui/buttons/`. Added rendered, copyable prose and navigation link examples covering existing palette colors, hover, current-page, and keyboard focus behavior; existing button styles are unchanged.
+- Button examples and color documentation distinguish base, primary, and secondary class combinations, with native disabled and compact button examples.
+
 
 ## [0.14.5] - 2026-11-14
 

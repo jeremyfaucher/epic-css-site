@@ -1,36 +1,54 @@
 ---
 layout: base.njk
 tag: ui-page
-title: Buttons
-description: Simple palette-based buttons, navigation links, and native disabled states with copyable HTML.
+title: Links and buttons
+seoTitle: CSS links and buttons
+description: Palette-based links and base, primary, and secondary buttons with copyable HTML.
 ---
 {% from "ui-example.njk" import example %}
 <article>
-<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/buttons/" aria-current="page">Buttons</a></nav>
-<h1 class="fs-37 lh-37 mb-24">Buttons</h1>
-<p class="mb-32">Make the next step clear with a short, descriptive label. Use a button for an action and a link for navigation.</p>
-<h2 class="fs-24 lh-32 mb-16">Base and palette variants</h2>
-<p class="mb-24"><code>btn</code> provides the shape, spacing, and inherited typography. Add <code>btn-primary</code> or <code>btn-secondary</code> to use an existing palette pair. These sample buttons demonstrate appearance and do not run an action.</p>
+<nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/buttons/" aria-current="page">Links and buttons</a></nav>
+<h1 class="fs-37 lh-37 mb-24">Links and buttons</h1>
+<p class="mb-32">Use a button for an action and a link for navigation.</p>
+<h2 class="fs-24 lh-32 mb-16">1. Link in nav</h2>
+<p class="mb-24">Inside <code>nav</code>, an inactive anchor has no underline, even on hover. The current anchor below uses <code>aria-current="page"</code> to underline it and identify the current page; <code>active</code> also underlines a link. Hover changes navigation text to primary. Tab shows the primary-colored focus outline; Enter follows the destination.</p>
+{% set navigationLinks %}<nav class="flex flex-wrap gap-16" aria-label="Example navigation">
+  <a href="/ui/">Inactive link in nav</a>
+  <a href="/ui/buttons/" aria-current="page">Current link in nav</a>
+</nav>{% endset %}
+{{ example(navigationLinks, "Link in nav") }}
+<h2 class="fs-24 lh-32 mb-16">2. Link in paragraph</h2>
+<p class="mb-24">This paragraph contains an anchor with <code>class="clr-underline"</code>. The class explicitly supplies both primary color and an underline. Hover changes the color to <code>primary-light</code> and keeps the underline. Keyboard focus adds the primary-colored outline.</p>
+{% set paragraphLink %}<p class="m-0">This is a <a class="clr-underline" href="/docs/colors/">Link in paragraph</a> with primary color and an underline.</p>{% endset %}
+{{ example(paragraphLink, "Link in paragraph") }}
+<h2 class="fs-24 lh-32 mb-16">3. Link by itself</h2>
+<p class="mb-24">This plain anchor is outside both <code>p</code> and <code>nav</code> and has no classes. It starts in body text color without an underline. Here in main content, hover changes its color to primary and adds an underline. Keyboard focus adds the primary-colored outline.</p>
+{% set standaloneLink %}<a href="/docs/installation/">Link by itself</a>{% endset %}
+{{ example(standaloneLink, "Link by itself") }}
+<p class="mb-32">All three examples use real destinations and follow the current palette and light/dark mode.</p>
+<h2 class="fs-24 lh-32 mb-16">Buttons: base and palette variants</h2>
+<p class="mb-24"><code>btn</code> provides the shape, spacing, and inherited typography. Use <code>btn btn-primary</code> for a solid palette fill, white text, and modest rounded corners. Use <code>btn btn-secondary</code> for a transparent pill with matching colored text and outline. These sample buttons demonstrate appearance and do not run an action.</p>
 {% set variants %}<div class="flex flex-wrap gap-16 items-center">
-  <button class="btn" type="button">Base button</button>
-  <button class="btn btn-primary" type="button">Primary button</button>
-  <button class="btn btn-secondary" type="button">Secondary button</button>
+  <button class="btn" type="button">btn</button>
+  <button class="btn btn-primary" type="button">btn btn-primary</button>
+  <button class="btn btn-secondary" type="button">btn btn-secondary</button>
 </div>{% endset %}
 {{ example(variants, "Base and palette buttons") }}
-<h2 class="fs-24 lh-32 mb-16">Navigation and unavailable actions</h2>
-<p class="mb-24">Keep navigation as a real link, even when it looks like a button. Use the native <code>disabled</code> attribute for an unavailable button; it prevents activation. Anchors do not support that attribute.</p>
+<p>Primary and secondary are persistent visual variants, not selected and unselected states. Keep the same variant class when state changes. A held press (<code>:active</code>), <code>aria-pressed="true"</code>, <code>aria-selected="true"</code>, or <code>aria-expanded="true"</code> slightly darkens the same primary fill or adds a stronger tinted fill inside the secondary outline. Primary keeps white text and modest rounded corners. Secondary stays pill-shaped with matching text and outline: its idle background is transparent, hover adds a subtle palette tint, and selected or expanded states use a stronger tint. Use the ARIA attribute appropriate to the control: pressed for toggle buttons, selected for tabs, and expanded for disclosures.</p>
+<h2 class="fs-24 lh-32 mb-16">Unavailable actions</h2>
+<p class="mb-24">Use the native <code>disabled</code> attribute for an unavailable button; it prevents activation.</p>
 {% set states %}<div class="flex flex-wrap gap-16 items-center">
-  <a class="btn btn-primary" href="/docs/installation/">Read the installation guide</a>
+  <button class="btn btn-primary" type="button" disabled>Primary unavailable</button>
   <button class="btn btn-secondary" type="button" disabled>Action unavailable</button>
 </div>{% endset %}
-{{ example(states, "Navigation link and disabled button") }}
+{{ example(states, "Disabled buttons") }}
 <h2 class="fs-24 lh-32 mb-16">Spacing and keyboard focus</h2>
-<p class="mb-24">Use spacing utilities to adjust the base padding. Tab through the enabled controls to see the focus outline; a focused link opens with Enter, while a native button supports Enter and Space. The disabled button is skipped in the normal Tab sequence.</p>
+<p class="mb-24">Use spacing utilities to adjust the base padding. Tab through the enabled controls to see the focus outline; a native button supports Enter and Space. The disabled button is skipped in the normal Tab sequence.</p>
 {% set spacing %}<div class="flex flex-wrap gap-16 items-center">
-  <a class="btn btn-secondary py-8 px-16" href="/docs/colors/#buttons">Explore button colors</a>
+  <button class="btn btn-secondary py-8 px-16" type="button">Compact topic</button>
   <button class="btn btn-primary py-8 px-16" type="button">Compact button</button>
 </div>{% endset %}
 {{ example(spacing, "Compact buttons and focus") }}
-<p>Button colors follow the existing foreground and background variables. Customize them through the <a href="/docs/colors/#buttons">Colors and palettes guide</a>, then check text, borders, and focus outlines against their surroundings. A named palette pair does not guarantee accessible contrast.</p>
+<p>Primary fills use the existing deeper light-mode primary accent in both modes for readable white labels. Secondary text and outlines follow the current mode’s secondary accent. Customize them through the <a href="/docs/colors/#buttons">Colors and palettes guide</a>, then check text, borders, and focus outlines against their surroundings. A named palette pair does not guarantee accessible contrast.</p>
 </article>
 <script src="/assets/js/examples.js" defer></script>

@@ -27,6 +27,14 @@ function checkTheme(output, css) {
   const roles = ['body', 'body-bg', 'primary', 'primary-light', 'primary-bg', 'secondary', 'secondary-bg', 'white'];
   const defaults = declarations(css, ':root');
   const filtered = fs.readFileSync(path.join(__dirname, '../src/_includes/style.css'), 'utf8');
+  const hoverSelector = '.btn.btn-primary:not(:disabled):hover';
+  const activeSelector = '.btn.btn-primary:not(:disabled):is(:active, [aria-pressed="true"], [aria-selected="true"], [aria-expanded="true"])';
+  for (const styles of [css, filtered]) {
+    assert.match(declarations(styles, hoverSelector).background, /88%, black/,
+      'Primary hover must survive compilation and filtering');
+    assert.match(declarations(styles, activeSelector).background, /80%, black/,
+      'Primary active/selected fill remains darker than hover');
+  }
   const modes = {};
   for (const mode of ['dark', 'light']) {
     const values = declarations(css, `html[data-theme="${mode}"]`);
@@ -93,6 +101,12 @@ function testPresets() {
     const css = sass.compileString(`$palette-name: "${name}"; @import "index";`, options).css;
     const defaults = declarations(css, ':root');
     assert.equal(defaults['--clr-body-bg'], background, name + ' selection');
+    assert(contrast('#ffffff', defaults['--btn-primary-bg']) >= 4.5, name + ' white primary label');
+    assert.equal(defaults['--btn-primary-bg'], declarations(css, 'html[data-theme="light"]')['--clr-primary']);
+    assert.equal(declarations(css, '.btn.btn-primary').color, 'var(--clr-white, #ffffff)');
+    assert.equal(declarations(css, '.btn.btn-primary')['border-color'], declarations(css, '.btn.btn-primary').background);
+    assert.equal(declarations(css, '.btn.btn-secondary').background, 'transparent');
+    assert.equal(declarations(css, '.btn.btn-secondary')['border-radius'], '9999px');
     for (const mode of ['light', 'dark']) {
       const palette = declarations(css, `html[data-theme="${mode}"]`);
       for (const role of roles) assert.match(palette[`--clr-${role}`], /^#[a-f0-9]{6}$/i);

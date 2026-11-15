@@ -8,7 +8,12 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const markdownIt = require("markdown-it");
 const sass = require("sass");
 const highlightCode = require("./scripts/highlight-code.cjs");
+const isIndexablePage = item => item.url && item.outputPath &&
+  item.outputPath.endsWith('.html') && item.url !== '/404.html' &&
+  item.data.sitemap !== false && item.data.noindex !== true;
 module.exports = function(eleventyConfig) {
+  eleventyConfig.addCollection('indexablePages', collectionApi =>
+    collectionApi.getAll().filter(isIndexablePage).sort((a, b) => a.url.localeCompare(b.url)));
   // Derive footer navigation from public HTML pages, rather than a second URL list.
   eleventyConfig.addCollection("footerSitemap", collectionApi => {
     const groups = [
@@ -17,8 +22,7 @@ module.exports = function(eleventyConfig) {
       { title: "UI library", pages: [] }
     ];
     for (const item of collectionApi.getAll()) {
-      if (!item.url || !item.outputPath || !item.outputPath.endsWith(".html") ||
-          item.url === "/404.html" || item.data.sitemap === false) continue;
+      if (!isIndexablePage(item)) continue;
       const title = item.url === "/" ? "Home" : item.url === "/11ty-theme/" ? "11ty theme" :
         item.url === "/ui/" ? "UI library" :
         item.data.title || item.url.split("/").filter(Boolean).pop().replaceAll("-", " ");
@@ -66,6 +70,7 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy('./src/assets');
   eleventyConfig.addPassthroughCopy('./src/.well-known');
   eleventyConfig.addPassthroughCopy('./robots.txt');
+  eleventyConfig.addPassthroughCopy("./interactive-demo");
 
   //Date Clean up
   eleventyConfig.addFilter("postDate", (dateObj) => {

@@ -13,8 +13,6 @@ document.querySelectorAll('[data-code-showcase]').forEach(showcase => {
     code.hidden = !visible;
     toggle.setAttribute('aria-expanded', String(visible));
     toggle.textContent = visible ? 'Hide code' : 'Show code';
-    toggle.classList.toggle('btn-primary', visible);
-    toggle.classList.toggle('btn-secondary', !visible);
   }
   toggle.addEventListener('click', () => setVisible(code.hidden));
   setVisible(false);

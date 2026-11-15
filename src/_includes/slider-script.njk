@@ -24,8 +24,6 @@
           const active = i === index;
           tab.setAttribute('aria-selected', String(active));
           tab.tabIndex = active ? 0 : -1;
-          tab.classList.toggle('btn-primary', active);
-          tab.classList.toggle('btn-secondary', !active);
           panels[i].inert = !active;
         });
       }

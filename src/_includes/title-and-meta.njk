@@ -1,16 +1,7 @@
 {%- if tag == 'home-page' -%}
-<title>Epic CSS - 11ty theme and UI library</title>
-<meta name="description" content="A utility-first UI library that makes building websites light weight, easy to scale and managae with endless layout options. Integrate into any project with node.js and npm install epic-css or use with our pre-integrated Epic CSS 11ty theme.">
-{%- elif tag == '11ty-page' -%}
-<title>Epic CSS - 11ty Theme</title>
-<meta name="description" content="The Epic CSS 11ty theme is a high performance blog based starter theme. It uses the Epic CSS utility-first UI library that makes it light weight and easy to manage.">
-{%- elif tag == 'npm-page' -%}
-<title>Epic CSS - NPM package</title>
-<meta name="description" content="The Epic CSS NPM package allows you to integrate the utility-first UI library in to any project with node.js.">
-{%- elif tag == 'docs-page' -%}
-<title>{{ title }} - Epic CSS</title>
-<meta name="description" content="{{ description }}">
+<title>{{ site.name | escape }} - {{ title | escape }}</title>
 {%- else -%}
-<title>{{ title }} - 11ty Theme</title>
-<meta name="description" content="{{ description }}">
-{%- endif -%}
+<title>{{ (seoTitle or title) | escape }} - {{ site.name | escape }}</title>
+{%- endif %}
+<meta name="description" content="{{ description | escape }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url | escape }}">

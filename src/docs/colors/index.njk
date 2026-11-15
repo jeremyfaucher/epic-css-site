@@ -2,12 +2,13 @@
 layout: docs.njk
 tag: docs-page
 title: Colors and palettes
+seoTitle: CSS colors and light/dark palettes
 description: Use Epic CSS semantic color utilities and customize eight Sass palette values.
 docTopic: colors
 ---
 {% from "docs-example.njk" import example %}
 <h1 id="colors">Colors and palettes</h1>
-<p class="docs-lead">Choose colors by their role in your design. Text and background utilities are separate, so one palette can change the appearance of the same markup.</p>
+<p>Choose colors by their role in your design. Text and background utilities are separate, so one palette can change the appearance of the same markup.</p>
 <h2 id="color-utilities">Text and backgrounds</h2>
 <p>Compare the primary and secondary text/background pairs side by side. Text color and background color each need their own class.</p>
 {% set markup %}<div class="flex w-100">
@@ -21,16 +22,17 @@ docTopic: colors
 {{ example(markup, "Primary and secondary color pairs") }}
 <p><code>xs-w-50</code> gives each box half the width. Vertical padding supplies the box height while the flex utilities center the labels.</p>
 <h2 id="buttons">Buttons</h2>
-<p>Use <code>btn</code> for an inline-flex button with inherited typography, padding, a border, rounded corners, and a visible keyboard focus outline. Add <code>btn-primary</code> or <code>btn-secondary</code> to use the matching foreground and background palette values. The base button inherits text color and has a transparent background, so it can also be used inside a colored region.</p>
+<p>Use <code>btn</code> for an inline-flex button with inherited typography, padding, a border, rounded corners, and a visible keyboard focus outline. Use <code>btn btn-primary</code> for a solid palette fill with white text and modest rounded corners. Use <code>btn btn-secondary</code> for a transparent pill with matching colored text and outline. The base button inherits text color and has a transparent background, so it can also be used inside a colored region.</p>
 {% set markup %}<div class="flex flex-wrap gap-16 items-center">
-  <button class="btn btn-primary" type="button">Primary button</button>
-  <button class="btn btn-secondary" type="button">Secondary button</button>
+  <button class="btn" type="button">btn</button>
+  <button class="btn btn-primary" type="button">btn btn-primary</button>
+  <button class="btn btn-secondary" type="button">btn btn-secondary</button>
   <button class="btn btn-primary" type="button" disabled>Unavailable action</button>
-  <a class="btn btn-secondary" href="/docs/installation/">Installation guide</a>
 </div>{% endset %}
 {{ example(markup, "Primary and secondary buttons") }}
 <p>These sample buttons demonstrate appearance; they do not run an action. Use a native <code>button</code> for actions and an anchor with a real destination for navigation. Native <code>disabled</code> prevents the unavailable button from activating; it also receives a dimmed appearance. Do not add <code>disabled</code> to an anchor.</p>
-<p>Use existing spacing and layout utilities for variations, such as <code>btn btn-primary py-8 px-16</code>. Palette overrides flow through both button variants. Check text, borders, focus outlines, and disabled states against their actual surroundings when customizing colors; the named pairs do not guarantee accessible contrast for every palette.</p>
+<p>Use existing spacing and layout utilities for variations, such as <code>btn btn-primary py-8 px-16</code>. Primary fills use the existing deeper light-mode primary accent in both modes through <code>--btn-primary-bg</code>; single-palette consumers use <code>$clr-primary</code>. Labels use fixed white. Secondary text and outlines use the current mode’s secondary accent. Palette overrides flow through both variants. Check text, borders, focus outlines, and disabled states against their actual surroundings when customizing colors; the named pairs do not guarantee accessible contrast for every palette.</p>
+<p>Primary and secondary are persistent visual variants, not selected and unselected states. Keep the same variant class when state changes. A held press (<code>:active</code>), <code>aria-pressed="true"</code>, <code>aria-selected="true"</code>, or <code>aria-expanded="true"</code> slightly darkens the same primary fill or adds a stronger tinted fill inside the secondary outline. Primary keeps white text and modest rounded corners. Secondary stays pill-shaped with matching text and outline: its idle background is transparent, hover adds a subtle palette tint, and selected or expanded states use a stronger tint. Use the ARIA attribute appropriate to the control: pressed for toggle buttons, selected for tabs, and expanded for disclosures.</p>
 <h3 id="inherited-and-white-text">Inherited and fixed text colors</h3>
 {% set markup %}<div class="clr-secondary-bg p-24 border-r-16">
   <p>This paragraph inherits the body text color.</p>
@@ -53,6 +55,7 @@ docTopic: colors
 <p>In <code>src/my-epic-css/_custom.scss</code>, set <code>$palette-name: "Harbor";</code> (blue), <code>$palette-name: "Dusk";</code> (charcoal/lavender), or <code>$palette-name: "Neon";</code> (black/coral/teal), then rebuild Sass. Dusk uses charcoal-violet surfaces and lavender accents in dark mode, with pale lavender surfaces and deeper violet accents in light mode. Neon uses bright coral and teal on black/charcoal in dark mode, with deeper accents on warm near-white surfaces in light mode. These three presets form the finished set. The runtime button switches light/dark within that compiled preset; there is no runtime palette picker. <code>index.scss</code> imports custom settings before centralized <code>_variables.scss</code>. Keep <code>!default</code> on library values: it means “use this fallback only when no value has been assigned.” The library's purple/green defaults remain separate from the workshop's named presets.</p>
 <p>The selected record in the site's <code>$palettes</code> map supplies the eight existing <code>$clr-*</code> defaults and the <code>$color-modes</code> pair. Each named preset contains complete <code>light</code> and <code>dark</code> variants using the same eight roles: <code>body</code>, <code>body-bg</code>, <code>primary</code>, <code>primary-light</code>, <code>primary-bg</code>, <code>secondary</code>, <code>secondary-bg</code> and <code>white</code>. To customize a preset, edit its complete pair inside <code>$palettes</code> and select its exact name with <code>$palette-name</code>. Unknown names or incomplete modes/roles fail compilation. Saved original commented palettes are deliberately retained as references; they do not select the active palette. Every variant keeps the quoted <code>"white": #ffffff</code> role; it is not a semantic body-text alias.</p>
 <p>The optional colors module emits default <code>--clr-*</code> properties on <code>:root</code> and mode overrides on <code>html[data-theme="light"]</code> and <code>html[data-theme="dark"]</code>. Existing utilities, base text, links, buttons and SVG <code>currentColor</code> use those properties. Single-palette consumers can leave <code>$color-modes</code> empty. Base rules also have Sass-value fallbacks, so selective imports keep working without the colors module. Import central variables before base or colors.</p>
-<p><code>$clr-body</code> sets base text. <code>$clr-primary-light</code> sets the accent on <code>main a.clr-underline:hover</code>. There are no standalone <code>clr-body</code> or <code>clr-primary-light</code> utilities. Changing modes updates semantic values without adding alternate utility names. Literal artwork and demo gradients keep their own colors.</p>
+<p>Paragraph links are underlined by default outside navigation. Navigation links underline only for <code>active</code> or <code>aria-current="page"</code>/<code>aria-current="true"</code>, not hover alone. See the <a href="/ui/buttons/">Links and buttons examples</a>. Use <code>clr-underline</code> to opt into both primary text color and an underline without relying on paragraph context. Hover uses primary-light and keeps the underline. Navigation still underlines only active/current links, even with this class. <code>clr-primary</code> remains a color-only utility.</p>
+<p><code>$clr-body</code> sets base text. <code>$clr-primary-light</code> sets the accent on <code>a.clr-underline:hover</code>. There are no standalone <code>clr-body</code> or <code>clr-primary-light</code> utilities. Changing modes updates semantic values without adding alternate utility names. Literal artwork and demo gradients keep their own colors.</p>
 <p>Run <code>npm start</code> after editing Sass. Check text, links, focus outlines, disabled buttons and code examples in both modes. Fixed white text still needs a dark surface. Active light presets adjust some accent colors from the saved original samples for readability; calculated color-pair checks do not establish accessibility for an entire page.</p>
 <p>Stop development watchers before <code>npm run build</code> or <code>npm run validate</code>. The build compiles Sass, filters CSS using source classes, and generates the site. Validation uses temporary output and restores CSS inputs. Preview both modes after filtering.</p>

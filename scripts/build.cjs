@@ -51,6 +51,7 @@ async function main() {
     await site.write();
     require('./check-docs.cjs')(output, full);
     require('./check-ui.cjs')(output);
+    require('./check-seo.cjs')(output, pages);
     for (const page of pages) {
       if (page.outputPath) assert.ok(fs.existsSync(page.outputPath), `Missing ${page.outputPath}`);
     }

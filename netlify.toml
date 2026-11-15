@@ -12,8 +12,3 @@
   status = 301
   force = true
 
-[[redirects]]
-  from = "jovial-goldstine-83c0bc.netlify.app/*"
-  to = "https://design2seo.com/"
-  status = 200
-  force = true # COMMENT: ensure that we always redirect

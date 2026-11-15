@@ -2,12 +2,13 @@
 layout: docs.njk
 tag: docs-page
 title: Grid
+seoTitle: CSS Grid and sidebar utilities
 description: Build Epic CSS auto-fitting grids, containers and sidebar layouts.
 docTopic: grid
 ---
 {% from "docs-example.njk" import example %}
 <h1 id="grid">Grid</h1>
-<p class="docs-lead">Use CSS Grid for rows and columns. Add <code>grid</code> for display, a column utility for the tracks, and a gap utility for spacing.</p>
+<p>Use CSS Grid for rows and columns. Add <code>grid</code> for display, a column utility for the tracks, and a gap utility for spacing.</p>
 <h2 id="auto-fit">Auto-fitting columns</h2>
 <p><code>grid-col-3</code> uses <code>repeat(auto-fit, minmax(270px, 1fr))</code>. It fits as many columns as the available space permits; it does not force exactly three columns.</p>
 {% set markup %}<div class="grid grid-col-3 gap-16">

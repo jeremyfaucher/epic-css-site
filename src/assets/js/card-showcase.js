@@ -11,9 +11,6 @@ document.querySelectorAll('[data-card-showcase]').forEach((showcase) => {
     tabs.forEach((tab, current) => {
       const selected = current === index;
       tab.setAttribute('aria-selected', String(selected));
-      tab.classList.toggle('btn-primary', selected);
-      tab.classList.toggle('btn-secondary', !selected);
-      tab.classList.toggle('fw-600', selected);
       tab.tabIndex = selected ? 0 : -1;
       panels[current].hidden = !selected;
     });
@@ -24,8 +21,6 @@ document.querySelectorAll('[data-card-showcase]').forEach((showcase) => {
   function updateCode() {
     codePanels.forEach(panel => { panel.hidden = !codeVisible; });
     codeToggle.setAttribute('aria-expanded', String(codeVisible));
-    codeToggle.classList.toggle('btn-primary', codeVisible);
-    codeToggle.classList.toggle('btn-secondary', !codeVisible);
     codeToggle.textContent = codeVisible ? 'Hide code' : 'Show code';
   }
 

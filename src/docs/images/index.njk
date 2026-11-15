@@ -2,12 +2,13 @@
 layout: docs.njk
 tag: docs-page
 title: Images
+seoTitle: Responsive image and SVG utilities
 description: Responsive images, rounded corners, centering classes, and optional inline SVG icon sizing in Epic CSS.
 docTopic: images
 ---
 {% from "docs-example.njk" import example %}
 <h1 id="images">Images</h1>
-<p class="docs-lead">Use <code>border-r-16</code> to choose rounded image corners, and add <code>img-center</code> or <code>center</code> to center a smaller image. Responsive sizing is automatic.</p>
+<p>Use <code>border-r-16</code> to choose rounded image corners, and add <code>img-center</code> or <code>center</code> to center a smaller image. Responsive sizing is automatic.</p>
 <p>For inline SVGs, see <a href="#icons">icon sizing and color</a> below, or browse the <a href="/ui/icons/">copyable Icons gallery</a>.</p>
 <h2 id="automatic-styles">Responsive images with a radius utility</h2>
 <p>Add <code>border-r-16</code> directly to the image for a 16-pixel radius. Epic CSS also gives every <code>img</code> <code>max-width: 100%</code> and <code>height: auto</code>. Large images shrink to fit their container while keeping their aspect ratio; small images do not stretch to full width automatically.</p>

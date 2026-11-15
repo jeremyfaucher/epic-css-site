@@ -4,7 +4,13 @@ $color-defaults: (
   primary: $clr-primary, primary-light: $clr-primary-light, primary-bg: $clr-primary-bg,
   secondary: $clr-secondary, secondary-bg: $clr-secondary-bg, "white": $clr-white
 );
+// Keep white labels readable using the existing deeper light-mode accent.
+$button-primary-bg: $clr-primary;
+@if length($color-modes) > 0 {
+  $button-primary-bg: map-get(map-get($color-modes, light), primary);
+}
 :root {
+  --btn-primary-bg: #{$button-primary-bg};
   @each $role, $value in $color-defaults { --clr-#{$role}: #{$value}; }
 }
 @if length($color-modes) > 0 {
@@ -44,13 +50,37 @@ $color-defaults: (
 }
 
 .btn.btn-primary {
-  color: var(--clr-primary, #{$clr-primary});
-  background: var(--clr-primary-bg, #{$clr-primary-bg});
+  color: var(--clr-white, #{$clr-white});
+  background: var(--btn-primary-bg, #{$button-primary-bg});
+  border-color: var(--btn-primary-bg, #{$button-primary-bg});
+}
+
+.btn.btn-primary:focus-visible {
+  outline-color: var(--clr-primary, #{$clr-primary});
 }
 
 .btn.btn-secondary {
   color: var(--clr-secondary, #{$clr-secondary});
-  background: var(--clr-secondary-bg, #{$clr-secondary-bg});
+  background: transparent;
+  border-radius: 9999px;
+}
+
+// Variants are persistent; interaction state never changes their identity.
+.btn.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--btn-primary-bg, #{$button-primary-bg}) 88%, black);
+}
+
+.btn.btn-primary:not(:disabled):is(:active, [aria-pressed="true"], [aria-selected="true"], [aria-expanded="true"]) {
+  background: color-mix(in srgb, var(--btn-primary-bg, #{$button-primary-bg}) 80%, black);
+}
+
+.btn.btn-secondary:not(:disabled):hover {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.btn.btn-secondary:not(:disabled):is(:active, [aria-pressed="true"], [aria-selected="true"], [aria-expanded="true"]) {
+  background: color-mix(in srgb, currentColor 22%, transparent);
+  box-shadow: inset 0 0 0 1px currentColor;
 }
 
 .clr-white {

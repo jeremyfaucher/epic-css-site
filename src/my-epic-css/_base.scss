@@ -23,20 +23,29 @@ h1, h2, h3, h4, h5, h6 {
 a {
   text-decoration: none;
   color: var(--clr-body, #{$clr-body});
-
-  &:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-
 }
 
-a.active,
-a[aria-current="page"],
-a[aria-current="true"],
-a:hover {
+// Paragraph defaults and hover underlines exclude navigation and button links.
+p a:not(.btn):not(nav a),
+a.clr-underline:not(.btn):not(nav a),
+a:not(.btn):not(nav a):hover,
+a.active:not(.btn),
+a[aria-current="page"]:not(.btn),
+a[aria-current="true"]:not(.btn) {
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+a.clr-underline {
+  color: var(--clr-primary, #{$clr-primary});
+}
+
+a.clr-underline:hover {
+  color: var(--clr-primary-light, #{$clr-primary-light});
+}
+
+nav a:not(.btn):hover {
+  color: var(--clr-primary, #{$clr-primary});
 }
 
 .btn {
@@ -91,24 +100,15 @@ main {
   a {
     color: var(--clr-body, #{$clr-body});
 
-    // Navigation uses the shared active/current state; prose stays underlined.
-    &:not(nav a) {
-      text-decoration: underline;
-      text-underline-offset: 4px;
-    }
-
     &:hover {
       color: var(--clr-primary, #{$clr-primary});
       text-underline-offset: 4px;
     }
 
-    &.clr-underline {
+    &.clr-primary {
       color: var(--clr-primary, #{$clr-primary});
     }
 
-    &.clr-underline:hover {
-      color: var(--clr-primary-light, #{$clr-primary-light});
-    }
 
   }
 

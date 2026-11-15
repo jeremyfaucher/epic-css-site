@@ -9,6 +9,29 @@ module.exports = function checkUi(output) {
   const core = new CleanCSS({}).minify(fs.readFileSync(path.join(__dirname, '../src/_includes/style.css'), 'utf8')).styles;
   const selectors = [];
   postcss.parse(core).walkRules(rule => selectors.push(rule.selector));
+  // Match compiled underline selectors against nested navigation, including hover.
+  const links = cheerio.load('<main><p><a id="prose">Prose</a><a id="button" class="btn btn-primary">Button</a></p><a id="standalone">Standalone</a><a id="explicit" class="clr-underline">Explicit</a><nav><p><a id="nav" class="clr-underline">Nav</a><a id="current" aria-current="page">Current</a><a id="active" class="active">Active</a></p></nav></main>');
+  function underlined(id, hover = false) {
+    let result = false;
+    postcss.parse(core).walkRules(rule => {
+      if (!rule.nodes.some(node => node.prop === 'text-decoration')) return;
+      for (const selector of rule.selectors) {
+        if (/:(focus|active)/.test(selector) || (!hover && selector.includes(':hover'))) continue;
+        if (!links('#' + id).is(selector.replaceAll(':hover', ''))) continue;
+        rule.walkDecls('text-decoration', decl => { result = decl.value === 'underline'; });
+      }
+    });
+    return result;
+  }
+  for (const hover of [false, true]) {
+    assert.equal(underlined('explicit', hover), true, 'clr-underline supplies underline outside paragraphs');
+    assert.equal(underlined('prose', hover), true, 'Paragraph links stay underlined');
+    assert.equal(underlined('nav', hover), false, 'Nested nav paragraph links never underline on hover alone');
+    assert.equal(underlined('current', hover), true, 'Current nav link stays underlined');
+    assert.equal(underlined('active', hover), true, 'Active nav link stays underlined');
+    assert.equal(underlined('button', hover), false, 'Button links retain their appearance');
+  }
+  assert.equal(underlined('standalone'), false, 'Non-paragraph content no longer underlines by default');
   let largeOrder = false;
   postcss.parse(core).walkRules('.order-lg-last', rule => {
     assert.equal(rule.parent.type, 'atrule', 'Order utility must be responsive');
@@ -87,7 +110,9 @@ module.exports = function checkUi(output) {
         return;
       }
       if (route === '/ui/buttons/') {
-        assert.ok(preview.find('.btn').length >= 2);
+        if (['Link in nav', 'Link in paragraph', 'Link by itself'].includes(example.attr('aria-label'))) {
+          assert.ok(preview.find('a[href]').length >= 1, 'Link examples have real destinations');
+        } else assert.ok(preview.find('.btn').length >= 2);
         assert.equal(preview.find('a:not([href]), a[disabled], button:not([type="button"])').length, 0);
         assert.equal(preview.find('[onclick], script').length, 0);
         return;

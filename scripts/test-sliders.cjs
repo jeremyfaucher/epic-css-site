@@ -66,7 +66,7 @@ module.exports = function testSliders() {
       assert.equal(first.calls.at(-1).behavior, reduced ? 'instant' : 'smooth');
       assert.equal(first.tabs[2].attrs['aria-selected'], 'true');
       assert.equal(first.panels[2].inert, false);
-      assert.equal(first.tabs[2].classes.has('btn-primary'), true);
+      assert.equal(first.tabs[2].classes.has('btn-primary'), false, 'Selection must not change button variant');
       assert.equal(second.calls.length, 0, 'Sliders must remain independent');
       fire(first.tabs[2], 'keydown', 'ArrowRight');
       assert.equal(first.calls.at(-1).left, 0);
