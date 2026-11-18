@@ -164,19 +164,37 @@ module.exports = function checkUi(output) {
         assert.ok($('script:not([src])').toArray().some(script => $(script).text().trim() === source), 'Live slider JS differs');
         return;
       }
-      const card = preview.children('div.clr-primary-bg.p-24.border-r-16');
+      const card = preview.children('div.clr-primary-bg.border-r-24');
       if (example.attr('aria-label') === 'Sidebar author profile') {
         assert.equal(preview.children('section[aria-label="Demo author profile"]').length, 1);
         return; // Detailed author structure/provenance checks run below.
       }
       if (route === '/ui/layouts/') {
+        if (example.attr('aria-label') === 'Featured lesson and six supporting cards') {
+          const section = preview.children('section[aria-labelledby="featured-grid-title"]');
+          const outer = section.children('.grid.grid-lg-1fr-2fr');
+          assert.equal(section.children('h2#featured-grid-title').length, 1);
+          assert.equal(section.children('p').length, 1);
+          assert.equal(outer.children().length, 2);
+          assert.ok(!outer.hasClass('items-start'), 'Feature must retain default grid stretching');
+          const feature = outer.children().first();
+          assert.ok(feature.hasClass('flex-col') && feature.hasClass('justify-between'));
+          assert.equal(feature.find('img[alt][width][height]').length, 1);
+          assert.equal(feature.find('h3').text().trim(), require('../src/_data/cardExample').title);
+          const group = outer.children('.grid.grid-md-1fr-1fr.grid-lg-1fr-1fr-1fr');
+          assert.equal(group.children().length, 6);
+          assert.equal(group.find('h3 a[href]').length, 6);
+          assert.equal(new Set(group.find('h3').map((_, h) => $(h).text()).get()).size, 6);
+          assert.equal(preview.find('style, script, [style]').length, 0, 'Layout uses shared utilities');
+          return;
+        }
         if (example.attr('aria-label') === 'Three column') {
           const section = preview.children('section');
           const columns = section.children('.flex-md').children('.flex-1');
           assert.equal(section.children('h2').length, 1);
           assert.equal(columns.length, 3, 'Three-column layout needs three equal flex wrappers');
           columns.each((_, column) => {
-            assert.equal($(column).children('.clr-primary-bg.p-24.border-r-16').length, 1);
+            assert.equal($(column).children('.clr-primary-bg.p-24.border-r-24').length, 1);
             assert.equal($(column).find('h3').length, 1);
           });
           return;
@@ -203,7 +221,17 @@ module.exports = function checkUi(output) {
         return;
       }
       assert.equal(card.length, 1);
-      if (example.attr('aria-label') === 'Vertical blog card') {
+      if (example.attr('aria-label') === 'Inset image card') {
+        assert.equal(card.children('div').length, 2);
+        const imageInset = card.children().first();
+        assert.equal(imageInset.attr('class'), 'px-12 pt-12');
+        assert.equal(imageInset.children('a.flex').find('img.w-100.border-r-16').length, 1);
+        assert.equal(card.children().last().attr('class'), 'p-24');
+        assert.equal(card.children().last().find('h3').length, 1);
+        assert.equal(card.children().last().children().length, 2, 'Inset content is only heading and paragraph');
+        assert.equal(card.children().last().children('p').length, 1);
+      } else assert.ok(card.hasClass('p-24'));
+      if (['Vertical blog card', 'Inset image card'].includes(example.attr('aria-label'))) {
         assert.equal(card.attr('style'), 'max-width: 344px');
         assert.equal(preview.find('[style]').length, 1, 'Only the original width cap needs an inline style');
       } else {
@@ -217,7 +245,8 @@ module.exports = function checkUi(output) {
       const data = require('../src/_data/cardExample');
       assert.equal(card.find('h3').text().trim(), data.title);
       assert.equal(card.find('h3').attr('class'), 'clr-primary mt-0 mb-24');
-      assert.equal(card.find('p').text().replace(/\s+/g, ' ').trim(), data.excerpt + ' ' + data.linkLabel);
+      const excerpt = example.attr('aria-label') === 'Inset image card' ? data.insetExcerpt : data.excerpt;
+      assert.equal(card.find('p').text().replace(/\s+/g, ' ').trim(), excerpt + ' ' + data.linkLabel);
       assert.equal(card.find('a[href="' + data.href + '"]').length, 3);
       if (example.attr('aria-label') === 'Horizontal image-right card') {
         assert.equal(card.children().first().prop('tagName'), 'A', 'Image must precede content on mobile');

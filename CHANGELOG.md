@@ -8,7 +8,22 @@ Dates are UTC: npm publication dates through 0.14.0, then GitHub release publica
 
 ## [Unreleased] - 0.14.6
 
+### Added
+
+- `border-r-24` radius utility and an Inset image card example: 24px outer corners, a 12px top/side image inset with 16px image corners, and a separate 24px-padded content wrapper. Uses shared Epic CSS imagery and a concise heading/paragraph with an inline link, without metadata. Retains 24px image-to-heading spacing.
+- Configurable `$grid-patterns` map emits only selected breakpoint/track combinations: existing `grid-md-1fr-4fr`, two equal tracks at medium, and one-to-two plus three equal tracks at large. Added a UI Layouts example with a full-height featured card beside six supporting cards; smaller screens stack the feature and reduce supporting columns.
+- Optional `btn-sm` size modifier with 12px text, 18px line-height, and 6px vertical / 12px horizontal padding. Size works independently of primary and secondary appearance variants; default button padding and inherited typography remain unchanged. The UI library includes rendered, copyable small primary and secondary examples.
+
 ### Changed
+
+- Boxed UI cards now use 24px outer corners while retaining 16px image corners across vertical/horizontal variants, shared layout cards, UI index tiles, icon cards, and slider panels. Homepage/layout embeds inherit shared component changes. Unboxed author profiles retain circular portraits.
+- Theme homepage featured post now uses two equal grid tracks from medium without percentage-width wrappers. Intro regions use a 776px inline maximum width, retaining centered and left-aligned treatments. Color swatches use an example-scoped equal-track grid. Retired auto-fit definitions remain as non-emitting Sass comments for reference.
+- Migrated first-party auto-fitting grids to explicit equal-track patterns: theme post lists use two columns from medium, and the site's category list adds three from large. Grid docs explain the map, selected breakpoint generation, and separate sidebar settings.
+
+
+- Renamed responsive row-direction utilities to `flex-xs-row`, `flex-sm-row`, `flex-md-row`, `flex-lg-row`, and `flex-xl-row`. Migrate the former `<breakpoint>-flex-row` names; no aliases are retained. All five minimum widths remain unchanged (0, 480, 820, 960, and 1200px). These utilities set only `flex-direction: row`; `flex-md` still enables flex display independently. Migrated theme/site layouts and documentation examples.
+
+- Eleventy blog category navigation uses small outlined secondary buttons in a wrapping flex row with 12px gaps. Removed the visible Categories heading and replaced its aside label reference with `aria-label`, preserving destinations and current-page attributes.
 
 - Audited site SEO: corrected the sitemap and robots origins to `https://epiccss.com`, restricted the sitemap to public indexable HTML pages without unreliable last-modified dates, added self-canonical URLs and consistent descriptive Epic CSS titles, refreshed home/theme descriptions, added the theme-page H1, and excluded the 404 from indexing. Removed an obsolete unrelated Netlify-domain rewrite; retained the installation redirect. Added generated metadata/sitemap/internal-link checks.
 
@@ -20,9 +35,13 @@ Dates are UTC: npm publication dates through 0.14.0, then GitHub release publica
 - Reduced the shared body font size from `1.125rem` (18px) to `1rem` (16px) for typography review, with body line-height set to `1.6rem`; paragraph `1.9rem` and component-specific line heights are unchanged.
 
 - Primary buttons now use a solid existing palette accent with white text and modest rounded corners; paired light/dark palettes use the deeper light-mode primary accent in both modes. Secondary buttons now use transparent backgrounds, matching secondary-colored text and outlines, and fully rounded pill corners. Shared structural styling remains in base, with variants in colors.
-- Renamed the UI Buttons presentation to Links and buttons while retaining `/ui/buttons/`. Added rendered, copyable prose and navigation link examples covering existing palette colors, hover, current-page, and keyboard focus behavior; existing button styles are unchanged.
+- Renamed the UI Buttons presentation to Links and buttons while retaining `/ui/buttons/`. Added rendered, copyable prose and navigation link examples covering existing palette colors, hover, current-page, and keyboard focus behavior.
 - Button examples and color documentation distinguish base, primary, and secondary class combinations, with native disabled and compact button examples.
 
+### Removed
+
+- Responsive 25%, 50%, and 75% width generator (`$grid-fractions`) after migrating all first-party usages to grid tracks or inline reading-width caps. Full-width `w-100` remains available.
+- `grid-col-2` and `grid-col-3` fixed-minimum auto-fit helpers after migrating their first-party usages; their definitions remain as non-emitting Sass reference comments. Use selected fractional patterns for equal columns. Both flex-basis helpers remain unchanged: all three slider panels use non-shrinking `flex-basis-100`, while `flex-basis-300` remains defined and documented with no current first-party template usages.
 
 ## [0.14.5] - 2026-11-14
 

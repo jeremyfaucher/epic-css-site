@@ -42,11 +42,11 @@ description: Palette-based links and base, primary, and secondary buttons with c
   <button class="btn btn-secondary" type="button" disabled>Action unavailable</button>
 </div>{% endset %}
 {{ example(states, "Disabled buttons") }}
-<h2 class="fs-24 lh-32 mb-16">Spacing and keyboard focus</h2>
-<p class="mb-24">Use spacing utilities to adjust the base padding. Tab through the enabled controls to see the focus outline; a native button supports Enter and Space. The disabled button is skipped in the normal Tab sequence.</p>
+<h2 class="fs-24 lh-32 mb-16">Small buttons and keyboard focus</h2>
+<p class="mb-24">Add <code>btn-sm</code> for 12px text, 18px line-height, and 6px vertical / 12px horizontal padding. Size is independent of appearance: combine it with either <code>btn-primary</code> or <code>btn-secondary</code>. Without the modifier, <code>btn</code> keeps its inherited typography and default padding of <code>0.75rem 1rem</code>. Tab through the enabled controls to see the focus outline; a native button supports Enter and Space. The disabled button is skipped in the normal Tab sequence.</p>
 {% set spacing %}<div class="flex flex-wrap gap-16 items-center">
-  <button class="btn btn-secondary py-8 px-16" type="button">Compact topic</button>
-  <button class="btn btn-primary py-8 px-16" type="button">Compact button</button>
+  <button class="btn btn-secondary btn-sm" type="button">Compact topic</button>
+  <button class="btn btn-primary btn-sm" type="button">Compact button</button>
 </div>{% endset %}
 {{ example(spacing, "Compact buttons and focus") }}
 <p>Primary fills use the existing deeper light-mode primary accent in both modes for readable white labels. Secondary text and outlines follow the current mode’s secondary accent. Customize them through the <a href="/docs/colors/#buttons">Colors and palettes guide</a>, then check text, borders, and focus outlines against their surroundings. A named palette pair does not guarantee accessible contrast.</p>

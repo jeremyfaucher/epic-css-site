@@ -25,13 +25,19 @@ module.exports = function checkDocs(output, libraryCss) {
     ['.pt-24', 'padding-top', '1.5rem'], ['.py-24', 'padding-bottom', '1.5rem'],
     ['.mb-80', 'margin-bottom', '5rem'], ['.gap-24', 'gap', '1.5rem'], ['.gap-40', 'gap', '2.5rem']
   ]) assert.equal(declarations(selector)[property], value, 'Documented spacing changed: ' + selector);
-  let mediumRow = false;
-  utilityCss.walkRules('.md-flex-row', rule => {
-    if (rule.parent.type === 'atrule' && /min-width:\s*820px/.test(rule.parent.params)) {
-      rule.walkDecls('flex-direction', decl => { if (decl.value === 'row') mediumRow = true; });
-    }
-  });
-  assert.ok(mediumRow, 'Documented medium flex breakpoint changed');
+  for (const [breakpoint, width] of Object.entries({ xs: 0, sm: 480, md: 820, lg: 960, xl: 1200 })) {
+    let found = false;
+    utilityCss.walkRules('.flex-' + breakpoint + '-row', rule => {
+      assert.equal(rule.parent.type, 'atrule');
+      assert.equal(rule.parent.params, '(min-width: ' + width + (width === 0 ? '' : 'px') + ')');
+      assert.deepEqual(Object.fromEntries(rule.nodes.filter(node => node.type === 'decl')
+        .map(node => [node.prop, node.value])), { 'flex-direction': 'row' });
+      found = true;
+    });
+    assert.ok(found, 'Missing responsive row direction: ' + breakpoint);
+    utilityCss.walkRules('.' + breakpoint + '-flex-row', () => assert.fail('Obsolete responsive row utility'));
+  }
+  assert.equal(declarations('.flex-md').display, 'flex', 'Medium flex display remains independent');
   assert.ok(fs.existsSync(path.join(output, 'assets/js/docs.js')), 'Missing docs copy/legacy-link script');
   assert.ok(fs.existsSync(path.join(output, 'assets/js/examples.js')), 'Missing shared copy script');
   let examples = 0;
@@ -72,12 +78,15 @@ module.exports = function checkDocs(output, libraryCss) {
       const paired = $('.docs-example[aria-label="Primary and secondary color pairs"]');
       assert.equal(paired.length, 1, 'Missing paired Colors example');
       for (const role of ['primary', 'secondary']) {
-        const box = paired.find('.docs-example-preview .xs-w-50.clr-' + role + '.clr-' + role + '-bg');
+        const box = paired.find('.docs-example-preview .clr-' + role + '.clr-' + role + '-bg');
         assert.equal(box.length, 1, 'Missing ' + role + ' pair');
         assert.equal(box.find('br').length, 1);
         assert.equal(box.text().trim(), 'clr-' + role + 'clr-' + role + '-bg');
       }
-      assert.equal(paired.find('.docs-example-preview [style]').length, 0, 'Color boxes must use utilities');
+      const tracks = paired.find('.docs-example-preview > .grid');
+      assert.equal(tracks.attr('style'), 'grid-template-columns: repeat(2, minmax(0, 1fr))');
+      assert.equal(tracks.children().length, 2);
+      assert.equal(paired.find('.docs-example-preview [style]').length, 1, 'Only the example-specific track pattern is inline');
     }
     if (topic === 'changelog') {
       const { readChangelog, GROUPS } = require('./changelog.cjs');

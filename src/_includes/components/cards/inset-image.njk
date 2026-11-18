@@ -1,0 +1,10 @@
+{% from "components/cards/parts.njk" import image %}
+<div class="clr-primary-bg border-r-24" style="max-width: 344px">
+  <div class="px-12 pt-12">
+    {{ image(cardExample, "flex", "w-100") }}
+  </div>
+  <div class="p-24">
+    <h3 class="clr-primary mt-0 mb-24"><a href="{{ cardExample.href }}">{{ cardExample.title }}</a></h3>
+    <p class="mb-0">{{ cardExample.insetExcerpt | escape }} <a href="{{ cardExample.href }}" class="clr-underline">{{ cardExample.linkLabel }}</a></p>
+  </div>
+</div>

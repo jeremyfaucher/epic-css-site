@@ -94,45 +94,26 @@ $align-items-values: flex-start, flex-end, center, space-between space-stretch;
   width: 100%;
 }
 
-// Start media querys
-$grid-fractions: (
-  "25": 25%,
-  "50": 50%,
-  "75": 75%,
-);
-
-// widths
-@each $breakpoint, $size in $breakpoints {
-  @media (min-width: #{$size}) {
-    @each $key, $value in $grid-fractions {
-      .#{$breakpoint}-w-#{$key} {
-        width: $value;
-      }
-    }
-  }
-}
-
 // flex direction
 @each $breakpoint, $size in $breakpoints {
   @media (min-width: #{$size}) {
 
-    .#{$breakpoint}-flex-row {
+    .flex-#{$breakpoint}-row {
       flex-direction: row;
     }
 
   }
 }
 
+// Reference only: retired auto-fit helpers; these comments emit no CSS.
+// .grid-col-2 {
+//   grid-template-columns: repeat(auto-fit, minmax(331px, 1fr));
+// }
+// .grid-col-3 {
+//   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+// }
+
 // Start grid
-.grid-col-2 {
-  grid-template-columns: repeat(auto-fit, minmax(331px, 1fr));
-}
-
-.grid-col-3 {
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  // grid-template-columns: repeat(3, minmax(262px, 1fr));
-}
-
 .grid {
   display: grid;
 }
@@ -234,9 +215,16 @@ $grid-fractions: (
 }
 
 // Start grid
-@media (min-width: map-get($breakpoints, md)) {
-  .grid-md-1fr-4fr {
-    grid-template-columns: 1fr 4fr;
+@each $breakpoint, $patterns in $grid-patterns {
+  @if not map-has-key($breakpoints, $breakpoint) {
+    @error "Unknown grid pattern breakpoint '#{$breakpoint}'.";
+  }
+  @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @each $name, $tracks in $patterns {
+      .grid-#{$breakpoint}-#{$name} {
+        grid-template-columns: $tracks;
+      }
+    }
   }
 }
 

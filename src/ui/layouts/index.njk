@@ -6,19 +6,36 @@ seoTitle: Responsive CSS layout examples
 description: Reusable responsive layouts for arranging images, text, and other components with Epic CSS.
 ---
 {% from "ui-example.njk" import example %}
-<article>
+<article data-example-gallery>
 <nav class="mb-24" aria-label="UI navigation"><a href="/ui/">UI library</a> / <a href="/ui/layouts/" aria-current="page">Layouts</a></nav>
 <h1 class="fs-37 lh-37 mb-24">Layouts</h1>
-<p class="mb-32">Arrange the main regions of a page, then compose cards and other components inside them. Each example includes a live preview and matching HTML.</p>
-<h2 class="fs-24 lh-32 mb-16">Posts with a right sidebar</h2>
+<nav data-example-picker aria-label="Layout examples" class="flex flex-wrap gap-24 mb-32">
+  <a href="#featured-lesson" data-example-choice class="active" aria-current="true">Featured lesson with a supporting grid</a>
+  <a href="#right-sidebar" data-example-choice>Posts with a right sidebar</a>
+  <a href="#three-column" data-example-choice>Three column</a>
+</nav>
+<section id="featured-lesson" data-example-panel aria-labelledby="featured-lesson-heading">
+<h2 id="featured-lesson-heading" class="fs-24 lh-32 mb-16">Featured lesson with a supporting grid</h2>
+<p class="mb-24">From 960 pixels, <code>grid-lg-1fr-2fr</code> gives the featured card one share of the width and the supporting group two shares, after the gap. Inside that group, <code>grid-lg-1fr-1fr-1fr</code> arranges six cards in three columns and two rows. The featured card stretches to the group's height through normal grid alignment. Below large, the feature stacks above the group; supporting cards use two columns from 820 pixels and one below that.</p>
+{% set featured %}{% include "components/layouts/featured-grid.njk" %}{% endset %}
+{{ example(featured, "Featured lesson and six supporting cards", codeId="featured-lesson-code", collapsible=true) }}
+</section>
+<section id="right-sidebar" data-example-panel aria-labelledby="right-sidebar-heading">
+<h2 id="right-sidebar-heading" class="fs-24 lh-32 mb-16">Posts with a right sidebar</h2>
 <p class="mb-24">An archive section holds two post summaries, followed by a related-reading sidebar. <code>grid</code> enables the layout, and <code>grid-sidebar-right-lg-344px</code> sets <code>minmax(0, 1fr) 344px</code> from 960 pixels. Below that, the sidebar stacks after the posts. <code>gap-40</code> supplies the 40-pixel gap at the default root font size.</p>
+<p class="mb-24">Sass generates the sidebar class from the <code>$sidebar-widths</code> map. The default widths are <code>narrow: 208px</code> and <code>wide: 344px</code>, and each width generates both a left and a right sidebar class. This example uses the wide preset. To use a different width, set the map in <code>_custom.scss</code>, rebuild Sass, and update the class in your markup to match the generated width. See <a href="/docs/grid/#customize-sidebar-width">Customize sidebar widths</a>.</p>
 {% set sidebar %}{% include "components/layouts/right-sidebar.njk" %}{% endset %}
-{{ example(sidebar, "Main content with right sidebar") }}
-<h2 class="fs-24 lh-32 mb-16">Three column</h2>
+{{ example(sidebar, "Main content with right sidebar", codeId="right-sidebar-code", collapsible=true) }}
+<p class="mb-24">For a left sidebar at the same width, use <code>grid-sidebar-left-lg-344px</code> and place the sidebar before the posts in the HTML. Below 960 pixels, the sidebar stacks above the posts.</p>
+</section>
+<section id="three-column" data-example-panel aria-labelledby="three-column-heading">
+<h2 id="three-column-heading" class="fs-24 lh-32 mb-16">Three column</h2>
 <p class="mb-24">A section heading followed by three existing vertical cards. <code>flex-md</code> switches the parent to flex from 820 pixels, and <code>flex-1</code> on each wrapper shares the available row width equally. Below medium the cards stack. <code>gap-24</code> separates columns, and <code>mb-24</code> separates stacked cards.</p>
 {% set three %}{% include "components/layouts/three-column.njk" %}{% endset %}
-{{ example(three, "Three column") }}
+{{ example(three, "Three column", codeId="three-column-code", collapsible=true) }}
 <p class="mb-24">The cards share the spacing lesson and retain their 344-pixel maximum width.</p>
 <p>Layout section headings use <code>h2</code>; the cards retain their <code>h3</code> headings.</p>
+</section>
 </article>
 <script src="/assets/js/examples.js" defer></script>
+<script src="/assets/js/example-picker.js" defer></script>

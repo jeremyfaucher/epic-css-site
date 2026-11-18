@@ -1,0 +1,19 @@
+{% from "components/cards/parts.njk" import image, content %}
+<section aria-labelledby="featured-grid-title">
+  <h2 id="featured-grid-title" class="fs-32 lh-37 mt-0 mb-16">{{ featuredLayout.title }}</h2>
+  <p class="mt-0 mb-32">{{ featuredLayout.intro }}</p>
+  <div class="grid grid-lg-1fr-2fr gap-24">
+    <div class="clr-primary-bg p-24 border-r-24 flex flex-col justify-between gap-24">
+      {{ image(cardExample, "flex", "w-100") }}
+      <div>{{ content(cardExample) }}</div>
+    </div>
+    <div class="grid grid-md-1fr-1fr grid-lg-1fr-1fr-1fr gap-16">
+      {% for card in featuredLayout.cards %}
+      <div class="clr-primary-bg p-16 border-r-24">
+        <h3 class="fs-20 lh-24 mt-0 mb-12"><a href="{{ card.href }}">{{ card.title }}</a></h3>
+        <p class="fs-14 lh-20 m-0">{{ card.text }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

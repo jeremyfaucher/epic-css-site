@@ -16,6 +16,9 @@ module.exports = function checkCards(output, core) {
     assert.equal(homeExample.length, 1);
     assert.equal(uiExample.length, 1);
     const rendered = normalize(uiExample.find('[data-example-preview]').html());
+    const card = uiExample.find('[data-example-preview] > div');
+    assert.ok(card.hasClass('border-r-24'), variant + ': outer radius');
+    assert.equal(card.find('img.border-r-16').length, 1, variant + ': image radius');
     for (const example of [homeExample, uiExample]) {
       assert.equal(normalize(example.find('[data-example-preview]').html()), rendered, variant + ': homepage and UI markup differ');
       assert.equal(normalize(example.find('pre code.language-html').text()), rendered, variant + ': code and preview differ');
@@ -23,7 +26,36 @@ module.exports = function checkCards(output, core) {
     }
   }
   const selectors = [];
-  postcss.parse(core).walkRules(rule => selectors.push(rule.selector));
+  const css = postcss.parse(core);
+  css.walkRules(rule => selectors.push(rule.selector));
+  const radius = {};
+  css.walkRules(rule => {
+    if (['.border-r-24', '.border-r-16'].includes(rule.selector)) rule.walkDecls('border-radius', decl => { radius[rule.selector] = decl.value; });
+  });
+  assert.deepEqual(radius, { '.border-r-16': '16px', '.border-r-24': '24px' });
+  const inset = cards('[data-example][aria-label="Inset image card"]');
+  assert.equal(inset.length, 1);
+  assert.equal(normalize(inset.find('[data-example-preview]').html()), normalize(inset.find('pre code.language-html').text()));
+  const insetPadding = {};
+  css.walkRules(rule => {
+    if (['.pt-12', '.px-12'].includes(rule.selector)) {
+      insetPadding[rule.selector] = Object.fromEntries(rule.nodes.filter(n => n.type === 'decl').map(n => [n.prop, n.value]));
+    }
+  });
+  assert.deepEqual(insetPadding['.pt-12'], { 'padding-top': '.75rem' }, 'Retain inset top padding in filtered CSS');
+  assert.deepEqual(insetPadding['.px-12'], { 'padding-left': '.75rem', 'padding-right': '.75rem' }, 'Retain inset side padding without bottom padding');
+  for (const [route, selector] of [
+    ['ui/layouts', '[data-example-preview] .clr-primary-bg'],
+    ['ui/icons', '[data-icon-card], [data-example][aria-label="Decorative engagement icons with visible labels"] [data-example-preview] > div'],
+    ['ui/sliders', '[data-example-preview] [data-slider-panel]'],
+    ['ui', 'main .clr-primary-bg'],
+  ]) {
+    const page = cheerio.load(fs.readFileSync(path.join(output, route, 'index.html'), 'utf8'));
+    const surfaces = page(selector);
+    assert.ok(surfaces.length, route + ': missing card surfaces');
+    surfaces.each((_, element) => assert.ok(page(element).hasClass('border-r-24'), route + ': boxed card outer radius'));
+    surfaces.find('img').each((_, image) => assert.ok(page(image).hasClass('border-r-16'), route + ': card image radius'));
+  }
   home('[data-card-showcase] [class]').each((_, element) => {
     if (home(element).closest('pre').length) return;
     for (const name of home(element).attr('class').split(/\s+/)) {
@@ -32,8 +64,10 @@ module.exports = function checkCards(output, core) {
   });
   const ids = home('[id]').map((_, element) => home(element).attr('id')).get();
   assert.equal(new Set(ids).size, ids.length, 'Duplicate homepage IDs');
-  assert.equal(home('[data-showcase-controls][hidden]').length, 1, 'Uninitialized controls should stay hidden');
-  assert.equal(home('[data-showcase-panel]:not([hidden])').length, 3, 'All examples must remain available without JS');
+  for (const showcase of ['[data-card-showcase]', '[data-layout-showcase]']) {
+    assert.equal(home(`${showcase} [data-showcase-controls][hidden]`).length, 1, 'Uninitialized controls should stay hidden');
+    assert.equal(home(`${showcase} [data-showcase-panel]:not([hidden])`).length, 3, 'All examples must remain available without JS');
+  }
   assert.equal(home('[data-example-code][hidden]').length, 0, 'Code must remain available without JS');
   home('[aria-controls]').each((_, element) => {
     for (const id of home(element).attr('aria-controls').split(/\s+/)) assert.equal(home('[id="' + id + '"]').length, 1, 'Missing controlled element ' + id);

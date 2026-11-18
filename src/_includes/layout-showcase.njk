@@ -1,9 +1,31 @@
 {% from "ui-example.njk" import example %}
 {% set archiveId = "home-archive" %}
 {% set sidebar %}{% include "components/layouts/right-sidebar.njk" %}{% endset %}
-<section class="my-80" data-code-showcase aria-labelledby="home-layout-heading">
+{% set featured %}{% include "components/layouts/featured-grid.njk" %}{% endset %}
+{% set three %}{% include "components/layouts/three-column.njk" %}{% endset %}
+<section class="my-80" data-layout-showcase aria-labelledby="home-layout-heading">
   <h2 class="fs-32 lh-32 mb-16" id="home-layout-heading">Give the page a clear structure</h2>
-  <p class="mb-24">Keep post summaries together and related reading alongside them. This <a href="/ui/layouts/">page layout</a> stacks in reading order on smaller screens.</p>
-  <button class="btn btn-secondary py-8 px-16" type="button" data-code-showcase-toggle aria-expanded="true" aria-controls="home-archive-code" hidden>Hide code</button>
-  {{ example(sidebar, "Posts with a right sidebar", "", false, "home-archive-code") }}
+  <p class="mb-24">Explore three responsive <a href="/ui/layouts/">page layouts</a>, then show and copy the HTML for the one you want to use.</p>
+  <div data-showcase-controls hidden>
+    <div class="flex flex-wrap gap-12 items-center">
+      <div class="flex flex-wrap gap-8" data-showcase-tabs aria-label="Page layout">
+        <button class="btn btn-secondary py-8 px-16" type="button" id="home-layout-sidebar-tab" data-showcase-tab="sidebar" aria-controls="home-layout-sidebar">Basic page layout</button>
+        <button class="btn btn-secondary py-8 px-16" type="button" id="home-layout-featured-tab" data-showcase-tab="featured" aria-controls="home-layout-featured">Featured with grid</button>
+        <button class="btn btn-secondary py-8 px-16" type="button" id="home-layout-three-tab" data-showcase-tab="three" aria-controls="home-layout-three">Three-card grid</button>
+      </div>
+      <button class="btn btn-secondary py-8 px-16" type="button" data-showcase-code-toggle aria-expanded="true" aria-controls="home-archive-code home-layout-featured-code home-layout-three-code">Hide code</button>
+    </div>
+  </div>
+  <section class="my-24" id="home-layout-sidebar" data-showcase-panel="sidebar">
+    <h3 class="fs-24 lh-32 mb-16">Posts with a right sidebar</h3>
+    {{ example(sidebar, "Posts with a right sidebar", "", false, "home-archive-code") }}
+  </section>
+  <section class="my-24" id="home-layout-featured" data-showcase-panel="featured">
+    <h3 class="fs-24 lh-32 mb-16">Featured lesson with a supporting grid</h3>
+    {{ example(featured, "Featured lesson and six supporting cards", "", false, "home-layout-featured-code") }}
+  </section>
+  <section class="my-24" id="home-layout-three" data-showcase-panel="three">
+    <h3 class="fs-24 lh-32 mb-16">Three-column layout</h3>
+    {{ example(three, "Three-column layout", "", false, "home-layout-three-code") }}
+  </section>
 </section>

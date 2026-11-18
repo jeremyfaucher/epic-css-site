@@ -24,7 +24,7 @@ css_include: /assets/css/icons.css
 <h2 id="icons-{{ group.id }}" class="fs-24 lh-32 mb-16">{{ group.name }}</h2>
 <ul class="grid gap-16 list-none p-0 m-0" data-icon-gallery>
 {% for icon in group.items %}
-<li class="clr-primary-bg p-24 border-r-16" data-icon-card data-icon-name="{{ icon.name }}">
+<li class="clr-primary-bg p-24 border-r-24" data-icon-card data-icon-name="{{ icon.name }}">
 <div class="flex items-center justify-center{% if group.id != 'social-and-feeds' %} clr-primary{% endif %} mb-16" data-icon-preview>{{ icon.svg | safe }}</div>
 <h3 class="fs-16 mt-0 mb-16">{{ icon.name }}</h3>
 <button type="button" class="btn btn-secondary" data-copy-icon aria-label="Copy {{ icon.name }} SVG" hidden>Copy SVG</button>
@@ -59,7 +59,7 @@ css_include: /assets/css/icons.css
 {{ example(buttons, "Dropdown, labeled link and icon-only button") }}
 <p>The native disclosure opens the Browse menu. The Search button demonstrates an accessible icon-only label; it is disabled because this example has no search service.</p>
 <h2 class="fs-24 lh-32 mb-16">Engagement in a card</h2>
-{% set card %}<div class="clr-primary-bg p-24 border-r-16">
+{% set card %}<div class="clr-primary-bg p-24 border-r-24">
   <h3 class="fs-24 mt-0 mb-16">Leave room between related groups</h3>
   <p class="mb-24">Spacing makes the relationship between a heading, a paragraph and its supporting details easier to see.</p>
   <div class="flex flex-wrap gap-24 items-center" aria-label="Sample engagement counts">

@@ -14,6 +14,14 @@ Develop and document the shared utility library here, then port verified changes
 
 ## Develop
 
+The user reviewed and approved the grid and percentage-width cleanup in the
+browser. This records user visual approval; the agent's attempted browser review
+was interrupted and did not establish visual verification. The current grid
+guide documents the four selected `$grid-patterns` combinations and migration
+from percentage widths. Retired auto-fit rules remain non-emitting Sass comments.
+The Flexbox guide records the retained helpers: all three slider panels use
+`flex-basis-100`; `flex-basis-300` is documented but unused by first-party templates.
+
 The footer sitemap derives Site, Documentation, and UI examples groups from Eleventy's public HTML page collection. Give new pages a descriptive front-matter `title`; they appear automatically. Error/XML routes are excluded; set `sitemap: false` or `eleventyExcludeFromCollections: true` for nonpublic pages.
 
 Follow [DEMO-COPY.md](DEMO-COPY.md) for short, meaningful teaching content in UI examples, including shared content ownership and copy checks.

@@ -61,7 +61,7 @@ docTopic: wrapper-and-container
 <h2 id="inner-layout">Arrange the content inside</h2>
 <p>Once the outer width is chosen, apply flex or grid where the items need arranging. These are composition choices: flex and grid do not require a wrapper or container.</p>
 {% set markup %}<div class="wrapper">
-  <div class="container flex flex-col md-flex-row gap-40 items-center justify-between mb-80 pt-24">
+  <div class="container flex flex-col flex-md-row gap-40 items-center justify-between mb-80 pt-24">
     <a href="/">Epic CSS</a>
     <nav class="flex flex-wrap gap-24" aria-label="Example navigation">
       <a href="/docs/flexbox/">Flexbox</a>
@@ -70,6 +70,6 @@ docTopic: wrapper-and-container
   </div>
 </div>{% endset %}
 {{ example(markup, "Inner responsive flex layout") }}
-<p><code>flex</code> enables flex layout. <code>flex-col</code> stacks the brand and navigation on smaller screens; <code>md-flex-row</code> switches to a row from 820 pixels up. In that row, <code>justify-between</code> pushes them toward opposite sides and <code>items-center</code> aligns them vertically. The breakpoint follows the viewport, even inside this narrower docs preview.</p>
+<p><code>flex</code> enables flex layout. <code>flex-col</code> stacks the brand and navigation on smaller screens; <code>flex-md-row</code> switches to a row from 820 pixels up. In that row, <code>justify-between</code> pushes them toward opposite sides and <code>items-center</code> aligns them vertically. The breakpoint follows the viewport, even inside this narrower docs preview.</p>
 <p><code>gap-40</code> spaces the main flex items; <code>gap-24</code> spaces the navigation links. Gap needs a flex or grid layout to have that effect. For more arrangements, see <a href="/docs/flexbox/">Flexbox</a> and <a href="/docs/grid/">Grid</a>.</p>
 <p><code>pt-24</code> adds top padding, <code>py-24</code> adds top and bottom padding, and <code>mb-80</code> adds bottom margin. Their current values are <code>1.5rem</code>, <code>1.5rem</code> per side, and <code>5rem</code>, respectively; at a 16-pixel root font size these are 24 and 80 pixels. The same spacing scale makes <code>gap-24</code> <code>1.5rem</code> and <code>gap-40</code> <code>2.5rem</code>.</p>

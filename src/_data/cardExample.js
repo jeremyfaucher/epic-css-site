@@ -9,5 +9,6 @@ module.exports = {
   alt: 'Epic CSS with 11ty UI Library banner',
   width: 484,
   height: 242,
+  insetExcerpt: 'Consistent spacing helps readers see what belongs together.',
   excerpt: 'Consistent spacing helps readers see what belongs together. Leave more space between groups than between related elements.'
 };

@@ -1,5 +1,17 @@
 # Shared card examples
 
+Boxed cards use `border-r-24` outside and `border-r-16` on images. The unboxed
+author profile keeps its circular portrait. Shared variants propagate to homepage
+and layout includes; those consumers do not duplicate the card markup.
+
+`inset-image.njk` is the Cards page's inset variant. Its image wrapper uses
+`px-12 pt-12` with no bottom padding, followed by a separate `p-24` content wrapper.
+The 12px inset pairs a 16px image radius with the 24px outer radius. The variant
+uses the shared image macro and `cardExample.js` content with its shorter
+`insetExcerpt`: one heading and one paragraph with an inline link, without the
+metadata row. The 24px content padding and heading margin remain unchanged. It preserves image
+dimensions, alt text, aspect ratio, and link destinations. It is capped at 344px.
+
 The image-right variant keeps image-first HTML for mobile and applies `order-lg-last` to its image link wrapper. From 960px it moves visually after the content, matching the `flex-lg` breakpoint. Both horizontal variants therefore stack image above copy below large.
 
 - Edit `vertical.njk`, `horizontal.njk` (image left), or `horizontal-right.njk` to change a variant's utility markup. Horizontal variants use `flex-lg` with equal `flex-1` children; their images fill their column with `w-100` while keeping their aspect ratio. HTML order determines mobile reading order.

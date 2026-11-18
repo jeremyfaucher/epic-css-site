@@ -71,6 +71,10 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./src/.well-known');
   eleventyConfig.addPassthroughCopy('./robots.txt');
   eleventyConfig.addPassthroughCopy("./interactive-demo");
+  eleventyConfig.addPassthroughCopy({
+    "src/_includes/style.css": "assets/css/site.css",
+    "src/_includes/theme-init.js": "assets/js/theme-init.js",
+  });
 
   //Date Clean up
   eleventyConfig.addFilter("postDate", (dateObj) => {

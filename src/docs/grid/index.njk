@@ -3,26 +3,54 @@ layout: docs.njk
 tag: docs-page
 title: Grid
 seoTitle: CSS Grid and sidebar utilities
-description: Build Epic CSS auto-fitting grids, containers and sidebar layouts.
+description: Build selected fractional grids, containers and sidebar layouts with Epic CSS.
 docTopic: grid
 ---
 {% from "docs-example.njk" import example %}
 <h1 id="grid">Grid</h1>
 <p>Use CSS Grid for rows and columns. Add <code>grid</code> for display, a column utility for the tracks, and a gap utility for spacing.</p>
-<h2 id="auto-fit">Auto-fitting columns</h2>
-<p><code>grid-col-3</code> uses <code>repeat(auto-fit, minmax(270px, 1fr))</code>. It fits as many columns as the available space permits; it does not force exactly three columns.</p>
-{% set markup %}<div class="grid grid-col-3 gap-16">
+<h2 id="fractional-tracks">Selected fractional tracks</h2>
+<p>Choose a track pattern and a breakpoint explicitly. Each pattern changes columns at its minimum viewport width; combine it with <code>grid</code> to enable grid display. Below that breakpoint, these examples stack in source order.</p>
+{% set markup %}<div class="grid grid-md-1fr-1fr grid-lg-1fr-1fr-1fr gap-16">
   <div class="docs-demo-item">One</div>
   <div class="docs-demo-item">Two</div>
   <div class="docs-demo-item">Three</div>
 </div>{% endset %}
-{{ example(markup, "Auto-fitting grid") }}
-<table><thead><tr><th>Class</th><th>Generated declaration</th></tr></thead><tbody>
-<tr><td><code>grid</code></td><td><code>display: grid</code></td></tr>
-<tr><td><code>grid-col-2</code></td><td><code>grid-template-columns: repeat(auto-fit, minmax(331px, 1fr))</code></td></tr>
-<tr><td><code>grid-col-3</code></td><td><code>grid-template-columns: repeat(auto-fit, minmax(270px, 1fr))</code></td></tr>
+{{ example(markup, "Responsive equal tracks") }}
+<table><thead><tr><th>Class</th><th>Minimum viewport width</th><th>Tracks</th></tr></thead><tbody>
+<tr><td><code>grid-md-1fr-4fr</code></td><td>820px</td><td><code>1fr 4fr</code> (existing behavior)</td></tr>
+<tr><td><code>grid-md-1fr-1fr</code></td><td>820px</td><td>Two equal tracks</td></tr>
+<tr><td><code>grid-lg-1fr-2fr</code></td><td>960px</td><td>One share beside two shares</td></tr>
+<tr><td><code>grid-lg-1fr-1fr-1fr</code></td><td>960px</td><td>Three equal tracks</td></tr>
 </tbody></table>
-<p>The minimum track widths are real minimums. A container narrower than 270 or 331 pixels can overflow. Choose the utility for your available content width, rather than treating the number in its name as a guaranteed column count.</p>
+<p>New patterns use <code>minmax(0, 1fr)</code> (or <code>minmax(0, 2fr)</code>) so tracks can shrink without imposing a fixed minimum width. Breakpoints follow the viewport, so allow room for the tracks inside your actual container. See the <a href="/ui/layouts/">featured lesson and supporting grid</a> for nested one-to-two and three-column patterns.</p>
+<h3 id="customize-track-patterns">Customize selected patterns</h3>
+<p>Set <code>$grid-patterns</code> before importing the library, in <code>src/my-epic-css/_custom.scss</code>. The outer keys select existing breakpoints; inner keys become class suffixes, and values supply the track list. Only listed combinations are generated. This replaces the default map rather than merging it; keep any defaults your templates use.</p>
+<pre><code>$grid-patterns: (
+  md: (
+    "1fr-4fr": (1fr 4fr),
+    "1fr-1fr": (minmax(0, 1fr) minmax(0, 1fr)),
+  ),
+  lg: (
+    "1fr-2fr": (minmax(0, 1fr) minmax(0, 2fr)),
+    "1fr-1fr-1fr": (minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)),
+  ),
+);</code></pre>
+<h3 id="add-track-pattern">Add a track pattern when needed</h3>
+<p>Three, four, five, or mixed-proportion tracks use the same generator. For four equal columns, insert this entry into your existing <code>$grid-patterns</code> map in <code>_custom.scss</code>, alongside the <code>md</code> and <code>lg</code> entries above:</p>
+<pre><code>xl: (
+  "1fr-1fr-1fr-1fr": (minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)),
+),</code></pre>
+<p>The outer key <code>xl</code> selects 1200px. The inner key supplies the suffix for <code>grid-xl-1fr-1fr-1fr-1fr</code>; its track list becomes <code>grid-template-columns</code>. Names do not calculate the tracks: keep the key descriptive of its values. This is an illustrative configuration, not an included default. The class exists only after you configure it and recompile Sass.</p>
+<pre><code>&lt;div class="grid grid-xl-1fr-1fr-1fr-1fr gap-24"&gt;
+  &lt;div&gt;First idea&lt;/div&gt;
+  &lt;div&gt;Second idea&lt;/div&gt;
+  &lt;div&gt;Third idea&lt;/div&gt;
+  &lt;div&gt;Fourth idea&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p><code>grid</code> enables display and <code>gap-24</code> separates the tracks. With this markup, items occupy one implicit column below 1200px and four columns from 1200px. Add a different selected pattern to the map when you need five tracks or mixed proportions; unconfigured combinations are not generated.</p>
+<p>For local development, run <code>npm start</code> in the consumer project to compile Sass and start the watchers. For the documentation site's filtered build, run <code>npm run build</code>. For the starter theme, run <code>npm run epic-build</code>, then <code>npm run epic-light</code>, then <code>npm run build-production</code>, allowing each command to finish. Stop development watchers before a filtered production build.</p>
+<p>The separate <code>$sidebar-widths</code> map continues to generate fixed-width sidebar layouts. The former auto-fitting column helpers have been removed; choose explicit equal tracks for equal-column layouts.</p>
 <h2 id="gap">Space between tracks</h2>
 <p><code>gap-16</code> sets both row and column gap to one rem. These are the current spacer keys:</p>
 <p><code>0, 4, 6, 8, 10, 12, 16, 18, 20, 24, 32, 40, 56, 60, 64, 80, 100</code>.</p>
@@ -36,6 +64,7 @@ docTopic: grid
   <div class="docs-demo-item">Main content</div>
 </div>{% endset %}
 {{ example(markup, "Responsive left sidebar grid") }}
+<p>Below 960 pixels, the sidebar and main content stack in HTML order. Put the sidebar first to keep it above the main content. To stack it below while keeping it on the left at 960 pixels and up, put the main content first in the HTML and add <code>order-lg-last</code> to that direct grid child. Reading and keyboard navigation still follow HTML order.</p>
 <h3 id="right-sidebar">Fixed-width right sidebar</h3>
 <p>Put main content first. Use <code>grid grid-sidebar-right-lg-344px gap-40</code> for a 344-pixel right track from 960 pixels, with a 2.5rem gap. See the <a href="/ui/layouts/">posts and right-sidebar example</a>.</p>
 {% set markup %}<div class="grid grid-sidebar-right-lg-344px gap-40">
@@ -63,6 +92,5 @@ docTopic: grid
 <tr><td><code>container-post</code></td><td>Centered container with an independently configured <code>$container-post-width</code>: 1000-pixel fallback and a 900-pixel custom setting. See <a href="/docs/wrapper-and-container/#customize-post-container">post container customization</a>.</td></tr>
 <tr><td><code>w-100</code></td><td>Full available width.</td></tr>
 <tr><td><code>margin-auto</code></td><td><code>margin: 0 auto</code>, resetting vertical margins and centering horizontally where the available width permits.</td></tr>
-<tr><td><code>sm-w-25</code>, <code>md-w-50</code>, <code>lg-w-75</code></td><td>Examples of breakpoint-prefixed 25%, 50%, and 75% widths.</td></tr>
 </tbody></table>
-<p>The generated width prefixes are <code>xs</code>, <code>sm</code>, <code>md</code>, <code>lg</code>, and <code>xl</code>, using the same <a href="/docs/flexbox/#responsive-direction">breakpoints as Flexbox</a>. Percentage widths combined with gaps can exceed the parent's available width; use the auto-fitting grid where it better fits the content.</p>
+<p>The retired breakpoint percentage-width helpers are no longer generated. Use fractional grid tracks to share available space after gaps, or an explicit inline <code>max-width</code> to cap a reading region while allowing it to fill narrower screens.</p>

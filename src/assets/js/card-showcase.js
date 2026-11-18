@@ -1,4 +1,4 @@
-document.querySelectorAll('[data-card-showcase]').forEach((showcase) => {
+document.querySelectorAll('[data-card-showcase], [data-layout-showcase]').forEach((showcase) => {
   const controls = showcase.querySelector('[data-showcase-controls]');
   const tablist = showcase.querySelector('[data-showcase-tabs]');
   const tabs = [...showcase.querySelectorAll('[data-showcase-tab]')];
