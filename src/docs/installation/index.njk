@@ -9,16 +9,25 @@ docTopic: installation
 <h1 id="installation">Installation</h1>
 <p>Use Epic CSS from the CDN, install it in an existing Node project, or start with the Eleventy theme. Each option gives you ordinary CSS to use in your site.</p>
 <h2 id="cdn">Use the CDN</h2>
-<p>Add this stylesheet link to your page's <code>&lt;head&gt;</code> to load the full Epic CSS <code>0.14.1</code> library without a build step:</p>
+{% set cdnVersions = ["0.14.6", "0.14.5", "0.14.4", "0.14.2", "0.14.1"] %}
+{% set cdnBase = "https://cdn.epiccss.com/" %}
+{% set latestCdnVersion = cdnVersions[0] %}
+<p>Add this stylesheet link to your page's <code>&lt;head&gt;</code> to load the latest full Epic CSS library ({{ latestCdnVersion }}) without a build step:</p>
 <pre><code class="language-html">&lt;link
   rel="stylesheet"
-  href="https://cdn.epiccss.com/0.14.1.css"
+  href="{{ cdnBase }}{{ latestCdnVersion }}.css"
 /&gt;</code></pre>
+<h3 id="cdn-versions">CDN versions</h3>
+<nav aria-labelledby="cdn-versions" class="flex flex-wrap gap-12 mb-24">
+  {% for version in cdnVersions %}
+  <a class="btn btn-secondary btn-sm" href="{{ cdnBase }}{{ version }}.css">{{ version }}{% if loop.first %} (latest){% endif %}</a>
+  {% endfor %}
+</nav>
 <p>For customization, follow the <a href="#npm">npm installation</a> and <a href="#sass-entry">Sass setup</a> below. The optional <a href="#light-build">Epic Light build</a> filters your compiled CSS into a smaller stylesheet for your project.</p>
 <h2 id="npm">Install the package</h2>
 <p>From a project with a package manifest, install the library and Sass:</p>
 <pre><code class="language-bash">npm install epic-css sass</code></pre>
-<p>Version 0.14.1 preserves palette values assigned before importing the library. If your configured corporate registry does not expose a newly published version, wait for it to become available through that registry; do not change network policy or disable TLS verification.</p>
+<p>To reproduce a specific version, install it with an exact pin. See the <a href="/docs/changelog/">changelog</a> for version details.</p>
 <h2 id="sass-entry">Create your Sass entry point</h2>
 <p>Create <code>src/my-epic-css/index.scss</code> and import the installed library. Relative paths below assume this folder structure:</p>
 <pre><code class="language-text">my-project/
